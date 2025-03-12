@@ -11,12 +11,23 @@
     h6 {
         @apply font-Fira-Go;
     }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply text-gray-Shades-Headlines;
+    }
 }
 
 @theme {
     --color-purple-accent: #8338ec;
     --color-purple-hover: #b588f4;
-    --color-Gray-Shades-Headlines: #212529;
+    --color-gray-Shades-Headlines: #212529;
+    --color-gray-shades-15: #ced4da;
+    --color-gray-border: #dee2e6;
     --global-padding: 120px;
     --font-Fredoka-One: 'Fredoka One';
     --font-Fira-Go: 'FiraGO';
