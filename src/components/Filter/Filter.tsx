@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import FilterDropDownButtons from './FilterDropDownButtons'
 import FilterDropDownRegion from './FilterDropDownSections/FilterDropDownRegion'
+import FilterDropDownDepartments from './FilterDropDownSections/FilterDropDownDepartments'
 
 type FilterProps = {
     onConfirm?: () => void
@@ -15,21 +16,21 @@ const Filter = ({ onConfirm }: FilterProps) => {
                 isActive={isActive}
                 handleSetActive={() => setIsActive(!isActive)}
             >
-                <FilterDropDownRegion />
+                <FilterDropDownDepartments />
             </FilterDropDownButtons>
             <FilterDropDownButtons
                 filterText="პრიორიტეტი"
                 isActive={false}
                 handleSetActive={() => setIsActive(!isActive)}
             >
-                <FilterDropDownRegion />
+                <FilterDropDownDepartments />
             </FilterDropDownButtons>
             <FilterDropDownButtons
                 filterText="თანამშრომელი"
                 isActive={false}
                 handleSetActive={() => setIsActive(!isActive)}
             >
-                <FilterDropDownRegion />
+                <FilterDropDownDepartments />
             </FilterDropDownButtons>
         </div>
     )

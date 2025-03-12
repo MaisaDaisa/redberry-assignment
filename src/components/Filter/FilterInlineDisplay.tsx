@@ -1,5 +1,5 @@
 import React from 'react'
-import FilterDisplayText from './FilterDisplay/FilterDisplayText'
+import FilterDisplayText from './FilterDisplayText'
 
 const FilterInlineDisplay = () => {
     return (

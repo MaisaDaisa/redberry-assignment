@@ -9,7 +9,7 @@ const IndexPage = () => {
             <h1 className="text-gray-Shades-Headlines text-[34px] font-semibold">
                 დავალებების გვერდი
             </h1>
-            <Filter></Filter>
+            <Filter />
             <FilterInlineDisplay />
             <TasksDisplay />
         </>
