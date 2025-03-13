@@ -1,13 +1,12 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import FilterDropDownButtons from './FilterDropDownButtons'
-import FilterDropDownRegion from './FilterDropDownSections/FilterDropDownRegion'
 import FilterDropDownDepartments from './FilterDropDownSections/FilterDropDownDepartments'
 
 type FilterProps = {
     onConfirm?: () => void
 }
 
-const Filter = ({ onConfirm }: FilterProps) => {
+const Filter = ({}: FilterProps) => {
     const [isActive, setIsActive] = useState(true)
     return (
         <div className="border-gray-border relative float-left mt-[52px] flex items-start gap-[45px] rounded-[10px] border py-[10px]">

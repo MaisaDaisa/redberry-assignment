@@ -1,7 +1,6 @@
 import Filter from '@/components/Filter/Filter'
 import FilterInlineDisplay from '@/components/Filter/FilterInlineDisplay'
 import TasksDisplay from '@/components/Tasks/TasksDisplay'
-import React from 'react'
 
 const IndexPage = () => {
     return (

@@ -1,5 +1,4 @@
 import CheckBoxWithText from '@/components/CheckBoxWithText'
-import React from 'react'
 
 const FilterDropDownDepartments = () => {
     return (

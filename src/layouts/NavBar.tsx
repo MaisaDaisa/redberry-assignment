@@ -1,4 +1,3 @@
-import React from 'react'
 import HourGlass from '@/assets/imgs/Hourglass.svg'
 
 type Props = {

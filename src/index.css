@@ -23,12 +23,33 @@
 }
 
 @theme {
+    /* General Colors */
     --color-purple-accent: #8338ec;
     --color-purple-hover: #b588f4;
     --color-gray-Shades-Headlines: #212529;
     --color-gray-shades-15: #ced4da;
     --color-gray-border: #dee2e6;
+
+    /* Status Colors  */
+    --color-status-yellow: #f7bc30;
+    --color-status-orange: #fb5607;
+    --color-status-blue: #3a86ff;
+    --color-status-pink: #ff006e;
+
+    /* Priority Colors */
+    --color-high-priority: #fa4d4d;
+    --color-medium-priority: #ffbe0b;
+    --color-low-priority: #08a508;
+
+    /* Department Colors */
+    --color-department-pink: #ff66a8;
+    --color-department-orange: #fd9a6a;
+    --color-department-cyan: #89b6ff;
+    --color-department-yellow: #ffd86d;
+
     --global-padding: 120px;
+
+    /* Fonts Family */
     --font-Fredoka-One: 'Fredoka One';
     --font-Fira-Go: 'FiraGO';
 }

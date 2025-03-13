@@ -1,4 +1,3 @@
-import React from 'react'
 import FilterDisplayText from './FilterDisplayText'
 
 const FilterInlineDisplay = () => {

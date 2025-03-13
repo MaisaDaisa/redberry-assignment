@@ -1,14 +1,23 @@
 import DepartmentRounded from '@/components/DepartmentRounded'
 import TaskPriorityBordered from '@/components/TaskPriorityBordered'
-import React from 'react'
+import TaskStatusColorEnum from '@/components/Tasks/TaskStatusColorEnum'
 
-const TaskCard = () => {
+type TaskCardProps = {
+    statusId?: number
+}
+
+const TaskCard = ({ statusId = 2 }: TaskCardProps) => {
     return (
-        <div className="flex flex-col items-center gap-7 rounded-[15px] border border-amber-200 p-5">
+        <div
+            className={`flex flex-col items-center gap-7 rounded-[15px] border p-5 ${'border-' + TaskStatusColorEnum[statusId]}`}
+        >
             <div className="flex w-full justify-between">
                 <div className="flex gap-[10px]">
                     <TaskPriorityBordered />
-                    <DepartmentRounded />
+                    <DepartmentRounded
+                        departmentId={3}
+                        departmentText="Redberry"
+                    />
                 </div>
                 <p className="text-gray-Shades-Headlines text-sm">
                     22 იანვ, 2022{' '}

@@ -1,6 +1,3 @@
-import React from 'react'
-import xDelete from '@/assets/svg/x-delete.svg'
-
 type FilterDisplayTextProps = {
     text: string
     setState?: React.Dispatch<React.SetStateAction<null>>

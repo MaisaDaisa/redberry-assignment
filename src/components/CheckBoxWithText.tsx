@@ -1,5 +1,3 @@
-import checkMark from '@/assets/imgs/checkMark.svg'
-
 interface CheckBoxWithTextProps {
     isChecked?: boolean
     text: string
@@ -11,7 +9,10 @@ const CheckBoxWithText = ({
     onClickHandler,
 }: CheckBoxWithTextProps) => {
     return (
-        <div className="flex flex-row items-center gap-[15px]">
+        <div
+            className="flex flex-row items-center gap-[15px]"
+            onClick={onClickHandler}
+        >
             <div className="border-y-purple-accent flex h-[22px] w-[22px] cursor-pointer items-center justify-center rounded-md border-[1.5px] border-solid">
                 {isChecked && (
                     <svg

@@ -1,11 +1,10 @@
-import React from 'react'
-import TasksColumn from './TasksColumn'
+import TasksColumn from '@/components/Tasks/TasksColumn'
 
 const TasksDisplay = () => {
     return (
         <div className="mt-6 grid grid-cols-4 gap-[52px]">
-            <TasksColumn />
-            <TasksColumn />
+            <TasksColumn statusId={3} />
+            <TasksColumn statusId={1} />
             <TasksColumn />
             <TasksColumn />
         </div>
