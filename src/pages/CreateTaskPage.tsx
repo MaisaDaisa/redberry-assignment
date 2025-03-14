@@ -2,6 +2,7 @@ import InputField from '@/components/Inputs/InputField'
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
 import HeaderWrapper from '@/layouts/HeaderWrapper'
 import { DevTool } from '@hookform/devtools'
+import DropDown from '@/components/DropDown/DropDown'
 
 type FormFields = {
     title: string
@@ -25,7 +26,7 @@ const CreateTaskPage = () => {
             <HeaderWrapper text="შექმენი ახალი დავალება">
                 <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className="isolate mt-[30px] flex flex-col items-start gap-[55px] rounded-sm px-[55px] pt-[65px] pb-[62px]"
+                    className="isolate mt-[30px] grid grid-cols-[550px_550px] justify-around gap-y-[55px] rounded-sm px-[55px] pt-[65px] pb-[62px]"
                 >
                     <InputField
                         name="title"
@@ -33,14 +34,54 @@ const CreateTaskPage = () => {
                         required
                         type="text"
                     />
+                    <DropDown
+                        name="department"
+                        title="დეპარტამენტი"
+                        required
+                        items={[
+                            { id: 1, name: 'gela' },
+                            { id: 2, name: 'dad' },
+                            { id: 3, name: 'dada' },
+                        ]}
+                    />
                     <InputField
                         name="description"
                         title="აღწერა"
                         required
                         type="textarea"
                     />
-
-                    <input type="submit" />
+                    <DropDown
+                        name="employee"
+                        title="პასუხისმგებელი თანამშრომელი"
+                        required
+                        items={[
+                            { id: 1, name: 'gela' },
+                            { id: 2, name: 'dad' },
+                            { id: 3, name: 'dada' },
+                        ]}
+                    />
+                    <div className="flex flex-row justify-between">
+                        <DropDown
+                            name="employee"
+                            title="პასუხისმგებელი თანამშრომელი"
+                            required
+                            items={[
+                                { id: 1, name: 'gela' },
+                                { id: 2, name: 'dad' },
+                                { id: 3, name: 'dada' },
+                            ]}
+                        />
+                        <DropDown
+                            name="employee"
+                            title="პასუხისმგებელი თანამშრომელი"
+                            required
+                            items={[
+                                { id: 1, name: 'gela' },
+                                { id: 2, name: 'dad' },
+                                { id: 3, name: 'dada' },
+                            ]}
+                        />
+                    </div>
                 </form>
                 <DevTool control={control} />{' '}
             </HeaderWrapper>

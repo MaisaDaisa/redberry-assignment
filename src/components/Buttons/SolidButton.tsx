@@ -15,16 +15,16 @@ const SolidButton = ({ text }: ButtonProps) => {
                 <path
                     d="M5 10H15"
                     stroke="white"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
                     stroke-linejoin="round"
                 />
                 <path
                     d="M10 15V5"
                     stroke="white"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                 />
             </svg>
             <p>{text}</p>
