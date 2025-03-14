@@ -1,17 +1,15 @@
 import Filter from '@/components/Filter/Filter'
 import FilterInlineDisplay from '@/components/Filter/FilterInlineDisplay'
 import TasksDisplay from '@/components/Tasks/TasksDisplay'
+import HeaderWrapper from '@/layouts/HeaderWrapper'
 
 const IndexPage = () => {
     return (
-        <>
-            <h1 className="text-gray-Shades-Headlines text-[34px] font-semibold">
-                დავალებების გვერდი
-            </h1>
+        <HeaderWrapper text="დავალებების გვერდი">
             <Filter />
             <FilterInlineDisplay />
             <TasksDisplay />
-        </>
+        </HeaderWrapper>
     )
 }
 

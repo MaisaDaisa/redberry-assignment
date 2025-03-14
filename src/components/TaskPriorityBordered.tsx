@@ -2,27 +2,26 @@ import High from '@/assets/imgs/High.svg'
 import Medium from '@/assets/imgs/Medium.svg'
 import Low from '@/assets/imgs/Low.svg'
 
-enum TaskPriorityTypes {
-    high = 'high-priority',
-    medium = 'medium-priority',
-    low = 'low-priority',
+export enum TaskPriorityTypes {
+    high = 1,
+    medium,
+    low,
 }
 
-// Map priority types to their corresponding styles and images
-const priorityStyles = {
+export const priorityStyles = {
     [TaskPriorityTypes.high]: {
-        borderColor: 'border-(--color-high-priority)', // Example Tailwind class for high priority
-        textColor: 'text-(--color-high-priority)', // Example Tailwind class for high priority
+        borderColor: `border-(--color-high-priority)`,
+        textColor: `text-(--color-high-priority)`,
         image: High,
     },
     [TaskPriorityTypes.medium]: {
-        borderColor: 'border-(--color-medium-priority)', // Example Tailwind class for medium priority
-        textColor: 'text-(--color-medium-priority)', // Example Tailwind class for medium priority
+        borderColor: `border-(--color-medium-priority)`,
+        textColor: `text-(--color-medium-priority)`,
         image: Medium,
     },
     [TaskPriorityTypes.low]: {
-        borderColor: 'border-(--color-low-priority)', // Example Tailwind class for low priority
-        textColor: 'text-(--color-low-priority)', // Example Tailwind class for low priority
+        borderColor: `border-(--color-low-priority)`,
+        textColor: `text-(--color-low-priority)`,
         image: Low,
     },
 }
@@ -36,7 +35,6 @@ const TaskPriorityBordered = ({
     priorityType = TaskPriorityTypes.high,
     priorityText = 'TEST',
 }: TaskPriorityBorderedProps) => {
-    // Get the styles and image based on the priority type
     const { borderColor, textColor, image } = priorityStyles[priorityType]
 
     return (

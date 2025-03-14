@@ -1,6 +1,7 @@
 import DepartmentRounded from '@/components/DepartmentRounded'
 import TaskPriorityBordered from '@/components/TaskPriorityBordered'
-import TaskStatusColorEnum from '@/components/Tasks/TaskStatusColorEnum'
+import { TaskPriorityTypes } from '@/components/TaskPriorityBordered'
+import { statusStyles } from '@/components/Tasks/TaskStatusColorEnum'
 
 type TaskCardProps = {
     statusId?: number
@@ -9,11 +10,13 @@ type TaskCardProps = {
 const TaskCard = ({ statusId = 2 }: TaskCardProps) => {
     return (
         <div
-            className={`flex flex-col items-center gap-7 rounded-[15px] border p-5 ${'border-' + TaskStatusColorEnum[statusId]}`}
+            className={`flex flex-col items-center gap-7 rounded-[15px] border p-5 ${statusStyles[statusId].borderColor}`}
         >
             <div className="flex w-full justify-between">
                 <div className="flex gap-[10px]">
-                    <TaskPriorityBordered />
+                    <TaskPriorityBordered
+                        priorityType={TaskPriorityTypes.high}
+                    />
                     <DepartmentRounded
                         departmentId={3}
                         departmentText="Redberry"

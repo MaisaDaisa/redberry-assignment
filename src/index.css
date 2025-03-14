@@ -28,6 +28,8 @@
     --color-purple-hover: #b588f4;
     --color-gray-Shades-Headlines: #212529;
     --color-gray-shades-15: #ced4da;
+    --color-gray-shade-10: var(--color-gray-border);
+    --color-gray-shade-validation: #6c757d;
     --color-gray-border: #dee2e6;
 
     /* Status Colors  */
@@ -52,4 +54,9 @@
     /* Fonts Family */
     --font-Fredoka-One: 'Fredoka One';
     --font-Fira-Go: 'FiraGO';
+}
+
+.isolate {
+    border: 0.3px solid #ddd2ff;
+    background: rgba(251, 249, 255, 0.65);
 }
