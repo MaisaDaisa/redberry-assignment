@@ -11,8 +11,12 @@ function App() {
     return (
         <>
             <NavBar>
-                <HollowButton text="თანამშრომლის შექმნა" />
-                <SolidButton text="შექმენი ახალი დავალება" />
+                <HollowButton text="თანამშრომლის შექმნა" onClick={() => {}} />
+                <SolidButton
+                    text="შექმენი ახალი დავალება"
+                    displayPlus
+                    onClick={() => {}}
+                />
             </NavBar>
             <MainSection>
                 <BrowserRouter>

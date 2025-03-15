@@ -54,7 +54,7 @@ const DropDown = ({
                 <div
                     onClick={() => setToggleCombo(!toggleCombo)}
                     className={`text-gray-Shades-Headlines flex w-full min-w-[200px] flex-row items-center justify-between rounded-t-[5px] border bg-white p-[14px] focus:outline-none ${
-                        error
+                        error && !toggleCombo
                             ? 'border-high-priority'
                             : toggleCombo
                               ? 'border-purple-accent'

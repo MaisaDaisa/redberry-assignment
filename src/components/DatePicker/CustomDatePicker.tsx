@@ -4,7 +4,6 @@ import './datepicker.css'
 import 'react-datepicker/dist/react-datepicker.css'
 import InputTextDesign from '../Inputs/inputTextDesign'
 import { forwardRef } from 'react'
-import { range } from '@/utils/range'
 import { getMonth, getYear } from '@/utils/dateFuncs'
 import TitleH4Component from '../Inputs/TitleH4Component'
 
@@ -27,14 +26,10 @@ const CustomDatePicker = ({ name, control }: CustomDatePickerProps) => {
         },
     })
 
-    const ExampleCustomInput = forwardRef(({ onClick, value }: any, ref) => (
-        // <input
-        //     onClick={onClick}
-        //     type={'text'}
-        //     className={`w-full min-w-[400px] rounded-[5px] bg-white p-[14px] text-sm font-light focus:outline-none ${error ? 'border-high-priority' : 'border-gray-shade-10'} `}
-        // />
+    const ExampleCustomInput = ({ onClick, value }: any) => (
         <div onClick={onClick}>
             <InputTextDesign
+                readOnly
                 value={value}
                 type="text"
                 customStyles="border-0 p-0 indent-[6px] "
@@ -42,11 +37,9 @@ const CustomDatePicker = ({ name, control }: CustomDatePickerProps) => {
                 placeholder="DD/MM/YY"
             />
         </div>
-    ))
+    )
 
     const Today = new Date()
-
-    console.log(Today)
 
     const months = [
         'იანვარი',
@@ -120,8 +113,8 @@ const CustomDatePicker = ({ name, control }: CustomDatePickerProps) => {
                                     // disabled={prevMonthButtonDisabled}
                                 >
                                     <path
-                                        fill-rule="evenodd"
-                                        clip-rule="evenodd"
+                                        fillRule="evenodd"
+                                        clipRule="evenodd"
                                         d="M9.375 3.6413L2.08333 11.25L1.25 10.3804L10 1.25L18.75 10.3804L17.9167 11.25L10.625 3.6413V20H9.375V3.6413Z"
                                         fill="black"
                                     />
@@ -137,8 +130,8 @@ const CustomDatePicker = ({ name, control }: CustomDatePickerProps) => {
                                     // disabled={prevMonthButtonDisabled}
                                 >
                                     <path
-                                        fill-rule="evenodd"
-                                        clip-rule="evenodd"
+                                        fillRule="evenodd"
+                                        clipRule="evenodd"
                                         d="M9.375 3.6413L2.08333 11.25L1.25 10.3804L10 1.25L18.75 10.3804L17.9167 11.25L10.625 3.6413V20H9.375V3.6413Z"
                                         fill="black"
                                     />

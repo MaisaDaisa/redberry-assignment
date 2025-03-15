@@ -5,6 +5,7 @@ import { DevTool } from '@hookform/devtools'
 import DropDown from '@/components/DropDown/DropDown'
 import CustomDatePicker from '@/components/DatePicker/CustomDatePicker'
 import DropDownWrapper from '@/components/DropDown/DropDownWrapper'
+import SolidButton from '@/components/Buttons/SolidButton'
 
 type FormFields = {
     title: string
@@ -69,7 +70,13 @@ const CreateTaskPage = () => {
                 input... IDK why */}
                 <DropDownWrapper control={control} test={test} />
                 <CustomDatePicker name="date" control={control} />
-                <div className="col-span-2 mt-[150px]"></div>
+                <div className="col-span-2 mt-[150px] flex justify-end">
+                    <SolidButton
+                        text="დავალების შექმნა"
+                        onClick={() => onSubmit}
+                        type="submit"
+                    />
+                </div>
             </form>
             <DevTool control={control} />{' '}
         </HeaderWrapper>
