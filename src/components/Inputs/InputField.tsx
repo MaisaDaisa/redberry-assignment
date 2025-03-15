@@ -1,6 +1,7 @@
 import { Control, useController } from 'react-hook-form'
 import TitleH4Component from './TitleH4Component'
 import InputErrorMessage, { InputErrorMessagesTypes } from './InputErrorMessage'
+import InputTextDesign from './inputTextDesign'
 
 type InputFieldProps = {
     control: Control<any>
@@ -8,7 +9,6 @@ type InputFieldProps = {
     title: string
     required?: boolean
     placeholder?: string
-    customStyles?: string
     minNum?: number
     minMessage?: string
     maxNum?: number
@@ -27,7 +27,6 @@ const InputField = ({
     maxNum = 255,
     maxMessage = 'მაქსიმუმ 255 სიმბოლო',
     placeholder = '',
-    customStyles = '',
 }: InputFieldProps) => {
     const {
         field,
@@ -58,21 +57,12 @@ const InputField = ({
 
     return (
         <TitleH4Component title={title} required={required}>
-            {type === 'text' ? (
-                <input
-                    {...field}
-                    type="text"
-                    placeholder={placeholder}
-                    className={`w-full min-w-[400px] rounded-[5px] border bg-white p-[14px] text-sm font-light focus:outline-none ${error ? 'border-high-priority' : 'border-gray-shade-10'} ${customStyles}`}
-                />
-            ) : (
-                <textarea
-                    {...field}
-                    placeholder={placeholder}
-                    className={`h-[105px] w-full min-w-[400px] resize-none rounded-[5px] border bg-white p-[14px] text-sm font-light focus:outline-none ${error ? 'border-high-priority' : 'border-gray-shade-10'} ${customStyles}`}
-                />
-            )}
-
+            <InputTextDesign
+                error={error}
+                field={field}
+                placeholder={placeholder}
+                type={type}
+            />
             <div className="mt-[6px] flex flex-col items-start gap-[2px]">
                 <InputErrorMessage
                     validationType={

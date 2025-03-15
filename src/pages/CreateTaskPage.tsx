@@ -69,6 +69,7 @@ const CreateTaskPage = () => {
                 input... IDK why */}
                 <DropDownWrapper control={control} test={test} />
                 <CustomDatePicker name="date" control={control} />
+                <div className="col-span-2 mt-[150px]"></div>
             </form>
             <DevTool control={control} />{' '}
         </HeaderWrapper>
