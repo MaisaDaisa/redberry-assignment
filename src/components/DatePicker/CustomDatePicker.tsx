@@ -1,36 +1,32 @@
-import { error } from 'console'
-import React, { useState } from 'react'
 import DatePicker from 'react-datepicker'
-import { Controller, useFormContext } from 'react-hook-form'
+import { Control, useController } from 'react-hook-form'
 import 'react-datepicker/dist/react-datepicker.css'
 
 type CustomDatePickerProps = {
     name: string
-    placeHolder: string
+    control: Control<any>
 }
 
-const CustomDatePicker = ({ name, placeHolder }: CustomDatePickerProps) => {
+const CustomDatePicker = ({ name, control }: CustomDatePickerProps) => {
     const {
+        field: { value, onChange },
+        // fieldState: { error },
+    } = useController({
+        name,
         control,
-        // formState: { errors, dirtyFields },
-    } = useFormContext()
+        rules: {
+            required: 'Date is required',
+            validate: (date) =>
+                date >= new Date() || 'Cannot select past dates',
+        },
+    })
 
-    const [startDate, setStartDate] = useState<Date | null>(new Date())
     return (
-        <div>
-            <Controller
-                control={control}
-                name={name}
-                rules={{
-                    required: 'This field is required',
-                }}
-                render={({ field }) => (
-                    <DatePicker
-                        name={name}
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date as Date | null)}
-                    />
-                )}
+        <div className="flex flex-col">
+            <DatePicker
+                selected={value}
+                onChange={onChange}
+                className="rounded border p-2"
             />
         </div>
     )

@@ -1,5 +1,5 @@
-import React, { useState, JSX } from 'react'
-import { useFormContext } from 'react-hook-form'
+import { useState, JSX } from 'react'
+import { Control, useController } from 'react-hook-form'
 import TitleH4Component from '../Inputs/TitleH4Component'
 
 type DropDownProps = {
@@ -9,9 +9,11 @@ type DropDownProps = {
     items: { id: string | number; name: string }[]
     required?: boolean
     placeholder?: string
+    control: Control<any>
 }
 
 const DropDown = ({
+    control,
     title,
     required,
     name,
@@ -26,19 +28,23 @@ const DropDown = ({
     } | null>(null)
 
     const {
-        register,
-        setValue,
-        formState: { errors },
-    } = useFormContext()
-
-    const error = errors?.[name]
+        field,
+        fieldState: { error },
+    } = useController({
+        name,
+        control,
+        rules: {
+            required: true,
+        },
+    })
 
     const handleSelectedItem = (item: {
         id: string | number
         name: string
     }) => {
         setSelected(item)
-        setValue(name, item.id, { shouldValidate: true })
+        // setValue(name, item.id, { shouldValidate: true })
+        field.onChange(item)
         setToggleCombo(false)
     }
 
@@ -98,18 +104,9 @@ const DropDown = ({
             </div>
 
             {/* Hidden input to store the selected value in React Hook Form */}
-            <input
-                type="hidden"
-                {...register(name, { required })}
-                value={selected?.id || ''}
-            />
+            <input type="hidden" {...field} />
 
             {/* Display validation message */}
-            {error && (
-                <p className="mt-1 text-sm text-red-500">
-                    {error.message as string}
-                </p>
-            )}
         </TitleH4Component>
     )
 }

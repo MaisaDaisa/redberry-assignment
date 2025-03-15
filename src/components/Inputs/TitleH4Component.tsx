@@ -1,4 +1,4 @@
-import { ReactNode, memo } from 'react'
+import { ReactNode } from 'react'
 
 interface TitleH4ComponentProps {
     title: string

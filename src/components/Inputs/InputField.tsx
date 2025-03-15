@@ -1,8 +1,9 @@
-import { useFormContext } from 'react-hook-form'
+import { Control, useController } from 'react-hook-form'
 import TitleH4Component from './TitleH4Component'
 import InputErrorMessage, { InputErrorMessagesTypes } from './InputErrorMessage'
 
 type InputFieldProps = {
+    control: Control<any>
     name: string
     title: string
     required?: boolean
@@ -16,7 +17,8 @@ type InputFieldProps = {
 }
 
 const InputField = ({
-    type,
+    control,
+    type = 'text',
     name,
     title,
     required = false,
@@ -28,54 +30,44 @@ const InputField = ({
     customStyles = '',
 }: InputFieldProps) => {
     const {
-        register,
-        formState: { errors, dirtyFields },
-    } = useFormContext()
+        field,
+        fieldState: { error, isDirty },
+    } = useController({
+        name,
+        control,
+        rules: {
+            required: required ? 'This field is required' : false, // ✅ Fix required
+            pattern: {
+                value: /^[A-Za-z\u10A0-\u10FF]+$/,
+                message: 'Only letters are allowed.',
+            },
+            minLength: {
+                value: minNum,
+                message: minMessage,
+            },
+            maxLength: {
+                value: maxNum,
+                message: maxMessage,
+            },
+        },
+    })
 
-    const error = errors?.[name]
+    console.log(field)
 
-    console.log(dirtyFields)
+    console.log(error?.type)
 
     return (
         <TitleH4Component title={title} required={required}>
             {type === 'text' ? (
                 <input
-                    {...register(name, {
-                        required: 'This is required.',
-                        pattern: {
-                            value: /^[A-Za-z\u10A0-\u10FF]+$/,
-                            message: 'MO',
-                        },
-                        minLength: {
-                            value: minNum,
-                            message: minMessage,
-                        },
-                        maxLength: {
-                            value: maxNum,
-                            message: maxMessage,
-                        },
-                    })}
+                    {...field}
                     type="text"
                     placeholder={placeholder}
                     className={`w-full min-w-[400px] rounded-[5px] border bg-white p-[14px] text-sm font-light focus:outline-none ${error ? 'border-high-priority' : 'border-gray-shade-10'} ${customStyles}`}
                 />
             ) : (
                 <textarea
-                    {...register(name, {
-                        required: 'This is required.',
-                        pattern: {
-                            value: /^[A-Za-z\u10A0-\u10FF]+$/,
-                            message: 'MO',
-                        },
-                        minLength: {
-                            value: minNum,
-                            message: minMessage,
-                        },
-                        maxLength: {
-                            value: maxNum,
-                            message: maxMessage,
-                        },
-                    })}
+                    {...field}
                     placeholder={placeholder}
                     className={`h-[105px] w-full min-w-[400px] resize-none rounded-[5px] border bg-white p-[14px] text-sm font-light focus:outline-none ${error ? 'border-high-priority' : 'border-gray-shade-10'} ${customStyles}`}
                 />
@@ -84,7 +76,7 @@ const InputField = ({
             <div className="mt-[6px] flex flex-col items-start gap-[2px]">
                 <InputErrorMessage
                     validationType={
-                        !dirtyFields[name]
+                        !isDirty
                             ? InputErrorMessagesTypes.default
                             : error?.type === 'minLength' ||
                                 error?.type === 'required'
@@ -96,7 +88,7 @@ const InputField = ({
 
                 <InputErrorMessage
                     validationType={
-                        !dirtyFields[name]
+                        !isDirty
                             ? InputErrorMessagesTypes.default
                             : error?.type === 'maxLength'
                               ? InputErrorMessagesTypes.invalid
