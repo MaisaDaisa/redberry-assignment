@@ -47,8 +47,12 @@ const DropDown = ({
             <div className="relative w-full text-sm font-light">
                 <div
                     onClick={() => setToggleCombo(!toggleCombo)}
-                    className={`text-gray-Shades-Headlines flex w-full min-w-[400px] flex-row items-center justify-between rounded-t-[5px] border bg-white p-[14px] focus:outline-none ${
-                        error ? 'border-high-priority' : 'border-purple-accent'
+                    className={`text-gray-Shades-Headlines flex w-full min-w-[200px] flex-row items-center justify-between rounded-t-[5px] border bg-white p-[14px] focus:outline-none ${
+                        error
+                            ? 'border-high-priority'
+                            : toggleCombo
+                              ? 'border-purple-accent'
+                              : 'border-gray-shade-10'
                     } ${!toggleCombo ? 'rounded-b-md' : 'border-b-0'}`}
                 >
                     {selected ? (
@@ -76,7 +80,9 @@ const DropDown = ({
                     </svg>
                 </div>
                 {toggleCombo && (
-                    <ul className="border-purple-accent absolute z-10 w-full rounded-b-[5px] border border-t-0 bg-white">
+                    <ul
+                        className={`absolute z-10 w-full rounded-b-[5px] border border-t-0 bg-white ${toggleCombo ? 'border-purple-accent' : 'border-gray-shade-10'}`}
+                    >
                         {additionalComponent}
                         {items.map((item) => (
                             <li

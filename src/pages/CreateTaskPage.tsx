@@ -3,6 +3,7 @@ import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
 import HeaderWrapper from '@/layouts/HeaderWrapper'
 import { DevTool } from '@hookform/devtools'
 import DropDown from '@/components/DropDown/DropDown'
+import CustomDatePicker from '@/components/DatePicker/CustomDatePicker'
 
 type FormFields = {
     title: string
@@ -11,8 +12,8 @@ type FormFields = {
 
 const CreateTaskPage = () => {
     const methods = useForm<FormFields>({
-        mode: 'onChange',
-        delayError: 500,
+        // mode: 'onChange',
+        // delayError: 500,
     })
 
     const { control, handleSubmit } = methods
@@ -60,10 +61,10 @@ const CreateTaskPage = () => {
                             { id: 3, name: 'dada' },
                         ]}
                     />
-                    <div className="flex flex-row justify-between">
+                    <div className="grid grid-cols-2 gap-8">
                         <DropDown
-                            name="employee"
-                            title="პასუხისმგებელი თანამშრომელი"
+                            name="priority"
+                            title="პრიორიტეტი"
                             required
                             items={[
                                 { id: 1, name: 'gela' },
@@ -72,8 +73,8 @@ const CreateTaskPage = () => {
                             ]}
                         />
                         <DropDown
-                            name="employee"
-                            title="პასუხისმგებელი თანამშრომელი"
+                            name="status"
+                            title="სტატუსი"
                             required
                             items={[
                                 { id: 1, name: 'gela' },
@@ -82,6 +83,7 @@ const CreateTaskPage = () => {
                             ]}
                         />
                     </div>
+                    <CustomDatePicker name="date" placeHolder={'smth'} />
                 </form>
                 <DevTool control={control} />{' '}
             </HeaderWrapper>
