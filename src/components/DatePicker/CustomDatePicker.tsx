@@ -1,11 +1,11 @@
 import DatePicker from 'react-datepicker'
 import { Control, useController } from 'react-hook-form'
-import './datepicker.css'
 import 'react-datepicker/dist/react-datepicker.css'
-import InputTextDesign from '../Inputs/inputTextDesign'
-import { forwardRef } from 'react'
+import InputTextDesign from '@/components/Inputs/InputTextDesign'
 import { getMonth, getYear } from '@/utils/dateFuncs'
 import TitleH4Component from '../Inputs/TitleH4Component'
+import './datepicker.css'
+import { useRef } from 'react'
 
 type CustomDatePickerProps = {
     name: string
@@ -26,6 +26,8 @@ const CustomDatePicker = ({ name, control }: CustomDatePickerProps) => {
         },
     })
 
+    console.log(error)
+
     const ExampleCustomInput = ({ onClick, value }: any) => (
         <div onClick={onClick}>
             <InputTextDesign
@@ -33,11 +35,19 @@ const CustomDatePicker = ({ name, control }: CustomDatePickerProps) => {
                 value={value}
                 type="text"
                 customStyles="border-0 p-0 indent-[6px] "
-                error={error}
+                error={!!error}
                 placeholder="DD/MM/YY"
             />
         </div>
     )
+
+    const datePickerRef = useRef<DatePicker | null>(null)
+
+    const handleClickOutside = () => {
+        if (datePickerRef.current) {
+            datePickerRef.current.setOpen(false) // Close date picker
+        }
+    }
 
     const Today = new Date()
 
@@ -79,14 +89,16 @@ const CustomDatePicker = ({ name, control }: CustomDatePickerProps) => {
     return (
         <TitleH4Component title="დედლაინი">
             <DatePicker
-                showPopperArrow={false}
-                popperPlacement="bottom"
-                formatWeekDay={(date) => {
-                    // @ts-ignore - მაინ არ იძლევა სვას
-                    return Weeks[date]
-                }}
-                startDate={Today}
-                minDate={Today}
+                //ref
+                ref={datePickerRef}
+                // Classes
+                calendarClassName="datePicker-calendar-custom"
+                calendarIconClassName="mr-[6px] cursor-pointer"
+                wrapperClassName={
+                    !!error ? 'datePickerError' : 'datePickCustom'
+                }
+                className="flex items-center justify-center border border-amber-300"
+                // Custom Elements
                 renderCustomHeader={({
                     date,
                     // changeYear,
@@ -98,7 +110,7 @@ const CustomDatePicker = ({ name, control }: CustomDatePickerProps) => {
                 }) => {
                     console.log(getMonth(date))
                     return (
-                        <div className="mx-4 my-[18px] flex items-center justify-between">
+                        <div className="mb-6 flex items-center justify-between">
                             <p className="text-[13px] font-bold text-black">
                                 {months[getMonth(date) - 1]} {getYear(date)}
                             </p>
@@ -140,13 +152,6 @@ const CustomDatePicker = ({ name, control }: CustomDatePickerProps) => {
                         </div>
                     )
                 }}
-                showIcon
-                toggleCalendarOnIconClick
-                calendarIconClassName="mr-[6px] cursor-pointer"
-                dateFormat="dd.MM.yyyy"
-                wrapperClassName="datePickCustom"
-                calendarClassName="p-[6px]"
-                customInput={<ExampleCustomInput />}
                 icon={
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -161,15 +166,39 @@ const CustomDatePicker = ({ name, control }: CustomDatePickerProps) => {
                         />
                     </svg>
                 }
-                selected={value}
-                onChange={onChange}
-                className="flex items-center justify-center border border-amber-300"
                 children={
                     <div className="text-purple-accent flex justify-between px-4 text-[13px]">
-                        <p>Cancel</p>
-                        <p>OK</p>
+                        <p
+                            className="cursor-pointer"
+                            onClick={handleClickOutside}
+                        >
+                            Cancel
+                        </p>
+                        <p
+                            className="cursor-pointer"
+                            onClick={handleClickOutside}
+                        >
+                            OK
+                        </p>
                     </div>
                 }
+                customInput={<ExampleCustomInput />}
+                // Toggles
+                showIcon
+                showPopperArrow={false}
+                toggleCalendarOnIconClick
+                //Position
+                popperPlacement="bottom"
+                // Date Manipulation
+                formatWeekDay={(date) => {
+                    // @ts-ignore - მაინ არ იძლევა სვას
+                    return Weeks[date]
+                }}
+                startDate={Today}
+                minDate={Today}
+                dateFormat="dd.MM.yyyy"
+                selected={value}
+                onChange={onChange}
             />
         </TitleH4Component>
     )

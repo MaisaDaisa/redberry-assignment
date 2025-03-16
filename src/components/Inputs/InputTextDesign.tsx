@@ -1,10 +1,9 @@
-import { ControllerRenderProps, FieldError } from 'react-hook-form'
-import { InputHTMLAttributes, TextareaHTMLAttributes } from 'react'
+import { ControllerRenderProps } from 'react-hook-form'
 
 type inputTextDesignProps = {
     placeholder?: string
     field?: ControllerRenderProps<any, string>
-    error?: FieldError | undefined
+    error?: boolean
     type: 'textarea' | 'text'
     customStyles?: string
     value?: string
@@ -28,14 +27,14 @@ const InputTextDesign = ({
                     value={value}
                     {...field}
                     placeholder={placeholder}
-                    className={`w-full min-w-[400px] rounded-[5px] border bg-white p-[14px] text-sm font-light focus:outline-none ${error ? 'border-high-priority' : 'border-gray-shade-10'} ${customStyles}`}
+                    className={`w-full rounded-[5px] border bg-white p-[14px] text-sm font-light focus:outline-none ${error ? 'border-high-priority' : 'border-gray-shade-10'} ${customStyles}`}
                 />
             ) : (
                 <textarea
                     value={value}
                     {...field}
                     placeholder={placeholder}
-                    className={`w-full min-w-[400px] rounded-[5px] border bg-white p-[14px] text-sm font-light focus:outline-none ${error ? 'border-high-priority' : 'border-gray-shade-10'} h-[105px] resize-none ${customStyles}`}
+                    className={`w-full rounded-[5px] border bg-white p-[14px] text-sm font-light focus:outline-none ${error ? 'border-high-priority' : 'border-gray-shade-10'} h-[105px] resize-none ${customStyles}`}
                 />
             )}
         </>

@@ -69,7 +69,9 @@ const CreateTaskPage = () => {
                 rerendering of two dropDown inputs on change of every other
                 input... IDK why */}
                 <DropDownWrapper control={control} test={test} />
-                <CustomDatePicker name="date" control={control} />
+                <div className="w-[330px]">
+                    <CustomDatePicker name="date" control={control} />
+                </div>
                 <div className="col-span-2 mt-[150px] flex justify-end">
                     <SolidButton
                         text="დავალების შექმნა"

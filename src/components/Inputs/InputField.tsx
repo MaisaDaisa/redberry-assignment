@@ -1,7 +1,7 @@
 import { Control, useController } from 'react-hook-form'
 import TitleH4Component from './TitleH4Component'
 import InputErrorMessage, { InputErrorMessagesTypes } from './InputErrorMessage'
-import InputTextDesign from './inputTextDesign'
+import InputTextDesign from '@/components/Inputs/InputTextDesign'
 
 type InputFieldProps = {
     control: Control<any>
@@ -51,14 +51,10 @@ const InputField = ({
         },
     })
 
-    console.log(field)
-
-    console.log(error?.type)
-
     return (
         <TitleH4Component title={title} required={required}>
             <InputTextDesign
-                error={error}
+                error={!!error}
                 field={field}
                 placeholder={placeholder}
                 type={type}
