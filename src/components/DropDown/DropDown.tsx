@@ -1,6 +1,6 @@
 import { useState, JSX } from 'react'
 import { Control, useController } from 'react-hook-form'
-import TitleH4Component from '../Inputs/TitleH4Component'
+import TitleH4Component from '../../layouts/TitleH4Component'
 
 type DropDownProps = {
     additionalComponent?: JSX.Element

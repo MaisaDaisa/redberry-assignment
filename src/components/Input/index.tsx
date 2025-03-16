@@ -1,7 +1,7 @@
 import { Control, useController } from 'react-hook-form'
-import TitleH4Component from './TitleH4Component'
+import TitleH4Component from '../../layouts/TitleH4Component'
 import InputErrorMessage, { InputErrorMessagesTypes } from './InputErrorMessage'
-import InputTextDesign from '@/components/Inputs/InputTextDesign'
+import InputTextDesign from './InputTextDesign'
 
 type InputFieldProps = {
     control: Control<any>
@@ -13,7 +13,8 @@ type InputFieldProps = {
     minMessage?: string
     maxNum?: number
     maxMessage?: string
-    type: 'textarea' | 'text'
+    type?: 'textarea' | 'text'
+    h4CustomClasses?: string
 }
 
 const InputField = ({
@@ -27,6 +28,7 @@ const InputField = ({
     maxNum = 255,
     maxMessage = 'მაქსიმუმ 255 სიმბოლო',
     placeholder = '',
+    h4CustomClasses = '',
 }: InputFieldProps) => {
     const {
         field,
@@ -52,7 +54,11 @@ const InputField = ({
     })
 
     return (
-        <TitleH4Component title={title} required={required}>
+        <TitleH4Component
+            title={title}
+            required={required}
+            h4CustomClasses={h4CustomClasses}
+        >
             <InputTextDesign
                 error={!!error}
                 field={field}

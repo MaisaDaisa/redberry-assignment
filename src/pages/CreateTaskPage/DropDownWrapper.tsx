@@ -1,4 +1,4 @@
-import DropDown from './DropDown'
+import DropDown from '@/components/DropDown/DropDown'
 import { Control } from 'react-hook-form'
 
 type DropDownWrapperProps = {

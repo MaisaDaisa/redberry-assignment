@@ -3,32 +3,41 @@ import MainSection from './layouts/MainSection'
 import NavBar from './layouts/NavBar'
 import HollowButton from '@/components/Buttons/HollowButton'
 import SolidButton from '@/components/Buttons/SolidButton'
-import { BrowserRouter, Route, Routes } from 'react-router'
+import { Route, Routes, useNavigate } from 'react-router'
 import IndexPage from './pages/IndexPage'
 import CreateTaskPage from './pages/CreateTaskPage'
+import FullScreenBlur from './layouts/FullScreenBlur'
+import { useState } from 'react'
+import FullScreenWrapper from './layouts/FullScreenWrapper'
 
 function App() {
+    const [blurActive, setIsBlurActive] = useState(false)
+    const navigate = useNavigate()
     return (
         <>
             <NavBar>
-                <HollowButton text="თანამშრომლის შექმნა" onClick={() => {}} />
+                <HollowButton
+                    text="თანამშრომლის შექმნა"
+                    onClick={() => setIsBlurActive(true)}
+                />
                 <SolidButton
                     text="შექმენი ახალი დავალება"
                     displayPlus
-                    onClick={() => {}}
+                    onClick={() => navigate('/create-task')}
                 />
             </NavBar>
             <MainSection>
-                <BrowserRouter>
-                    <Routes>
-                        <Route path="/" element={<IndexPage />} />
-                        <Route
-                            path="/create-task"
-                            element={<CreateTaskPage />}
-                        />
-                    </Routes>
-                </BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<IndexPage />} />
+                    <Route path="/create-task" element={<CreateTaskPage />} />
+                </Routes>
             </MainSection>
+            <FullScreenBlur
+                isActive={blurActive}
+                setActiveState={setIsBlurActive}
+            >
+                <FullScreenWrapper />
+            </FullScreenBlur>
         </>
     )
 }

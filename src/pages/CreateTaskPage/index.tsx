@@ -1,10 +1,10 @@
-import InputField from '@/components/Inputs/InputField'
+import InputField from '@/components/Input'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import HeaderWrapper from '@/layouts/HeaderWrapper'
-import { DevTool } from '@hookform/devtools'
+// import { DevTool } from '@hookform/devtools'
 import DropDown from '@/components/DropDown/DropDown'
 import CustomDatePicker from '@/components/DatePicker/CustomDatePicker'
-import DropDownWrapper from '@/components/DropDown/DropDownWrapper'
+import DropDownWrapper from './DropDownWrapper'
 import SolidButton from '@/components/Buttons/SolidButton'
 
 type FormFields = {
@@ -80,7 +80,6 @@ const CreateTaskPage = () => {
                     />
                 </div>
             </form>
-            <DevTool control={control} />{' '}
         </HeaderWrapper>
     )
 }

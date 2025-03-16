@@ -1,9 +1,9 @@
 import DatePicker from 'react-datepicker'
 import { Control, useController } from 'react-hook-form'
 import 'react-datepicker/dist/react-datepicker.css'
-import InputTextDesign from '@/components/Inputs/InputTextDesign'
+import InputTextDesign from '@/components/Input/InputTextDesign'
 import { getMonth, getYear } from '@/utils/dateFuncs'
-import TitleH4Component from '../Inputs/TitleH4Component'
+import TitleH4Component from '../../layouts/TitleH4Component'
 import './datepicker.css'
 import { useRef } from 'react'
 
@@ -25,8 +25,6 @@ const CustomDatePicker = ({ name, control }: CustomDatePickerProps) => {
                 date >= new Date() || 'Cannot select past dates',
         },
     })
-
-    console.log(error)
 
     const ExampleCustomInput = ({ onClick, value }: any) => (
         <div onClick={onClick}>
