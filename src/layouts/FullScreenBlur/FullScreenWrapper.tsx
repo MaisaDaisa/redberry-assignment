@@ -16,7 +16,11 @@ export type employeeFormInputs = {
     department: any
 }
 
-function FullScreenWrapper() {
+type FullScreenWrapperProps = {
+    toggleActive: () => void
+}
+
+function FullScreenWrapper({ toggleActive }: FullScreenWrapperProps) {
     const contextValues = useDepartmentsContext()
     const methods = useForm<employeeFormInputs>({
         defaultValues: {
@@ -48,6 +52,8 @@ function FullScreenWrapper() {
                 height="40"
                 viewBox="0 0 40 40"
                 fill="none"
+                onClick={() => toggleActive()}
+                className="cursor-pointer"
             >
                 <g clipPath="url(#clip0_504_15522)">
                     <path
@@ -107,7 +113,9 @@ function FullScreenWrapper() {
                                     items={contextValues.departments}
                                 />
                             </div>
-                            <AddEmployeeButtonWrapper />
+                            <AddEmployeeButtonWrapper
+                                toggleActive={() => toggleActive()}
+                            />
                         </form>
                     </FormProvider>
                     <DevTool control={control} />

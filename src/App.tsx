@@ -48,7 +48,9 @@ function App() {
                 isActive={blurActive}
                 setActiveState={setIsBlurActive}
             >
-                <FullScreenWrapper />
+                <FullScreenWrapper
+                    toggleActive={() => setIsBlurActive(false)}
+                />
             </FullScreenBlur>
         </mainContext.Provider>
     )
