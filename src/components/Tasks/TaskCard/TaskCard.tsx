@@ -15,7 +15,7 @@ const TaskCard = ({ statusId = 2 }: TaskCardProps) => {
             <div className="flex w-full justify-between">
                 <div className="flex gap-[10px]">
                     <TaskPriorityBordered
-                        priorityType={TaskPriorityTypes.high}
+                        prioritySchema={TaskPriorityTypes.high}
                     />
                     <DepartmentRounded
                         departmentId={3}
@@ -36,7 +36,11 @@ const TaskCard = ({ statusId = 2 }: TaskCardProps) => {
                 </p>
             </div>
             <div className="flex w-full items-center justify-between">
-                <img src="" alt="" className="h-8 w-8 rounded-full" />
+                <img
+                    src="https://picsum.photos/200/200"
+                    alt="yup"
+                    className="h-8 w-8 rounded-full"
+                />
                 <div className="flex items-center gap-1">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

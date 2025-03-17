@@ -1,12 +1,20 @@
+import { statusSchema } from '@/api/apiSchemas'
 import TasksColumn from '@/components/Tasks/TasksColumn'
 
-const TasksDisplay = () => {
+type TasksDisplayProps = {
+    statuses: statusSchema[]
+}
+
+const TasksDisplay = ({ statuses }: TasksDisplayProps) => {
     return (
         <div className="mt-6 grid grid-cols-4 gap-[52px]">
-            <TasksColumn statusId={3} />
-            <TasksColumn statusId={1} />
-            <TasksColumn />
-            <TasksColumn />
+            {statuses.map((status) => (
+                <TasksColumn
+                    statusId={status.id}
+                    title={status.name}
+                    key={'task' + status.id}
+                />
+            ))}
         </div>
     )
 }

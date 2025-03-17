@@ -24,7 +24,7 @@ const FileUploader = ({
     // State for the preview of the image
     const {
         field,
-        fieldState: { error, isDirty },
+        fieldState: { error },
     } = useController({
         name,
         control,
@@ -126,11 +126,11 @@ const FileUploader = ({
                     ref={inputRef}
                 />
                 {preview ? (
-                    <div className="relative flex flex-col items-end justify-end">
+                    <div className="relative flex h-[88px] w-[88px] flex-col items-end justify-end">
                         <img
                             src={preview as string}
                             alt="preview"
-                            className="h-[82px] w-[96px] rounded-full object-cover"
+                            className="h-[88px] w-[88px] rounded-full object-cover"
                         />
                         <div className="border-gray-shade-validation absolute flex h-6 w-6 translate-x-[3px] translate-y-[3px] cursor-pointer items-center justify-center rounded-full border-[0.3px] bg-white transition-transform hover:scale-110">
                             <img

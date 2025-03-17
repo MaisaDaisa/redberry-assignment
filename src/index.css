@@ -22,6 +22,11 @@
     }
 }
 
+.back-ground-blur {
+    fill: #0d0f10;
+    opacity: 0 1;
+}
+
 @theme {
     /* General Colors */
     --color-purple-accent: #8338ec;

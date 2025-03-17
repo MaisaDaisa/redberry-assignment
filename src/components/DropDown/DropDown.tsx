@@ -10,6 +10,7 @@ type DropDownProps = {
     required?: boolean
     placeholder?: string
     control: Control<any>
+    h4CustomClasses?: string
 }
 
 const DropDown = ({
@@ -20,6 +21,7 @@ const DropDown = ({
     additionalComponent,
     items,
     placeholder = 'Select an option',
+    h4CustomClasses = '',
 }: DropDownProps) => {
     const [toggleCombo, setToggleCombo] = useState(false)
     const [selected, setSelected] = useState<{
@@ -49,7 +51,11 @@ const DropDown = ({
     }
 
     return (
-        <TitleH4Component title={title} required={required}>
+        <TitleH4Component
+            title={title}
+            required={required}
+            h4CustomClasses={h4CustomClasses}
+        >
             <div className="relative w-full text-sm font-light">
                 <div
                     onClick={() => setToggleCombo(!toggleCombo)}

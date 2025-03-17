@@ -6,9 +6,9 @@ import SolidButton from '@/components/Buttons/SolidButton'
 import { Route, Routes, useNavigate } from 'react-router'
 import IndexPage from './pages/IndexPage'
 import CreateTaskPage from './pages/CreateTaskPage'
-import FullScreenBlur from './layouts/FullScreenBlur'
+import FullScreenBlur from './layouts/FullScreenBlur/FullScreenBlur'
 import { useState } from 'react'
-import FullScreenWrapper from './layouts/FullScreenWrapper'
+import FullScreenWrapper from './layouts/FullScreenBlur/FullScreenWrapper'
 
 function App() {
     const [blurActive, setIsBlurActive] = useState(false)

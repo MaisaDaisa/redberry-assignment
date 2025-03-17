@@ -1,9 +1,11 @@
+import { AddEmployeeButtonWrapper } from './addEmployeeButtonWrapper'
 import React from 'react'
-import HeaderWrapper from './HeaderWrapper'
+import HeaderWrapper from '../HeaderWrapper'
 import Input from '@/components/Input'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { DevTool } from '@hookform/devtools'
 import FileUploader from '@/components/FileUploader/FileUploader'
+import DropDown from '@/components/DropDown/DropDown'
 
 type employeeFormInputs = {
     firstname: string
@@ -26,7 +28,7 @@ function FullScreenWrapper() {
     const h4Styles = 'text-sm font-medium'
     return (
         <div
-            className="flex w-[813px] flex-col items-end gap-[37px] rounded-[10px] bg-white px-[50px] pt-10 pb-[60px]"
+            className="z-30 flex w-[813px] flex-col items-end gap-[37px] rounded-[10px] bg-white px-[50px] pt-10 pb-[60px] brightness-100"
             onMouseDown={(e) => e.stopPropagation()}
         >
             <svg
@@ -53,35 +55,46 @@ function FullScreenWrapper() {
                     text={'თანამშრომლის დამატება'}
                     fontClassNames="text-[32px] font-medium"
                 >
-                    <form
-                        onSubmit={handleSubmit(onSubmit)}
-                        className="grid w-full grid-cols-2 gap-[45px]"
-                    >
-                        <Input
-                            h4CustomClasses={h4Styles}
-                            control={control}
-                            name="firstname"
-                            title="სახელი"
-                            required
-                            type="text"
-                        />
-                        <Input
-                            h4CustomClasses={h4Styles}
-                            control={control}
-                            name="lastname"
-                            title="გვარი"
-                            required
-                            type="text"
-                        />
-                        <FileUploader
-                            control={control}
-                            h4CustomClasses={h4Styles}
-                            customStyles="col-span-2"
-                            name="avatar"
-                            required
-                            title="ავატარი"
-                        />
-                        ~
+                    <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+                        <div className="grid w-full grid-cols-2 gap-[45px]">
+                            <Input
+                                h4CustomClasses={h4Styles}
+                                control={control}
+                                name="firstname"
+                                title="სახელი"
+                                required
+                                type="text"
+                            />
+                            <Input
+                                h4CustomClasses={h4Styles}
+                                control={control}
+                                name="lastname"
+                                title="გვარი"
+                                required
+                                type="text"
+                            />
+                            <FileUploader
+                                control={control}
+                                h4CustomClasses={h4Styles}
+                                customStyles="col-span-2"
+                                name="avatar"
+                                required
+                                title="ავატარი"
+                            />
+                            <DropDown
+                                name="department"
+                                control={control}
+                                required
+                                title="დეპარტამენტი"
+                                h4CustomClasses={h4Styles}
+                                items={[
+                                    { id: 1, name: 'gela' },
+                                    { id: 2, name: 'dad' },
+                                    { id: 3, name: 'dada' },
+                                ]}
+                            />
+                        </div>
+                        <AddEmployeeButtonWrapper />
                     </form>
                     <DevTool control={control} />
                 </HeaderWrapper>

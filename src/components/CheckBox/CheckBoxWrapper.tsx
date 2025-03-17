@@ -1,19 +1,23 @@
-interface CheckBoxWithTextProps {
-    isChecked?: boolean
-    text: string
+import React from 'react'
+
+export type CheckBoxWrapperProps = {
+    isChecked: boolean
     onClickHandler?: () => void
 }
-const CheckBoxWithText = ({
-    isChecked = false,
-    text,
+
+const CheckBoxWrapper = ({
+    isChecked,
+    children,
     onClickHandler,
-}: CheckBoxWithTextProps) => {
+}: CheckBoxWrapperProps & {
+    children: React.ReactNode
+}) => {
     return (
         <div
             className="flex flex-row items-center gap-[15px]"
             onClick={onClickHandler}
         >
-            <div className="border-y-purple-accent flex h-[22px] w-[22px] cursor-pointer items-center justify-center rounded-md border-[1.5px] border-solid">
+            <div className="border-purple-accent flex h-[22px] w-[22px] cursor-pointer items-center justify-center rounded-md border-[1.5px] border-solid">
                 {isChecked && (
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -25,16 +29,16 @@ const CheckBoxWithText = ({
                         <path
                             d="M12.3333 1.33337L4.99996 8.66671L1.66663 5.33337"
                             stroke="#8338EC"
-                            stroke-width="1.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                         />
                     </svg>
                 )}
             </div>
-            <p className="">{text}</p>
+            {children}
         </div>
     )
 }
 
-export default CheckBoxWithText
+export default CheckBoxWrapper

@@ -27,21 +27,21 @@ export const priorityStyles = {
 }
 
 interface TaskPriorityBorderedProps {
-    priorityType?: TaskPriorityTypes
+    prioritySchema?: TaskPriorityTypes
     priorityText?: string
 }
 
 const TaskPriorityBordered = ({
-    priorityType = TaskPriorityTypes.high,
+    prioritySchema = TaskPriorityTypes.high,
     priorityText = 'TEST',
 }: TaskPriorityBorderedProps) => {
-    const { borderColor, textColor, image } = priorityStyles[priorityType]
+    const { borderColor, textColor, image } = priorityStyles[prioritySchema]
 
     return (
         <div
             className={`flex items-center gap-1 rounded-sm border-[0.5px] p-1 ${borderColor}`}
         >
-            <img src={image} alt={`${priorityType} priority icon`} />
+            <img src={image} alt={`${prioritySchema} priority icon`} />
             <p className={`text-xs font-medium select-none ${textColor}`}>
                 {priorityText}
             </p>
