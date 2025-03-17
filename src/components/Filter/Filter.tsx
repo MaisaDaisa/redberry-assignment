@@ -30,6 +30,7 @@ const Filter = ({ priorities }: FilterProps) => {
             setEmployees(await getAllEmployees())
             setDepartments(await getAllDepartments())
 
+            // for testing without api
             // setEmployees(
             //     await delayedInvoke(() => {
             //         return testEmployees
