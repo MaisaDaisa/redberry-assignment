@@ -1,33 +1,30 @@
 import { departmentSchema, prioritySchema } from '@/api/apiSchemas'
 import CheckBoxWithText from '@/components/CheckBox/CheckBoxWithText'
-import React from 'react'
-import { UseFormSetValue } from 'react-hook-form'
+import { MultiAcceptFilterArrays } from './FilterDepPriority'
 
 type MultiCheckboxProps = {
-    filters: departmentSchema[] | prioritySchema[]
-    selectedValue: departmentSchema[] | prioritySchema[]
-    setValue: UseFormSetValue<any>
-    nameProp: string
+    filters: MultiAcceptFilterArrays
+    selectedValue: MultiAcceptFilterArrays
+    setValue: (value: MultiAcceptFilterArrays) => any
 }
 
 const MultiCheckbox = ({
     filters,
     selectedValue,
     setValue,
-    nameProp,
 }: MultiCheckboxProps) => {
     const handleCheck = (valueToCheck: departmentSchema | prioritySchema) => {
         if (selectedValue.some((value) => value.id === valueToCheck.id)) {
             console.log('Removing:', valueToCheck)
             setValue(
-                nameProp,
                 selectedValue.filter((item) => item.id !== valueToCheck.id)
             )
         } else {
             console.log('Adding:', valueToCheck)
-            setValue(nameProp, [...selectedValue, valueToCheck])
+            setValue([...selectedValue, valueToCheck])
         }
     }
+
     return (
         <>
             {filters.map((filter) => (

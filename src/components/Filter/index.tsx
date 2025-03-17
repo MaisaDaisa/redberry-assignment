@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react'
-import FilterDropDownButtons from './FilterDropDownButtons'
-import FilterDropDownWrapper from './FilterDropDownSections/FilterDropDownWrapper'
+import FilterDropDownButtons from './FilterDropDownButton/FilterDropDownButtons'
 import { Controller, useFormContext } from 'react-hook-form'
 import { DevTool } from '@hookform/devtools'
-import MultiCheckbox from './FilterDropDownSections/MultiCheckbox'
 import { filterValues } from '@/pages/IndexPage'
-import FilterEmployees from './FilterDropDownSections/FilterEmployees'
+import FilterEmployees from './FilterDropDownButton/FilterEmployees'
 import {
     departmentSchema,
     employeeSchema,
     prioritySchema,
 } from '@/api/apiSchemas'
 import { getAllDepartments, getAllEmployees } from '@/api/getRequest'
+import FilterDepPriority from './FilterDropDownButton/FilterDepPriority'
 
 type FilterProps = {
     onConfirm?: () => void
@@ -56,22 +55,15 @@ const Filter = ({ priorities }: FilterProps) => {
                 name="departments"
                 control={control}
                 render={({ field }) => (
-                    <FilterDropDownButtons
-                        filterText="დეპარტამენტი"
+                    <FilterDepPriority
+                        field={field}
+                        handleSetActiveFilter={() => handleSetActiveFilter(1)}
                         isActive={activeFilters === 1}
-                        handleSetActive={() => handleSetActiveFilter(1)}
-                    >
-                        {departments.length > 0 && (
-                            <FilterDropDownWrapper>
-                                <MultiCheckbox
-                                    setValue={setValue}
-                                    filters={departments}
-                                    nameProp={field.name}
-                                    selectedValue={field.value}
-                                />
-                            </FilterDropDownWrapper>
-                        )}
-                    </FilterDropDownButtons>
+                        initialData={departments}
+                        setValue={setValue}
+                        title="დეპარტამენტი"
+                        key={'depFilter'}
+                    />
                 )}
             />
 
@@ -80,22 +72,15 @@ const Filter = ({ priorities }: FilterProps) => {
                 name="priorities"
                 control={control}
                 render={({ field }) => (
-                    <FilterDropDownButtons
-                        filterText="პრიორიტეტი"
+                    <FilterDepPriority
+                        title="პრიორიტეტი"
                         isActive={activeFilters === 2}
-                        handleSetActive={() => handleSetActiveFilter(2)}
-                    >
-                        {priorities.length > 0 && (
-                            <FilterDropDownWrapper>
-                                <MultiCheckbox
-                                    setValue={setValue}
-                                    filters={priorities}
-                                    nameProp={field.name}
-                                    selectedValue={field.value}
-                                />
-                            </FilterDropDownWrapper>
-                        )}
-                    </FilterDropDownButtons>
+                        handleSetActiveFilter={() => handleSetActiveFilter(2)}
+                        field={field}
+                        initialData={priorities}
+                        setValue={setValue}
+                        key={'priFilter'}
+                    />
                 )}
             />
 
@@ -108,16 +93,15 @@ const Filter = ({ priorities }: FilterProps) => {
                         filterText="თანამშრომელი"
                         isActive={activeFilters === 3}
                         handleSetActive={() => handleSetActiveFilter(3)}
+                        // onSubmit={()=>{handleSubmit()}}
                     >
                         {employees.length > 0 && (
-                            <FilterDropDownWrapper>
-                                <FilterEmployees
-                                    selectedValue={field.value}
-                                    nameProp={field.name}
-                                    filters={employees}
-                                    setValue={setValue}
-                                />
-                            </FilterDropDownWrapper>
+                            <FilterEmployees
+                                selectedValue={field.value}
+                                nameProp={field.name}
+                                filters={employees}
+                                setValue={setValue}
+                            />
                         )}
                     </FilterDropDownButtons>
                 )}

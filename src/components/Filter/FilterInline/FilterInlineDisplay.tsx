@@ -1,13 +1,11 @@
 import { useFormContext } from 'react-hook-form'
-import FilterDisplayText from './FilterDisplayText'
 import { filterValues } from '@/pages/IndexPage'
+import FilterDisplayText from './FilterDisplayText'
 
-// Define the expected form type
-const FilterInlineDisplay = () => {
+const FilterInlineDisplay = ({}) => {
     const { watch, setValue } = useFormContext<filterValues>()
 
-    // Watch for changes in form fields
-    const formValues = watch() ?? { departments: [], priorities: [] }
+    const formValues = watch()
 
     const handleRemoveFromArray = (
         id: number,
@@ -23,7 +21,7 @@ const FilterInlineDisplay = () => {
 
     return (
         <div className="mt-[25px] inline-flex h-[30px] w-full justify-start gap-4">
-            {formValues.departments.length > 0 &&
+            {formValues?.departments.length > 0 &&
                 formValues.departments.map((department) => (
                     <FilterDisplayText
                         key={department.id}
@@ -33,7 +31,7 @@ const FilterInlineDisplay = () => {
                         }
                     />
                 ))}
-            {formValues.priorities.length > 0 &&
+            {formValues?.priorities.length > 0 &&
                 formValues.priorities.map((priority) => (
                     <FilterDisplayText
                         key={priority.id}

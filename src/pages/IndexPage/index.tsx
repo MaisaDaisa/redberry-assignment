@@ -6,8 +6,8 @@ import {
     taskSchema,
 } from '@/api/apiSchemas'
 import { getAllPriorities, getAllStatuses } from '@/api/getRequest'
-import Filter from '@/components/Filter/Filter'
-import FilterInlineDisplay from '@/components/Filter/FilterInlineDisplay'
+import Filter from '@/components/Filter'
+import FilterInlineDisplay from '@/components/Filter/FilterInline/FilterInlineDisplay'
 import TasksDisplay from '@/components/Tasks/TasksDisplay'
 import HeaderWrapper from '@/layouts/HeaderWrapper'
 import { useEffect, useState } from 'react'
@@ -20,7 +20,6 @@ export type filterValues = {
 }
 
 const IndexPage = () => {
-    const [tasks, setTasks] = useState<taskSchema[]>([])
     const [statuses, setStatuses] = useState<statusSchema[]>([])
     const [priorities, setPriorities] = useState<prioritySchema[]>([])
 

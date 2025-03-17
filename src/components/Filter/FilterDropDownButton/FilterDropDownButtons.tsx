@@ -6,6 +6,7 @@ interface FilterDropDownButtonsProps {
     isActive?: boolean
     handleSetActive?: () => void
     children?: React.ReactNode
+    onSubmit?: () => void
 }
 
 const FilterDropDownButtons = memo(
@@ -14,6 +15,7 @@ const FilterDropDownButtons = memo(
         isActive = false,
         handleSetActive = () => {},
         children,
+        onSubmit = () => {},
     }: FilterDropDownButtonsProps) => {
         return (
             <div>
@@ -22,10 +24,7 @@ const FilterDropDownButtons = memo(
                     onClick={handleSetActive}
                 >
                     <p
-                        className={`${isActive ? 'color-(--color-purple-accent)' : ''} select-none`}
-                        style={{
-                            color: isActive ? 'var(--color-purple-accent)' : '',
-                        }}
+                        className={`${isActive ? 'text-purple-accent' : 'text-blackish-shades'} select-none`}
                     >
                         {filterText}
                     </p>
@@ -42,7 +41,7 @@ const FilterDropDownButtons = memo(
                             fill={
                                 isActive
                                     ? 'var(--color-purple-accent)'
-                                    : '#0D0F10'
+                                    : 'var(--color-blackish-shades)'
                             }
                         />
                     </svg>
@@ -52,8 +51,10 @@ const FilterDropDownButtons = memo(
                     <div
                         className={`border-purple-accent absolute z-10 flex w-full translate-y-5 transform flex-col gap-6 self-start rounded-[10px] border-[0.5px] bg-white px-[30px] pt-10 pb-5 transition-opacity duration-500 ease-in-out ${isActive ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
                     >
-                        {children}
-                        <FilterConfirmButton onConfirm={() => {}} />
+                        <div className="flex flex-col flex-wrap items-start gap-x-[50px] gap-y-4">
+                            {children}
+                        </div>
+                        <FilterConfirmButton onConfirm={onSubmit} />
                     </div>
                 }
             </div>
