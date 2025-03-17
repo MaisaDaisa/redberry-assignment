@@ -1,5 +1,4 @@
 import { axiosInstanceJson } from '@/api/axios'
-import { AxiosInstance } from 'axios'
 
 export const postRequest = async (url: string, data: any) => {
     try {
@@ -13,10 +12,12 @@ export const postRequest = async (url: string, data: any) => {
 
 export const postRequestForm = async (url: string, data: any) => {
     try {
+        console.log(data)
         const formData = new FormData()
 
         // Convert object properties to FormData
         Object.entries(data).forEach(([key, value]) => {
+            // @ts-ignore This will work trust me
             formData.append(key, value)
         })
 

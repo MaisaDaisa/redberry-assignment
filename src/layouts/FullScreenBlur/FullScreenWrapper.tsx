@@ -7,29 +7,33 @@ import FileUploader from '@/components/FileUploader/FileUploader'
 import DropDown from '@/components/DropDown/DropDown'
 import { useDepartmentsContext } from '@/contexts/mainContext'
 import { employeeSchema } from '@/api/apiSchemas'
+import { createEmployee } from '@/api/postRequest'
 
 export type employeeFormInputs = {
     name: string
     surname: string
-    avatar: File
+    avatar: any
     department: any
 }
 
 function FullScreenWrapper() {
-    const departments = useDepartmentsContext()
-    const methods = useForm<employeeFormInputs>({})
-    const { control, handleSubmit, setValue } = methods
+    const contextValues = useDepartmentsContext()
+    const methods = useForm<employeeFormInputs>({
+        defaultValues: {
+            avatar: undefined,
+        },
+    })
+    const { control, handleSubmit } = methods
 
     const onSubmit: SubmitHandler<employeeFormInputs> = (data) => {
         const dataToSend: employeeSchema = {
             name: data.name,
             surname: data.surname,
             department_id: data.department.id,
-            avatar: data.avatar as Blob,
+            avatar: data.avatar,
         }
 
-        // createEmployee(dataToSend)
-        console.log(data.avatar)
+        createEmployee(dataToSend)
     }
 
     const h4Styles = 'text-sm font-medium'
@@ -92,14 +96,15 @@ function FullScreenWrapper() {
                                     required
                                     title="ავატარი"
                                 />
+                                {/* <FileUploader3 control={control} /> */}
+                                {/* <FileUploader2 register={register} /> */}
                                 <DropDown
                                     name="department"
                                     control={control}
                                     required
                                     title="დეპარტამენტი"
                                     h4CustomClasses={h4Styles}
-                                    setValue={setValue}
-                                    items={departments}
+                                    items={contextValues.departments}
                                 />
                             </div>
                             <AddEmployeeButtonWrapper />

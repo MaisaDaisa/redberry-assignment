@@ -6,7 +6,7 @@ type DropDownProps = {
     additionalComponent?: JSX.Element
     name: string
     title: string
-    items: { id: string | number; name: string }[]
+    items: any[]
     required?: boolean
     placeholder?: string
     control: Control<any>

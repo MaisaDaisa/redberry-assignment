@@ -26,7 +26,7 @@ function App() {
 
     const navigate = useNavigate()
     return (
-        <mainContext.Provider value={departments}>
+        <mainContext.Provider value={{ departments: departments }}>
             <NavBar>
                 <HollowButton
                     text="თანამშრომლის შექმნა"

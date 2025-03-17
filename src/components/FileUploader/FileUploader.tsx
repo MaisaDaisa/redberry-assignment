@@ -22,20 +22,15 @@ const FileUploader = ({
     h4CustomClasses = '',
 }: FileUploaderProps) => {
     // State for the preview of the image
-    const {
-        field,
-        fieldState: { error },
-    } = useController({
+    const { field } = useController({
         name,
         control,
         rules: {
             required: required ? 'This field is required' : false,
-            validate: {
-                fileSize: fileTooLarge,
-            },
         },
     })
     const [preview, setPreview] = useState<string | ArrayBuffer | null>(null)
+    const [error, setError] = useState<boolean>(false)
     // Ref for the input element
     const inputRef = useRef<HTMLInputElement | null>(null)
 
@@ -53,6 +48,13 @@ const FileUploader = ({
             event.preventDefault()
             const file = event.dataTransfer.files[0]
 
+            uploadFileLogic(file)
+        },
+        [field]
+    )
+
+    const uploadFileLogic = useCallback(
+        (file: File | null) => {
             if (file && file.type.startsWith('image/')) {
                 if (!fileTooLarge(file)) {
                     const reader = new FileReader()
@@ -60,11 +62,12 @@ const FileUploader = ({
                         setPreview(reader.result)
                     }
                     reader.readAsDataURL(file)
-                    // Use field.onChange instead of setting field.value directly
-                    field.onChange([file])
+                    field.onChange(file)
+                } else {
+                    setError(true)
                 }
             } else {
-                console.error('The dropped file is not an image.')
+                setError(true)
             }
         },
         [field]
@@ -75,24 +78,15 @@ const FileUploader = ({
     const uploadFile = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
             const file = event.target.files ? event.target.files[0] : null
-            console.log(file)
-            if (file && !fileTooLarge(file)) {
-                field.onChange(event.target.value)
-                const reader = new FileReader()
-                reader.onload = () => {
-                    setPreview(reader.result)
-                }
-                reader.readAsDataURL(file)
-            } else {
-                // setDropRejected(true)
-            }
+
+            uploadFileLogic(file)
         },
         []
     )
 
     const handleDelete = useCallback(() => {
         setPreview(null)
-        field.value = ''
+        field.value = undefined
     }, [])
 
     return (
@@ -115,10 +109,10 @@ const FileUploader = ({
                 role="button"
             >
                 <input
-                    {...field}
                     type="file"
                     // disabled={!!preview}
                     hidden
+                    accept="image/*"
                     onChange={(event) => {
                         uploadFile(event)
                     }}
@@ -178,16 +172,6 @@ const FileUploader = ({
                         <p className="text-sm">ატვირთე ფოტო</p>
                     </div>
                 )}
-            </div>
-
-            <div>
-                <p
-                    className={`main-text-sm-100-400 !text-invalid-red mt-2 ${
-                        !error ? 'invisible' : ''
-                    }`}
-                >
-                    Please input an image file under 1MB
-                </p>
             </div>
         </TitleH4Component>
     )
