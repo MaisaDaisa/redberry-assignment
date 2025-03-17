@@ -5,7 +5,7 @@ export function AddEmployeeButtonWrapper({}) {
     return (
         <div className="mt-[65px] flex justify-end gap-[22px]">
             <HollowButton text="გაუქმება" onClick={() => {}} />
-            <SolidButton text="დაამატე თანამშრომელია" onClick={() => {}} />
+            <SolidButton text="დაამატე თანამშრომელია" type="submit" />
         </div>
     )
 }

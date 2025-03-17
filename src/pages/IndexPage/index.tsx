@@ -3,12 +3,12 @@ import {
     employeeSchema,
     prioritySchema,
     statusSchema,
-    taskSchema,
 } from '@/api/apiSchemas'
 import { getAllPriorities, getAllStatuses } from '@/api/getRequest'
 import Filter from '@/components/Filter'
 import FilterInlineDisplay from '@/components/Filter/FilterInline/FilterInlineDisplay'
 import TasksDisplay from '@/components/Tasks/TasksDisplay'
+import { useDepartmentsContext } from '@/contexts/mainContext'
 import HeaderWrapper from '@/layouts/HeaderWrapper'
 import { useEffect, useState } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
@@ -55,7 +55,6 @@ const IndexPage = () => {
                         <FilterInlineDisplay />
                     </form>
                 )}
-
                 {statuses.length > 0 && <TasksDisplay statuses={statuses} />}
             </FormProvider>
         </HeaderWrapper>

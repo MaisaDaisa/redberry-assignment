@@ -1,28 +1,35 @@
 import { AddEmployeeButtonWrapper } from './addEmployeeButtonWrapper'
-import React from 'react'
 import HeaderWrapper from '../HeaderWrapper'
 import Input from '@/components/Input'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { DevTool } from '@hookform/devtools'
 import FileUploader from '@/components/FileUploader/FileUploader'
 import DropDown from '@/components/DropDown/DropDown'
+import { useDepartmentsContext } from '@/contexts/mainContext'
+import { employeeSchema } from '@/api/apiSchemas'
 
-type employeeFormInputs = {
-    firstname: string
-    lastname: string
-    avatar: any
+export type employeeFormInputs = {
+    name: string
+    surname: string
+    avatar: File
     department: any
 }
 
 function FullScreenWrapper() {
-    const methods = useForm<employeeFormInputs>({
-        mode: 'onChange',
-        delayError: 500,
-    })
-    const { control, handleSubmit } = methods
+    const departments = useDepartmentsContext()
+    const methods = useForm<employeeFormInputs>({})
+    const { control, handleSubmit, setValue } = methods
 
     const onSubmit: SubmitHandler<employeeFormInputs> = (data) => {
-        console.log(data)
+        const dataToSend: employeeSchema = {
+            name: data.name,
+            surname: data.surname,
+            department_id: data.department.id,
+            avatar: data.avatar as Blob,
+        }
+
+        // createEmployee(dataToSend)
+        console.log(data.avatar)
     }
 
     const h4Styles = 'text-sm font-medium'
@@ -55,47 +62,49 @@ function FullScreenWrapper() {
                     text={'თანამშრომლის დამატება'}
                     fontClassNames="text-[32px] font-medium"
                 >
-                    <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-                        <div className="grid w-full grid-cols-2 gap-[45px]">
-                            <Input
-                                h4CustomClasses={h4Styles}
-                                control={control}
-                                name="firstname"
-                                title="სახელი"
-                                required
-                                type="text"
-                            />
-                            <Input
-                                h4CustomClasses={h4Styles}
-                                control={control}
-                                name="lastname"
-                                title="გვარი"
-                                required
-                                type="text"
-                            />
-                            <FileUploader
-                                control={control}
-                                h4CustomClasses={h4Styles}
-                                customStyles="col-span-2"
-                                name="avatar"
-                                required
-                                title="ავატარი"
-                            />
-                            <DropDown
-                                name="department"
-                                control={control}
-                                required
-                                title="დეპარტამენტი"
-                                h4CustomClasses={h4Styles}
-                                items={[
-                                    { id: 1, name: 'gela' },
-                                    { id: 2, name: 'dad' },
-                                    { id: 3, name: 'dada' },
-                                ]}
-                            />
-                        </div>
-                        <AddEmployeeButtonWrapper />
-                    </form>
+                    <FormProvider {...methods}>
+                        <form
+                            onSubmit={handleSubmit(onSubmit)}
+                            className="w-full"
+                        >
+                            <div className="grid w-full grid-cols-2 gap-[45px]">
+                                <Input
+                                    h4CustomClasses={h4Styles}
+                                    control={control}
+                                    name="name"
+                                    title="სახელი"
+                                    required
+                                    type="text"
+                                />
+                                <Input
+                                    h4CustomClasses={h4Styles}
+                                    control={control}
+                                    name="surname"
+                                    title="გვარი"
+                                    required
+                                    type="text"
+                                />
+                                <FileUploader
+                                    control={control}
+                                    h4CustomClasses={h4Styles}
+                                    customStyles="col-span-2"
+                                    name="avatar"
+                                    required
+                                    title="ავატარი"
+                                />
+                                <DropDown
+                                    name="department"
+                                    control={control}
+                                    required
+                                    title="დეპარტამენტი"
+                                    h4CustomClasses={h4Styles}
+                                    setValue={setValue}
+                                    items={departments}
+                                />
+                            </div>
+                            <AddEmployeeButtonWrapper />
+                        </form>
+                    </FormProvider>
                     <DevTool control={control} />
                 </HeaderWrapper>
             </div>

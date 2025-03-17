@@ -105,7 +105,7 @@ const FileUploader = ({
             <div
                 onDragOver={handleDragOver}
                 onDrop={handleDrop}
-                onClick={() => inputRef.current?.click()}
+                onClick={() => !preview && inputRef.current?.click()}
                 className={`group flex h-[120px] items-center justify-center border border-dashed ${
                     !error ? 'border-gray-shades-15' : 'border-high-priority'
                 } w-full rounded-lg select-none ${
@@ -117,13 +117,15 @@ const FileUploader = ({
                 <input
                     {...field}
                     type="file"
-                    disabled={!!preview}
+                    // disabled={!!preview}
                     hidden
                     onChange={(event) => {
                         uploadFile(event)
                     }}
-                    accept="image/png, image/jpeg"
-                    ref={inputRef}
+                    ref={(e) => {
+                        field.ref(e)
+                        inputRef.current = e
+                    }}
                 />
                 {preview ? (
                     <div className="relative flex h-[88px] w-[88px] flex-col items-end justify-end">

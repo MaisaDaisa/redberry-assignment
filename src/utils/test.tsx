@@ -1,8 +1,3 @@
-enum DepartmentColorEnum {
-    Pink = 1,
-    Orange,
-    Cyan,
-    Yellow,
-}
+import { axiosInstanceJson } from '../api/axios'
 
-console.log(DepartmentColorEnum[4])
+console.log(axiosInstanceJson)

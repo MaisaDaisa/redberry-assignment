@@ -4,13 +4,10 @@ import { Controller, useFormContext } from 'react-hook-form'
 import { DevTool } from '@hookform/devtools'
 import { filterValues } from '@/pages/IndexPage'
 import FilterEmployees from './FilterDropDownButton/FilterEmployees'
-import {
-    departmentSchema,
-    employeeSchema,
-    prioritySchema,
-} from '@/api/apiSchemas'
-import { getAllDepartments, getAllEmployees } from '@/api/getRequest'
+import { employeeSchema, prioritySchema } from '@/api/apiSchemas'
+import { getAllEmployees } from '@/api/getRequest'
 import FilterDepPriority from './FilterDropDownButton/FilterDepPriority'
+import { useDepartmentsContext } from '@/contexts/mainContext'
 
 type FilterProps = {
     onConfirm?: () => void
@@ -22,12 +19,11 @@ const Filter = ({ priorities }: FilterProps) => {
 
     const [activeFilters, setActiveFilters] = useState<number>(0)
     const [employees, setEmployees] = useState<employeeSchema[]>([])
-    const [departments, setDepartments] = useState<departmentSchema[]>([])
+    const departments = useDepartmentsContext()
 
     useEffect(() => {
         const fetchData = async () => {
             setEmployees(await getAllEmployees())
-            setDepartments(await getAllDepartments())
 
             // for testing without api
             // setEmployees(

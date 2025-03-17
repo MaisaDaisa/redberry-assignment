@@ -7,14 +7,26 @@ import { Route, Routes, useNavigate } from 'react-router'
 import IndexPage from './pages/IndexPage'
 import CreateTaskPage from './pages/CreateTaskPage'
 import FullScreenBlur from './layouts/FullScreenBlur/FullScreenBlur'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import FullScreenWrapper from './layouts/FullScreenBlur/FullScreenWrapper'
+import { departmentSchema } from './api/apiSchemas'
+import { mainContext } from './contexts/mainContext'
+import { getAllDepartments } from './api/getRequest'
 
 function App() {
     const [blurActive, setIsBlurActive] = useState(false)
+    const [departments, setDepartments] = useState<departmentSchema[]>([])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setDepartments(await getAllDepartments())
+        }
+        fetchData()
+    }, [])
+
     const navigate = useNavigate()
     return (
-        <>
+        <mainContext.Provider value={departments}>
             <NavBar>
                 <HollowButton
                     text="თანამშრომლის შექმნა"
@@ -38,7 +50,7 @@ function App() {
             >
                 <FullScreenWrapper />
             </FullScreenBlur>
-        </>
+        </mainContext.Provider>
     )
 }
 

@@ -1,7 +1,7 @@
 type ButtonProps = {
     text: string
     displayPlus?: boolean
-    onClick: () => any
+    onClick?: () => any
     type?: 'button' | 'submit'
 }
 

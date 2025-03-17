@@ -1,21 +1,21 @@
 export type statusSchema = {
-    id: number
+    id?: number
     name: string
 }
 
 export type departmentSchema = {
-    id: number
+    id?: number
     name: string
 }
 
 export type prioritySchema = {
-    id: number
+    id?: number
     name: string
     icon: string
 }
 
 export type employeeSchema = {
-    id: number
+    id?: number
     name: string
     surname: string
     avatar: string
@@ -23,7 +23,7 @@ export type employeeSchema = {
 }
 
 export type taskSchema = {
-    id: number
+    id?: number
     name: string
     description: string
     due_date: string
