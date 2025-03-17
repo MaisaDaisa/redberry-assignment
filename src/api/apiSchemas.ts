@@ -21,3 +21,14 @@ export type employeeSchema = {
     avatar: string
     department_id: number
 }
+
+export type taskSchema = {
+    id: number
+    name: string
+    description: string
+    due_date: string
+    status: statusSchema
+    priority: prioritySchema
+    department: departmentSchema
+    employee: employeeSchema
+}

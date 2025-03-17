@@ -1,34 +1,48 @@
 import { useFormContext } from 'react-hook-form'
 import FilterDisplayText from './FilterDisplayText'
-import { departmentSchema } from '@/api/apiSchemas'
+import { filterValues } from '@/pages/IndexPage'
 
 // Define the expected form type
-type FormValues = {
-    departments: departmentSchema[]
-}
-
 const FilterInlineDisplay = () => {
-    const { watch, setValue } = useFormContext<FormValues>()
+    const { watch, setValue } = useFormContext<filterValues>()
 
-    // Watch for changes in "departments" field
-    const formValues = watch() ?? { departments: [] } // Ensure a default value
+    // Watch for changes in form fields
+    const formValues = watch() ?? { departments: [], priorities: [] }
 
-    const handleRemoveDepartment = (departmentId: number) => {
+    const handleRemoveFromArray = (
+        id: number,
+        filterField: keyof filterValues
+    ) => {
         setValue(
-            'departments',
-            formValues.departments.filter((dep) => dep.id !== departmentId)
+            filterField,
+            // @ts-ignore it is an array, an array has filter i don't know that typescript is on about
+            formValues[filterField].filter((item) => item.id !== id)
         )
+        console.log(filterField)
     }
 
     return (
-        <div className="mt-[25px] inline-flex h-[29px] w-full justify-start gap-4">
-            {formValues.departments?.map((department) => (
-                <FilterDisplayText
-                    key={department.id}
-                    text={department.name}
-                    onClickHandler={() => handleRemoveDepartment(department.id)}
-                />
-            ))}
+        <div className="mt-[25px] inline-flex h-[30px] w-full justify-start gap-4">
+            {formValues.departments.length > 0 &&
+                formValues.departments.map((department) => (
+                    <FilterDisplayText
+                        key={department.id}
+                        text={department.name}
+                        onClickHandler={() =>
+                            handleRemoveFromArray(department.id, 'departments')
+                        }
+                    />
+                ))}
+            {formValues.priorities.length > 0 &&
+                formValues.priorities.map((priority) => (
+                    <FilterDisplayText
+                        key={priority.id}
+                        text={priority.name}
+                        onClickHandler={() =>
+                            handleRemoveFromArray(priority.id, 'priorities')
+                        }
+                    />
+                ))}
         </div>
     )
 }

@@ -8,7 +8,7 @@ const FilterDisplayText = ({
     onClickHandler,
 }: FilterDisplayTextProps) => {
     return (
-        <div className="border-gray-shades-15 flex flex-nowrap items-center justify-center gap-1 rounded-full border px-[10px] py-[6px]">
+        <div className="border-gray-shades-15 flex h-[29px] flex-nowrap items-center justify-center gap-1 rounded-full border px-[10px] py-[6px]">
             <p className="text-gray-Shades-Headlines text-sm text-nowrap select-none">
                 {text}
             </p>

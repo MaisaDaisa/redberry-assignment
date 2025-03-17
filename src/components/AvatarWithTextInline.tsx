@@ -8,8 +8,12 @@ const AvatarWithTextInline = ({
     avatarUrl,
 }: AvatarWithTextInlineProps) => {
     return (
-        <div>
-            <img src={avatarUrl} alt="" className="h-7 w-7" />
+        <div className="flex flex-row items-center gap-[6px]">
+            <img
+                src={avatarUrl}
+                alt={name}
+                className="h-7 w-7 rounded-full object-cover object-center"
+            />
             <p className="text-sm font-light">{name}</p>
         </div>
     )

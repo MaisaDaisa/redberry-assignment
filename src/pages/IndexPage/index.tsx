@@ -1,46 +1,35 @@
 import {
     departmentSchema,
+    employeeSchema,
     prioritySchema,
     statusSchema,
+    taskSchema,
 } from '@/api/apiSchemas'
-import {
-    getAllDepartments,
-    getAllStatuses,
-    getAllTasks,
-} from '@/api/getRequest'
+import { getAllPriorities, getAllStatuses, getAllTasks } from '@/api/getRequest'
 import Filter from '@/components/Filter/Filter'
 import FilterInlineDisplay from '@/components/Filter/FilterInlineDisplay'
 import TasksDisplay from '@/components/Tasks/TasksDisplay'
 import HeaderWrapper from '@/layouts/HeaderWrapper'
+import delayedInvoke from '@/utils/delayedInvoke'
 import { useEffect, useState } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 
 export type filterValues = {
     departments: departmentSchema[]
-    priority: prioritySchema[]
-    employee: string
+    priorities: prioritySchema[]
+    employee: employeeSchema
 }
 
 const IndexPage = () => {
-    const [tasks, setTasks] = useState([])
+    const [tasks, setTasks] = useState<taskSchema[]>([])
     const [statuses, setStatuses] = useState<statusSchema[]>([])
-
-    const test = [
-        {
-            id: 1,
-            name: 'lol',
-        },
-        {
-            id: 2,
-            name: 'gela',
-        },
-    ]
+    const [priorities, setPriorities] = useState<prioritySchema[]>([])
 
     const methods = useForm<filterValues>({
         defaultValues: {
-            departments: test,
-            priority: test,
-            employee: '',
+            departments: [],
+            employee: {},
+            priorities: [],
         },
     })
 
@@ -50,23 +39,24 @@ const IndexPage = () => {
 
     useEffect(() => {
         const getInfo = async () => {
-            // const tasks = await getAllTasks()
-            // console.log(tasks)
-            // const departments = await getAllDepartments()
-            const statusResponse = await getAllStatuses()
-            setStatuses(statusResponse)
-            // console.log(departments)
+            setStatuses(await getAllStatuses())
+            setPriorities(await getAllPriorities())
+            // setTasks(await getAllTasks())
+            // setStatuses(await delayedInvoke(() => testStatus))
+            // setPriorities(await delayedInvoke(() => testPriorities))
         }
         getInfo()
-    }, [tasks])
+    }, [])
 
     return (
         <HeaderWrapper text="დავალებების გვერდი">
             <FormProvider {...methods}>
-                <form onSubmit={methods.handleSubmit(onSubmit)}>
-                    <Filter />
-                    <FilterInlineDisplay />
-                </form>
+                {priorities.length > 0 && (
+                    <form onSubmit={methods.handleSubmit(onSubmit)}>
+                        <Filter priorities={priorities} />
+                        <FilterInlineDisplay />
+                    </form>
+                )}
 
                 {statuses.length > 0 && <TasksDisplay statuses={statuses} />}
             </FormProvider>

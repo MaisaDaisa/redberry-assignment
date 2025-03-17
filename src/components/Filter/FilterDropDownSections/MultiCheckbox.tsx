@@ -21,11 +21,11 @@ const MultiCheckbox = ({
             console.log('Removing:', valueToCheck)
             setValue(
                 nameProp,
-                selectedValue.filter((item) => item.id !== valueToCheck.id) // Remove selected
+                selectedValue.filter((item) => item.id !== valueToCheck.id)
             )
         } else {
             console.log('Adding:', valueToCheck)
-            setValue(nameProp, [...selectedValue, valueToCheck]) // Add selected
+            setValue(nameProp, [...selectedValue, valueToCheck])
         }
     }
     return (
