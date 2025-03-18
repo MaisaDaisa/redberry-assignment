@@ -5,9 +5,11 @@ type inputTextDesignProps = {
     field?: ControllerRenderProps<any, string>
     error?: boolean
     type: 'textarea' | 'text'
-    customStyles?: string
+    customInputStyles?: string
     value?: string
     readOnly?: boolean
+    borderOn?: boolean
+    customDivClass?: string
 }
 
 const InputTextDesign = ({
@@ -15,29 +17,34 @@ const InputTextDesign = ({
     field,
     error,
     type,
-    customStyles = '',
+    customInputStyles = '',
     value,
     readOnly = false,
+    borderOn = true,
+    customDivClass = 'p-[14px]',
 }: inputTextDesignProps) => {
+    const BothStyles = 'w-full focus:outline-none'
     return (
-        <>
+        <div
+            className={`w-full rounded-[5px] bg-white text-sm font-light ${customDivClass} ${borderOn ? 'border ' + (error ? 'border-high-priority' : 'border-gray-shade-10') : ''}`}
+        >
             {type === 'text' ? (
                 <input
                     readOnly={readOnly}
                     value={value}
                     {...field}
                     placeholder={placeholder}
-                    className={`w-full rounded-[5px] border bg-white p-[14px] text-sm font-light focus:outline-none ${error ? 'border-high-priority' : 'border-gray-shade-10'} ${customStyles}`}
+                    className={`${BothStyles} ${customInputStyles}`}
                 />
             ) : (
                 <textarea
                     value={value}
                     {...field}
                     placeholder={placeholder}
-                    className={`w-full rounded-[5px] border bg-white p-[14px] text-sm font-light focus:outline-none ${error ? 'border-high-priority' : 'border-gray-shade-10'} h-[105px] resize-none ${customStyles}`}
+                    className={`no-scrollbar h-[105px] resize-none ${BothStyles} ${customInputStyles}`}
                 />
             )}
-        </>
+        </div>
     )
 }
 

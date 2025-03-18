@@ -104,7 +104,7 @@ const DropDown = ({
                         height="15"
                         viewBox="0 0 14 15"
                         fill="none"
-                        className={`transition-all duration-300 ${toggleCombo ? '-rotate-180' : 'rotate-0'}`}
+                        className={`m-[14px] transition-all duration-300 ${toggleCombo ? '-rotate-180' : 'rotate-0'}`}
                     >
                         <path
                             d="M11.62 5.7207L7.81667 9.52404C7.3675 9.9732 6.6325 9.9732 6.18334 9.52404L2.38 5.7207"
