@@ -26,16 +26,25 @@ const CustomDatePicker = ({ name, control }: CustomDatePickerProps) => {
         },
     })
 
-    const ExampleCustomInput = ({ onClick, value }: any) => (
+    const CustomInput = ({ onClick, value }: any) => (
         <div onClick={onClick}>
-            <InputTextDesign
-                readOnly
-                value={value}
+            <input
                 type="text"
-                customStyles="border-0 p-0 indent-[6px] "
-                error={!!error}
-                placeholder="DD/MM/YY"
+                name=""
+                id=""
+                value={value}
+                className="w-full indent-[6px] text-sm font-light focus:outline-none"
             />
+            {/* // <InputTextDesign */}
+            {/* //     readOnly
+        //     value={value}
+        //     type="text"
+        //     borderOn={false}
+        //     customDivClass="p-0"
+        //     customInputStyles="indent-[6px]"
+        //     error={!!error}
+        //     placeholder="DD/MM/YY"
+        // /> */}
         </div>
     )
 
@@ -179,7 +188,7 @@ const CustomDatePicker = ({ name, control }: CustomDatePickerProps) => {
                         </p>
                     </div>
                 }
-                customInput={<ExampleCustomInput />}
+                customInput={<CustomInput />}
                 // Toggles
                 showIcon
                 showPopperArrow={false}
