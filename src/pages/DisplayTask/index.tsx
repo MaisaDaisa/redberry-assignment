@@ -7,17 +7,30 @@ import DetailsRow from './components/DetailsRow'
 import pieChart from '@/assets/imgs/pieChart.svg'
 import calendar from '@/assets/imgs/calendar.svg'
 import person from '@/assets/imgs/person.svg'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { getTaskById } from '@/api/getRequest'
 import { useParams } from 'react-router'
 import { taskSchema } from '@/api/apiSchemas'
-import { useDepartmentsContext } from '@/contexts/mainContext'
+import { mainContext } from '@/contexts/mainContext'
+import { WeeksGeorgian } from '@/enums/dateEnums'
+import DropDown from '@/components/DropDown/DropDown'
+
+const weekDays = [
+    WeeksGeorgian.Sunday,
+    WeeksGeorgian.Monday,
+    WeeksGeorgian.Tuesday,
+    WeeksGeorgian.Wednesday,
+    WeeksGeorgian.Thursday,
+    WeeksGeorgian.Friday,
+    WeeksGeorgian.Saturday,
+]
 
 export const index = () => {
     const [task, setTask] = useState<taskSchema | null>(null)
     let { taskId } = useParams<{ taskId: string }>()
 
-    const departmentValues = useDepartmentsContext()
+    const departmentValues = useContext(mainContext)
+    console.log(departmentValues)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,9 +42,12 @@ export const index = () => {
         fetchData()
     }, [taskId])
 
+    const dueDate: Date | null = task ? new Date(task.due_date) : new Date()
+
     return (
         <>
-            {!task == null && departmentValues.length > 0 ? (
+            {/* {!task == null && departmentValues.length > 0 ? ( */}
+            {task && departmentValues?.departments.length > 0 && (
                 <section className="flex flex-row justify-between">
                     <div className="flex max-w-[715px] flex-col items-start gap-16">
                         <div className="flex flex-col gap-[26px]">
@@ -44,16 +60,18 @@ export const index = () => {
                                     />
                                 </div>
                                 <h1 className="font-Inter text-[34px] font-semibold">
-                                    Redberry-ს საიტის ლენდინგის დიზაინი
+                                    {/* Redberry-ს საიტის ლენდინგის დიზაინი */}
+                                    {task.name}
                                 </h1>
                             </div>
                             <p className="line text-lg leading-7 text-black">
-                                მიზანია რომ შეიქმნას თანამედროვე, სუფთა და
+                                {/* მიზანია რომ შეიქმნას თანამედროვე, სუფთა და
                                 ფუნქციონალური დიზაინი, რომელიც უზრუნველყოფს
                                 მარტივ ნავიგაციას და მკაფიო ინფორმაციის
                                 გადაცემას. დიზაინი უნდა იყოს ადაპტირებადი
                                 (responsive), გამორჩეული ვიზუალით, მინიმალისტური
-                                სტილით და ნათელი ტიპოგრაფიით.
+                                სტილით და ნათელი ტიპოგრაფიით. */}
+                                {task.description}
                             </p>
                         </div>
                         <div className="flex flex-col items-start gap-[18px]">
@@ -63,7 +81,7 @@ export const index = () => {
                             <div className="flex flex-col">
                                 <DetailsRow imgUrl={pieChart} text="სტატუსი">
                                     <div></div>
-                                    {/* <DropDown/> */}
+                                    {/* <DropDown /> */}
                                 </DetailsRow>
                                 <DetailsRow imgUrl={person} text="თანამშრომელი">
                                     <div className="flex flex-row items-center gap-[6px]">
@@ -81,7 +99,12 @@ export const index = () => {
                                                     task.employee.surname}
                                             </p>
                                             <p className="text-gray-small absolute -top-4 text-[11px] font-light text-nowrap">
-                                                {}
+                                                {
+                                                    departmentValues
+                                                        ?.departments[
+                                                        task.department.id
+                                                    ].name
+                                                }
                                             </p>
                                         </div>
                                     </div>
@@ -92,7 +115,8 @@ export const index = () => {
                                 >
                                     <div>
                                         <p className="text-blackish-shades text-sm">
-                                            ორშ - 02/2/2025
+                                            {weekDays[dueDate?.getDay()]} -{' '}
+                                            {`${dueDate?.getDate()}/${dueDate?.getMonth()}/${dueDate?.getFullYear()}`}
                                         </p>
                                     </div>
                                 </DetailsRow>
@@ -120,9 +144,10 @@ export const index = () => {
                         </div>
                     </aside>
                 </section>
-            ) : (
-                <div></div>
             )}
+            {/* ) : (
+                <div></div>
+            )} */}
         </>
     )
 }

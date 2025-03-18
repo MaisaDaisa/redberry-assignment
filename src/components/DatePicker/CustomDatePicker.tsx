@@ -1,11 +1,10 @@
 import DatePicker from 'react-datepicker'
 import { Control, useController } from 'react-hook-form'
 import 'react-datepicker/dist/react-datepicker.css'
-import InputTextDesign from '@/components/Input/InputTextDesign'
-import { getDate, getMonth, getYear } from '@/utils/dateFuncs'
 import TitleH4Component from '../../layouts/TitleH4Component'
 import './datepicker.css'
 import { useRef, useState } from 'react'
+import { WeeksEnglish } from '@/enums/dateEnums'
 
 type CustomDatePickerProps = {
     name: string
@@ -61,26 +60,6 @@ const CustomDatePicker = ({
         'დეკემბერი',
     ]
 
-    // enum Weeks {
-    //     Monday = 'ორშ',
-    //     Tuesday = 'სამ',
-    //     Wednesday = 'ოთხ',
-    //     Thursday = 'ხუთ',
-    //     Friday = 'პარ',
-    //     Saturday = 'შაბ',
-    //     Sunday = 'კვი',
-    // }
-
-    enum Weeks {
-        Monday = 'M',
-        Tuesday = 'T',
-        Wednesday = 'W',
-        Thursday = 'T',
-        Friday = 'F',
-        Saturday = 'S',
-        Sunday = 'S',
-    }
-
     return (
         <TitleH4Component title="დედლაინი" required={required}>
             <DatePicker
@@ -106,7 +85,7 @@ const CustomDatePicker = ({
                     return (
                         <div className="mb-6 flex items-center justify-between">
                             <p className="text-[13px] font-bold text-black">
-                                {months[getMonth(date) - 1]} {getYear(date)}
+                                {months[date.getMonth()]} {date.getFullYear()}
                             </p>
                             <div className="flex gap-2">
                                 <svg
@@ -192,11 +171,11 @@ const CustomDatePicker = ({
                 // Date Manipulation
                 formatWeekDay={(date) => {
                     // @ts-ignore - მაინ არ იძლევა სვას
-                    return Weeks[date]
+                    return WeeksEnglish[date]
                 }}
                 onMonthChange={(date) => setViewingMonth(date)}
                 dayClassName={(date: Date) =>
-                    getMonth(date) === getMonth(viewingMonth)
+                    date.getMonth() === viewingMonth.getMonth()
                         ? ''
                         : 'not-same-month'
                 }

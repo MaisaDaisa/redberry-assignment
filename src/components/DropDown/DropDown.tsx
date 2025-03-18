@@ -8,20 +8,24 @@ import DropDownChoiceWrapper from './DropDownChoiceWrapper'
 type DropDownProps = {
     additionalComponent?: JSX.Element
     name: string
-    title: string
+    title?: string
     items: any[]
     required?: boolean
     placeholder?: string
     control: Control<any>
     h4CustomClasses?: string
     renderItem?: (item: any, onClick: () => void) => JSX.Element
+    selectedItem?: any
+    headerEnabled?: boolean
 }
 
 const DropDown = ({
+    headerEnabled = true,
+    selectedItem = null,
     control,
-    title,
-    required,
+    required = false,
     name,
+    title = name,
     additionalComponent,
     items,
     renderItem,
@@ -32,7 +36,7 @@ const DropDown = ({
     const [selected, setSelected] = useState<{
         id: string | number
         name: string
-    } | null>(null)
+    } | null>(selectedItem)
 
     const dropDownRef = useRef<HTMLDivElement>(null)
 
