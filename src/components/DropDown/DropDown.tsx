@@ -1,6 +1,9 @@
-import { useState, JSX } from 'react'
+import { useState, JSX, useEffect, useRef, RefObject } from 'react'
 import { Control, useController } from 'react-hook-form'
 import TitleH4Component from '../../layouts/TitleH4Component'
+import DropDownText from './DropDownText'
+import { useClickOutside } from '@/hooks/useClickOutside'
+import DropDownChoiceWrapper from './DropDownChoiceWrapper'
 
 type DropDownProps = {
     additionalComponent?: JSX.Element
@@ -11,6 +14,7 @@ type DropDownProps = {
     placeholder?: string
     control: Control<any>
     h4CustomClasses?: string
+    renderItem?: (item: any, onClick: () => void) => JSX.Element
 }
 
 const DropDown = ({
@@ -20,6 +24,7 @@ const DropDown = ({
     name,
     additionalComponent,
     items,
+    renderItem,
     placeholder = 'Select an option',
     h4CustomClasses = '',
 }: DropDownProps) => {
@@ -28,6 +33,8 @@ const DropDown = ({
         id: string | number
         name: string
     } | null>(null)
+
+    const dropDownRef = useRef<HTMLDivElement>(null)
 
     const {
         field,
@@ -40,13 +47,17 @@ const DropDown = ({
         },
     })
 
+    //
+    useClickOutside(dropDownRef, () => {
+        setToggleCombo(false)
+    })
+
     const handleSelectedItem = (item: {
         id: string | number
         name: string
     }) => {
         setSelected(item)
-        // setValue(name, item.id, { shouldValidate: true })
-        field.onChange(item)
+        field.onChange(item.id)
         setToggleCombo(false)
     }
 
@@ -56,10 +67,13 @@ const DropDown = ({
             required={required}
             h4CustomClasses={h4CustomClasses}
         >
-            <div className="relative w-full text-sm font-light">
+            <div
+                className="relative w-full text-sm font-light"
+                ref={dropDownRef}
+            >
                 <div
                     onClick={() => setToggleCombo(!toggleCombo)}
-                    className={`text-gray-Shades-Headlines flex w-full min-w-[200px] flex-row items-center justify-between rounded-t-[5px] border bg-white p-[14px] focus:outline-none ${
+                    className={`text-gray-Shades-Headlines flex w-full min-w-[200px] flex-row items-center justify-between rounded-t-[5px] border bg-white focus:outline-none ${
                         error && !toggleCombo
                             ? 'border-high-priority'
                             : toggleCombo
@@ -68,9 +82,20 @@ const DropDown = ({
                     } ${!toggleCombo ? 'rounded-b-md' : 'border-b-0'}`}
                 >
                     {selected ? (
-                        selected.name
+                        renderItem ? (
+                            renderItem(selected, () =>
+                                handleSelectedItem(selected)
+                            )
+                        ) : (
+                            <DropDownText
+                                onClick={() => {}}
+                                text={selected.name}
+                            />
+                        )
                     ) : (
-                        <span className="text-gray-400">{placeholder}</span>
+                        <DropDownChoiceWrapper onClick={() => {}}>
+                            <span className="text-gray-400">{placeholder}</span>
+                        </DropDownChoiceWrapper>
                     )}
 
                     <svg
@@ -96,15 +121,16 @@ const DropDown = ({
                         className={`absolute z-10 w-full rounded-b-[5px] border border-t-0 bg-white ${toggleCombo ? 'border-purple-accent' : 'border-gray-shade-10'}`}
                     >
                         {additionalComponent}
-                        {items.map((item) => (
-                            <li
-                                key={item.id}
-                                onClick={() => handleSelectedItem(item)}
-                                className="cursor-pointer px-[14px] py-[12px]"
-                            >
-                                {item.name}
-                            </li>
-                        ))}
+                        {items.map((item) =>
+                            renderItem ? (
+                                renderItem(item, () => handleSelectedItem(item))
+                            ) : (
+                                <DropDownText
+                                    onClick={() => handleSelectedItem(item)}
+                                    text={item.name}
+                                />
+                            )
+                        )}
                     </ul>
                 )}
             </div>

@@ -1,12 +1,17 @@
+import { prioritySchema, statusSchema } from '@/api/apiSchemas'
 import DropDown from '@/components/DropDown/DropDown'
+import DropDownPriority from '@/components/DropDown/DropDownPriority'
 import { Control } from 'react-hook-form'
 
 type DropDownWrapperProps = {
     control: Control<any>
-    test: any
+    data: {
+        priorities: prioritySchema[]
+        statuses: statusSchema[]
+    }
 }
 
-const DropDownWrapper = ({ control, test }: DropDownWrapperProps) => {
+const DropDownWrapper = ({ control, data }: DropDownWrapperProps) => {
     return (
         <div className="grid grid-cols-2 gap-8">
             <DropDown
@@ -15,7 +20,14 @@ const DropDownWrapper = ({ control, test }: DropDownWrapperProps) => {
                 key={'titleDropDown'}
                 title="პრიორიტეტი"
                 required
-                items={test}
+                items={data.priorities}
+                renderItem={(item: prioritySchema, onClick) => (
+                    <DropDownPriority
+                        iconUrl={item.icon}
+                        text={item.name}
+                        onClick={onClick}
+                    />
+                )}
             />
             <DropDown
                 control={control}
@@ -23,7 +35,7 @@ const DropDownWrapper = ({ control, test }: DropDownWrapperProps) => {
                 title="სტატუსი"
                 key={'statusDropDown'}
                 required
-                items={test}
+                items={data.statuses}
             />
         </div>
     )

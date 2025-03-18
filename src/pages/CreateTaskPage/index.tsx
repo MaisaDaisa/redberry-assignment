@@ -1,11 +1,11 @@
+import { CustomDatePickerWrapper } from './CustomDatePickerWrapper'
+import { SubmitButtonWrapper } from './SubmitButtonWrapper'
 import InputField from '@/components/Input'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import HeaderWrapper from '@/layouts/HeaderWrapper'
 // import { DevTool } from '@hookform/devtools'
 import DropDown from '@/components/DropDown/DropDown'
-import CustomDatePicker from '@/components/DatePicker/CustomDatePicker'
 import DropDownWrapper from './DropDownWrapper'
-import SolidButton from '@/components/Buttons/SolidButton'
 import { useDepartmentsContext } from '@/contexts/mainContext'
 import { useEffect, useState } from 'react'
 import { employeeSchema, prioritySchema, statusSchema } from '@/api/apiSchemas'
@@ -14,8 +14,10 @@ import {
     getAllPriorities,
     getAllStatuses,
 } from '@/api/getRequest'
+import AvatarWithTextInline from '@/components/AvatarWithTextInline'
+import DropDownChoiceWrapper from '@/components/DropDown/DropDownChoiceWrapper'
 
-type FormFields = {
+export type FormFields = {
     title: string
     description: string
 }
@@ -27,15 +29,15 @@ const CreateTaskPage = () => {
     })
 
     const departments = useDepartmentsContext()
-    const [statuses, setStatuses] = useState<statusSchema>([])
-    const [employees, setEmployees] = useState<employeeSchema>([])
-    const [priotities, setPriotities] = useState<prioritySchema>([])
+    const [statuses, setStatuses] = useState<statusSchema[]>([])
+    const [employees, setEmployees] = useState<employeeSchema[]>([])
+    const [priorities, setPriorities] = useState<prioritySchema[]>([])
 
     useEffect(() => {
         const fetchData = async () => {
             setStatuses(await getAllStatuses())
             setEmployees(await getAllEmployees())
-            setPriotities(await getAllPriorities())
+            setPriorities(await getAllPriorities())
         }
         fetchData()
     }, [])
@@ -85,21 +87,29 @@ const CreateTaskPage = () => {
                     key={'employeeDropdown'}
                     required
                     items={employees}
+                    renderItem={(item, onClick) => (
+                        <DropDownChoiceWrapper onClick={onClick}>
+                            <AvatarWithTextInline
+                                avatarUrl={item.avatar}
+                                name={item.name}
+                                key={'avatar' + item.id}
+                            />
+                        </DropDownChoiceWrapper>
+                    )}
                 />
                 {/* this might seem unnecessary but somehow this prevents
                 rerendering of two dropDown inputs on change of every other
                 input... IDK why */}
-                <DropDownWrapper control={control} test={test} />
-                <div className="w-[330px]">
-                    <CustomDatePicker name="date" control={control} />
-                </div>
-                <div className="col-span-2 mt-[150px] flex justify-end">
-                    <SolidButton
-                        text="დავალების შექმნა"
-                        onClick={() => onSubmit}
-                        type="submit"
+                {statuses.length > 0 && priorities.length > 0 ? (
+                    <DropDownWrapper
+                        control={control}
+                        data={{ priorities: priorities, statuses: statuses }}
                     />
-                </div>
+                ) : (
+                    ''
+                )}
+                <CustomDatePickerWrapper control={control} />
+                <SubmitButtonWrapper onSubmit={() => onSubmit} />
             </form>
         </HeaderWrapper>
     )
