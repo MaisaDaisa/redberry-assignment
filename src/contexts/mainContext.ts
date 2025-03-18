@@ -8,11 +8,11 @@ type mainContextType = {
 export const mainContext = createContext<undefined | mainContextType>(undefined)
 
 export const useDepartmentsContext = () => {
-    const departments = useContext(mainContext)
+    const context = useContext(mainContext)
 
-    if (departments === undefined) {
+    if (context?.departments === undefined) {
         throw new Error('the Context needs to be invoked first...')
     }
 
-    return departments
+    return context.departments
 }

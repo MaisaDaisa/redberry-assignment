@@ -21,8 +21,11 @@ type FullScreenWrapperProps = {
 }
 
 function FullScreenWrapper({ toggleActive }: FullScreenWrapperProps) {
-    const contextValues = useDepartmentsContext()
+    const departments = useDepartmentsContext()
     const methods = useForm<employeeFormInputs>({
+        criteriaMode: 'all',
+        mode: 'all',
+        delayError: 500,
         defaultValues: {
             avatar: undefined,
         },
@@ -36,8 +39,9 @@ function FullScreenWrapper({ toggleActive }: FullScreenWrapperProps) {
             department_id: data.department.id,
             avatar: data.avatar,
         }
+        console.log(dataToSend)
 
-        createEmployee(dataToSend)
+        // createEmployee(dataToSend)
     }
 
     const h4Styles = 'text-sm font-medium'
@@ -102,15 +106,13 @@ function FullScreenWrapper({ toggleActive }: FullScreenWrapperProps) {
                                     required
                                     title="ავატარი"
                                 />
-                                {/* <FileUploader3 control={control} /> */}
-                                {/* <FileUploader2 register={register} /> */}
                                 <DropDown
                                     name="department"
                                     control={control}
                                     required
                                     title="დეპარტამენტი"
                                     h4CustomClasses={h4Styles}
-                                    items={contextValues.departments}
+                                    items={departments}
                                 />
                             </div>
                             <AddEmployeeButtonWrapper

@@ -9,7 +9,7 @@ import CreateTaskPage from './pages/CreateTaskPage'
 import FullScreenBlur from './layouts/FullScreenBlur/FullScreenBlur'
 import { useEffect, useState } from 'react'
 import FullScreenWrapper from './layouts/FullScreenBlur/FullScreenWrapper'
-import { departmentSchema } from './api/apiSchemas'
+import { departmentSchema, statusSchema } from './api/apiSchemas'
 import { mainContext } from './contexts/mainContext'
 import { getAllDepartments } from './api/getRequest'
 

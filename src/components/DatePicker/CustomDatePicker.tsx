@@ -106,7 +106,6 @@ const CustomDatePicker = ({ name, control }: CustomDatePickerProps) => {
                     // prevMonthButtonDisabled,
                     // nextMonthButtonDisabled,
                 }) => {
-                    console.log(getMonth(date))
                     return (
                         <div className="mb-6 flex items-center justify-between">
                             <p className="text-[13px] font-bold text-black">

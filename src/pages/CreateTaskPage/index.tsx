@@ -6,6 +6,14 @@ import DropDown from '@/components/DropDown/DropDown'
 import CustomDatePicker from '@/components/DatePicker/CustomDatePicker'
 import DropDownWrapper from './DropDownWrapper'
 import SolidButton from '@/components/Buttons/SolidButton'
+import { useDepartmentsContext } from '@/contexts/mainContext'
+import { useEffect, useState } from 'react'
+import { employeeSchema, prioritySchema, statusSchema } from '@/api/apiSchemas'
+import {
+    getAllEmployees,
+    getAllPriorities,
+    getAllStatuses,
+} from '@/api/getRequest'
 
 type FormFields = {
     title: string
@@ -17,6 +25,20 @@ const CreateTaskPage = () => {
         mode: 'onChange',
         delayError: 500,
     })
+
+    const departments = useDepartmentsContext()
+    const [statuses, setStatuses] = useState<statusSchema>([])
+    const [employees, setEmployees] = useState<employeeSchema>([])
+    const [priotities, setPriotities] = useState<prioritySchema>([])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setStatuses(await getAllStatuses())
+            setEmployees(await getAllEmployees())
+            setPriotities(await getAllPriorities())
+        }
+        fetchData()
+    }, [])
 
     const { control, handleSubmit } = methods
 
@@ -48,13 +70,12 @@ const CreateTaskPage = () => {
                     name="department"
                     title="დეპარტამენტი"
                     required
-                    items={test}
+                    items={departments}
                 />
                 <InputField
                     control={control}
                     name="description"
                     title="აღწერა"
-                    required
                     type="textarea"
                 />
                 <DropDown
@@ -63,7 +84,7 @@ const CreateTaskPage = () => {
                     title="პასუხისმგებელი თანამშრომელი"
                     key={'employeeDropdown'}
                     required
-                    items={test}
+                    items={employees}
                 />
                 {/* this might seem unnecessary but somehow this prevents
                 rerendering of two dropDown inputs on change of every other
