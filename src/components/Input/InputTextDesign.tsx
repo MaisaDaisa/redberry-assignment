@@ -21,12 +21,12 @@ const InputTextDesign = ({
     value,
     readOnly = false,
     borderOn = true,
-    customDivClass = 'p-[14px]',
+    customDivClass = '',
 }: inputTextDesignProps) => {
     const BothStyles = 'w-full focus:outline-none'
     return (
         <div
-            className={`w-full rounded-[5px] bg-white text-sm font-light ${customDivClass} ${borderOn ? 'border ' + (error ? 'border-high-priority' : 'border-gray-shade-10') : ''}`}
+            className={`w-full rounded-[5px] bg-white text-sm font-light ${'p-[14px] ' + customDivClass} ${borderOn ? 'border ' + (error ? 'border-high-priority' : 'border-gray-shade-10') : ''}`}
         >
             {type === 'text' ? (
                 <input

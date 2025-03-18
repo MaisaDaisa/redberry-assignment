@@ -16,7 +16,7 @@ const DropDownWrapper = ({ control, data }: DropDownWrapperProps) => {
         <div className="grid grid-cols-2 gap-8">
             <DropDown
                 control={control}
-                name="priority"
+                name="priority_id"
                 key={'titleDropDown'}
                 title="პრიორიტეტი"
                 required
@@ -31,7 +31,7 @@ const DropDownWrapper = ({ control, data }: DropDownWrapperProps) => {
             />
             <DropDown
                 control={control}
-                name="status"
+                name="status_id"
                 title="სტატუსი"
                 key={'statusDropDown'}
                 required

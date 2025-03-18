@@ -88,6 +88,7 @@ const DropDown = ({
                             )
                         ) : (
                             <DropDownText
+                                key={selected.name + selected.id}
                                 onClick={() => {}}
                                 text={selected.name}
                             />
@@ -126,6 +127,7 @@ const DropDown = ({
                                 renderItem(item, () => handleSelectedItem(item))
                             ) : (
                                 <DropDownText
+                                    key={item.name + item.id}
                                     onClick={() => handleSelectedItem(item)}
                                     text={item.name}
                                 />

@@ -6,27 +6,32 @@ import SolidButton from '@/components/Buttons/SolidButton'
 import { Route, Routes, useNavigate } from 'react-router'
 import IndexPage from './pages/IndexPage'
 import CreateTaskPage from './pages/CreateTaskPage'
+import DisplayTask from './pages/DisplayTask'
 import FullScreenBlur from './layouts/FullScreenBlur/FullScreenBlur'
 import { useEffect, useState } from 'react'
 import FullScreenWrapper from './layouts/FullScreenBlur/FullScreenWrapper'
 import { departmentSchema, statusSchema } from './api/apiSchemas'
 import { mainContext } from './contexts/mainContext'
-import { getAllDepartments } from './api/getRequest'
+import { getAllDepartments, getAllStatuses } from './api/getRequest'
 
 function App() {
     const [blurActive, setIsBlurActive] = useState(false)
     const [departments, setDepartments] = useState<departmentSchema[]>([])
+    const [statuses, setStatuses] = useState<statusSchema[]>([])
 
     useEffect(() => {
         const fetchData = async () => {
             setDepartments(await getAllDepartments())
+            setStatuses(await getAllStatuses())
         }
         fetchData()
     }, [])
 
     const navigate = useNavigate()
     return (
-        <mainContext.Provider value={{ departments: departments }}>
+        <mainContext.Provider
+            value={{ departments: departments, statuses: statuses }}
+        >
             <NavBar>
                 <HollowButton
                     text="თანამშრომლის შექმნა"
@@ -42,6 +47,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<IndexPage />} />
                     <Route path="/create-task" element={<CreateTaskPage />} />
+                    <Route path="/task/:taskId" element={<DisplayTask />} />
                 </Routes>
             </MainSection>
             <FullScreenBlur

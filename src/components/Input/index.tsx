@@ -39,7 +39,8 @@ const InputField = ({
         rules: {
             required: required ? 'This field is required' : false, // ✅ Fix required
             pattern: {
-                value: /^[A-Za-z\u10A0-\u10FF]+$/,
+                value: /^[A-Za-z\u10D0-\u10FF\s]+$/,
+
                 message: 'Only letters are allowed.',
             },
             minLength: {

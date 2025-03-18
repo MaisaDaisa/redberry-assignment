@@ -1,6 +1,6 @@
 import DepartmentRounded from '@/components/DepartmentRounded'
-import TaskPriorityBordered from '@/components/Tasks/TaskCard/TaskPriorityBordered'
-import { TaskPriorityTypes } from '@/components/Tasks/TaskCard/TaskPriorityBordered'
+import TaskPriorityBordered from '@/components/TaskPriorityBordered'
+import { TaskPriorityTypes } from '@/components/TaskPriorityBordered'
 import { statusStyles } from '@/components/Tasks/TaskStatusColorEnum'
 
 type TaskCardProps = {

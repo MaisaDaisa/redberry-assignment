@@ -6,10 +6,10 @@ enum DepartmentColorEnum {
 }
 
 const DepartmentRounded = ({
-    departmentId,
+    departmentId = 1,
     departmentText,
 }: {
-    departmentId: number
+    departmentId?: number
     departmentText: string
 }) => {
     const depNum = departmentId % 4

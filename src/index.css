@@ -2,13 +2,7 @@
 @import 'tailwindcss';
 
 @layer base {
-    p,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
+    * {
         @apply font-Fira-Go;
     }
 
@@ -36,6 +30,7 @@
     --color-gray-shades-15: #ced4da;
     --color-gray-shade-10: var(--color-gray-border);
     --color-gray-shade-validation: #6c757d;
+    --color-gray-small: #474747;
     --color-gray-border: #dee2e6;
 
     /* Status Colors  */
@@ -60,6 +55,10 @@
     /* Fonts Family */
     --font-Fredoka-One: 'Fredoka One';
     --font-Fira-Go: 'FiraGO';
+    --font-Inter: 'Inter';
+
+    /* Font Weight */
+    --font-weight-book: 350;
 }
 
 .isolate {

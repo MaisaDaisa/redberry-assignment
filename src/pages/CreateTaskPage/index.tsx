@@ -16,10 +16,16 @@ import {
 } from '@/api/getRequest'
 import AvatarWithTextInline from '@/components/AvatarWithTextInline'
 import DropDownChoiceWrapper from '@/components/DropDown/DropDownChoiceWrapper'
+import { DevTool } from '@hookform/devtools'
+import { createNewTask } from '@/api/postRequest'
 
 export type FormFields = {
-    title: string
+    name: string
     description: string
+    due_date: Date
+    status_id: number
+    priority_id: number
+    employee_id: number
 }
 
 const CreateTaskPage = () => {
@@ -46,13 +52,8 @@ const CreateTaskPage = () => {
 
     const onSubmit: SubmitHandler<FormFields> = (data) => {
         console.log(data)
+        createNewTask(data)
     }
-
-    const test = [
-        { id: 1, name: 'gela' },
-        { id: 2, name: 'dad' },
-        { id: 3, name: 'dada' },
-    ]
 
     return (
         <HeaderWrapper text="შექმენი ახალი დავალება">
@@ -62,14 +63,14 @@ const CreateTaskPage = () => {
             >
                 <InputField
                     control={control}
-                    name="title"
+                    name="name"
                     title="სათაური"
                     required
                     type="text"
                 />
                 <DropDown
                     control={control}
-                    name="department"
+                    name="department_id"
                     title="დეპარტამენტი"
                     required
                     items={departments}
@@ -82,7 +83,7 @@ const CreateTaskPage = () => {
                 />
                 <DropDown
                     control={control}
-                    name="employee"
+                    name="employee_id"
                     title="პასუხისმგებელი თანამშრომელი"
                     key={'employeeDropdown'}
                     required
@@ -108,9 +109,10 @@ const CreateTaskPage = () => {
                 ) : (
                     ''
                 )}
-                <CustomDatePickerWrapper control={control} />
+                <CustomDatePickerWrapper name={'due_date'} control={control} />
                 <SubmitButtonWrapper onSubmit={() => onSubmit} />
             </form>
+            <DevTool control={control} />
         </HeaderWrapper>
     )
 }

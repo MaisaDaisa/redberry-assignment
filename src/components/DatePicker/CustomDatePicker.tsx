@@ -2,53 +2,41 @@ import DatePicker from 'react-datepicker'
 import { Control, useController } from 'react-hook-form'
 import 'react-datepicker/dist/react-datepicker.css'
 import InputTextDesign from '@/components/Input/InputTextDesign'
-import { getMonth, getYear } from '@/utils/dateFuncs'
+import { getDate, getMonth, getYear } from '@/utils/dateFuncs'
 import TitleH4Component from '../../layouts/TitleH4Component'
 import './datepicker.css'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 type CustomDatePickerProps = {
     name: string
     control: Control<any>
+    required?: boolean
 }
 
-const CustomDatePicker = ({ name, control }: CustomDatePickerProps) => {
+const CustomDatePicker = ({
+    name,
+    control,
+    required = false,
+}: CustomDatePickerProps) => {
     const {
-        field: { value, onChange },
+        field,
         fieldState: { error },
     } = useController({
         name,
         control,
         rules: {
             required: 'Date is required',
-            validate: (date) =>
-                date >= new Date() || 'Cannot select past dates',
+            validate: {
+                validDate: (date) =>
+                    !isNaN(Date.parse(date)) || 'Invalid date format',
+                noPast: (date) =>
+                    date >= new Date() || 'Cannot select past dates',
+            },
         },
     })
 
-    const CustomInput = ({ onClick, value }: any) => (
-        <div onClick={onClick}>
-            <input
-                type="text"
-                name=""
-                id=""
-                value={value}
-                className="w-full indent-[6px] text-sm font-light focus:outline-none"
-            />
-            {/* // <InputTextDesign */}
-            {/* //     readOnly
-        //     value={value}
-        //     type="text"
-        //     borderOn={false}
-        //     customDivClass="p-0"
-        //     customInputStyles="indent-[6px]"
-        //     error={!!error}
-        //     placeholder="DD/MM/YY"
-        // /> */}
-        </div>
-    )
-
     const datePickerRef = useRef<DatePicker | null>(null)
+    const [viewingMonth, setViewingMonth] = useState(new Date())
 
     const handleClickOutside = () => {
         if (datePickerRef.current) {
@@ -94,7 +82,7 @@ const CustomDatePicker = ({ name, control }: CustomDatePickerProps) => {
     }
 
     return (
-        <TitleH4Component title="დედლაინი">
+        <TitleH4Component title="დედლაინი" required={required}>
             <DatePicker
                 //ref
                 ref={datePickerRef}
@@ -104,7 +92,7 @@ const CustomDatePicker = ({ name, control }: CustomDatePickerProps) => {
                 wrapperClassName={
                     !!error ? 'datePickerError' : 'datePickCustom'
                 }
-                className="flex items-center justify-center border border-amber-300"
+                placeholderText="DD/MM/YYYY"
                 // Custom Elements
                 renderCustomHeader={({
                     date,
@@ -188,7 +176,13 @@ const CustomDatePicker = ({ name, control }: CustomDatePickerProps) => {
                         </p>
                     </div>
                 }
-                customInput={<CustomInput />}
+                customInput={
+                    <input
+                        placeholder="DD/MM/YYYY"
+                        type="text"
+                        className="w-full indent-[6px] text-sm font-light focus:outline-none"
+                    />
+                }
                 // Toggles
                 showIcon
                 showPopperArrow={false}
@@ -200,11 +194,17 @@ const CustomDatePicker = ({ name, control }: CustomDatePickerProps) => {
                     // @ts-ignore - მაინ არ იძლევა სვას
                     return Weeks[date]
                 }}
+                onMonthChange={(date) => setViewingMonth(date)}
+                dayClassName={(date: Date) =>
+                    getMonth(date) === getMonth(viewingMonth)
+                        ? ''
+                        : 'not-same-month'
+                }
                 startDate={Today}
                 minDate={Today}
-                dateFormat="dd.MM.yyyy"
-                selected={value}
-                onChange={onChange}
+                dateFormat="dd/MM/yyyy"
+                selected={field.value}
+                onChange={field.onChange}
             />
         </TitleH4Component>
     )

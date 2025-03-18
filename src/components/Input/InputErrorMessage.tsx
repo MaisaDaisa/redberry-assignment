@@ -17,7 +17,7 @@ function InputErrorMessage({
 
     return (
         <span
-            className="flex items-center gap-[2px] text-[10px] font-[350]"
+            className="font-book flex items-center gap-[2px] text-[10px]"
             style={{ color: validationType }} // Apply color to text
         >
             <svg

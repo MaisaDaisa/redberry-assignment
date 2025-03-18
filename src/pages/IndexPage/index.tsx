@@ -4,11 +4,11 @@ import {
     prioritySchema,
     statusSchema,
 } from '@/api/apiSchemas'
-import { getAllPriorities, getAllStatuses } from '@/api/getRequest'
+import { getAllPriorities } from '@/api/getRequest'
 import Filter from '@/components/Filter'
 import FilterInlineDisplay from '@/components/Filter/FilterInline/FilterInlineDisplay'
 import TasksDisplay from '@/components/Tasks/TasksDisplay'
-import { useDepartmentsContext } from '@/contexts/mainContext'
+import { useStatusesContext } from '@/contexts/mainContext'
 import HeaderWrapper from '@/layouts/HeaderWrapper'
 import { useEffect, useState } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
@@ -20,8 +20,8 @@ export type filterValues = {
 }
 
 const IndexPage = () => {
-    const [statuses, setStatuses] = useState<statusSchema[]>([])
     const [priorities, setPriorities] = useState<prioritySchema[]>([])
+    const statuses: statusSchema[] = useStatusesContext()
 
     const methods = useForm<filterValues>({
         defaultValues: {
@@ -37,7 +37,6 @@ const IndexPage = () => {
 
     useEffect(() => {
         const getInfo = async () => {
-            setStatuses(await getAllStatuses())
             setPriorities(await getAllPriorities())
             // setTasks(await getAllTasks())
             // setStatuses(await delayedInvoke(() => testStatus))
