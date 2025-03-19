@@ -20,7 +20,7 @@ const FilterInlineDisplay = ({}) => {
     }
 
     return (
-        <div className="mt-[25px] inline-flex h-[30px] w-full justify-start gap-4">
+        <div className="flex min-h-[30px] w-full flex-wrap justify-start gap-4">
             {formValues?.departments.length > 0 &&
                 formValues.departments.map((department) => (
                     <FilterDisplayText

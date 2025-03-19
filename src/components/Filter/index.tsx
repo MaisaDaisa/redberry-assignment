@@ -45,7 +45,7 @@ const Filter = ({ priorities }: FilterProps) => {
     }
 
     return (
-        <div className="border-gray-border relative float-left mt-[52px] flex items-start gap-[45px] rounded-[10px] border py-[10px]">
+        <div className="border-gray-border relative float-left mt-[52px] mb-[25px] flex items-start gap-[45px] rounded-[10px] border py-[10px]">
             {/* დეპარტამენტი Filter */}
             <Controller
                 name="departments"
