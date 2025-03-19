@@ -4,10 +4,9 @@ import Input from '@/components/Input'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { DevTool } from '@hookform/devtools'
 import FileUploader from '@/components/FileUploader/FileUploader'
-import DropDown from '@/components/DropDown/DropDown'
 import { useDepartmentsContext } from '@/contexts/mainContext'
 import { employeeSchema } from '@/api/apiSchemas'
-import { createEmployee } from '@/api/postRequest'
+import DropDownWithTitle from '@/components/DropDown/DropDownWithTitle'
 
 export type employeeFormInputs = {
     name: string
@@ -106,13 +105,15 @@ function FullScreenWrapper({ toggleActive }: FullScreenWrapperProps) {
                                     required
                                     title="ავატარი"
                                 />
-                                <DropDown
-                                    name="department"
-                                    control={control}
+                                <DropDownWithTitle
                                     required
                                     title="დეპარტამენტი"
                                     h4CustomClasses={h4Styles}
-                                    items={departments}
+                                    dropDownProps={{
+                                        control: control,
+                                        name: 'department',
+                                        items: departments,
+                                    }}
                                 />
                             </div>
                             <AddEmployeeButtonWrapper

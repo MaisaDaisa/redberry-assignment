@@ -1,6 +1,6 @@
 import { prioritySchema, statusSchema } from '@/api/apiSchemas'
-import DropDown from '@/components/DropDown/DropDown'
 import DropDownPriority from '@/components/DropDown/DropDownPriority'
+import DropDownWithTitle from '@/components/DropDown/DropDownWithTitle'
 import { Control } from 'react-hook-form'
 
 type DropDownWrapperProps = {
@@ -14,28 +14,32 @@ type DropDownWrapperProps = {
 const DropDownWrapper = ({ control, data }: DropDownWrapperProps) => {
     return (
         <div className="grid grid-cols-2 gap-8">
-            <DropDown
-                control={control}
-                name="priority_id"
+            <DropDownWithTitle
                 key={'titleDropDown'}
                 title="პრიორიტეტი"
                 required
-                items={data.priorities}
-                renderItem={(item: prioritySchema, onClick) => (
-                    <DropDownPriority
-                        iconUrl={item.icon}
-                        text={item.name}
-                        onClick={onClick}
-                    />
-                )}
+                dropDownProps={{
+                    items: data.priorities,
+                    name: 'priority_id',
+                    control: control,
+                    renderItem: (item: prioritySchema, onClick) => (
+                        <DropDownPriority
+                            iconUrl={item.icon}
+                            text={item.name}
+                            onClick={onClick}
+                        />
+                    ),
+                }}
             />
-            <DropDown
-                control={control}
-                name="status_id"
+            <DropDownWithTitle
                 title="სტატუსი"
-                key={'statusDropDown'}
                 required
-                items={data.statuses}
+                key={'statusDropDown'}
+                dropDownProps={{
+                    control: control,
+                    name: 'status_id',
+                    items: data.statuses,
+                }}
             />
         </div>
     )

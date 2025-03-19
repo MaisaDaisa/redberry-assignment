@@ -3,8 +3,6 @@ import { SubmitButtonWrapper } from './SubmitButtonWrapper'
 import InputField from '@/components/Input'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import HeaderWrapper from '@/layouts/HeaderWrapper'
-// import { DevTool } from '@hookform/devtools'
-import DropDown from '@/components/DropDown/DropDown'
 import DropDownWrapper from './DropDownWrapper'
 import { useDepartmentsContext } from '@/contexts/mainContext'
 import { useEffect, useState } from 'react'
@@ -18,6 +16,7 @@ import AvatarWithTextInline from '@/components/AvatarWithTextInline'
 import DropDownChoiceWrapper from '@/components/DropDown/DropDownChoiceWrapper'
 import { DevTool } from '@hookform/devtools'
 import { createNewTask } from '@/api/postRequest'
+import DropDownWithTitle from '@/components/DropDown/DropDownWithTitle'
 
 export type FormFields = {
     name: string
@@ -68,12 +67,14 @@ const CreateTaskPage = () => {
                     required
                     type="text"
                 />
-                <DropDown
-                    control={control}
-                    name="department_id"
+                <DropDownWithTitle
                     title="დეპარტამენტი"
                     required
-                    items={departments}
+                    dropDownProps={{
+                        items: departments,
+                        control: control,
+                        name: 'department_id',
+                    }}
                 />
                 <InputField
                     control={control}
@@ -81,22 +82,24 @@ const CreateTaskPage = () => {
                     title="აღწერა"
                     type="textarea"
                 />
-                <DropDown
-                    control={control}
-                    name="employee_id"
+                <DropDownWithTitle
                     title="პასუხისმგებელი თანამშრომელი"
                     key={'employeeDropdown'}
                     required
-                    items={employees}
-                    renderItem={(item, onClick) => (
-                        <DropDownChoiceWrapper onClick={onClick}>
-                            <AvatarWithTextInline
-                                avatarUrl={item.avatar}
-                                name={item.name}
-                                key={'avatar' + item.id}
-                            />
-                        </DropDownChoiceWrapper>
-                    )}
+                    dropDownProps={{
+                        items: employees,
+                        control: control,
+                        name: 'employee_id',
+                        renderItem: (item, onClick) => (
+                            <DropDownChoiceWrapper onClick={onClick}>
+                                <AvatarWithTextInline
+                                    avatarUrl={item.avatar}
+                                    name={item.name}
+                                    key={'avatar' + item.id}
+                                />
+                            </DropDownChoiceWrapper>
+                        ),
+                    }}
                 />
                 {/* this might seem unnecessary but somehow this prevents
                 rerendering of two dropDown inputs on change of every other
@@ -112,7 +115,7 @@ const CreateTaskPage = () => {
                 <CustomDatePickerWrapper name={'due_date'} control={control} />
                 <SubmitButtonWrapper onSubmit={() => onSubmit} />
             </form>
-            <DevTool control={control} />
+            {/* <DevTool control={control} /> */}
         </HeaderWrapper>
     )
 }

@@ -37,7 +37,7 @@ const InputField = ({
         name,
         control,
         rules: {
-            required: required ? 'This field is required' : false, // ✅ Fix required
+            required: required ? 'This field is required' : false, //  Fix required
             pattern: {
                 value: /^[A-Za-z\u10D0-\u10FF\s]+$/,
 

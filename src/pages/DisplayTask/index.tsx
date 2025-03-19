@@ -81,7 +81,7 @@ export const index = () => {
                             <div className="flex flex-col">
                                 <DetailsRow imgUrl={pieChart} text="სტატუსი">
                                     <div></div>
-                                    {/* <DropDown /> */}
+                                    <DropDown control={} />
                                 </DetailsRow>
                                 <DetailsRow imgUrl={person} text="თანამშრომელი">
                                     <div className="flex flex-row items-center gap-[6px]">
@@ -145,9 +145,6 @@ export const index = () => {
                     </aside>
                 </section>
             )}
-            {/* ) : (
-                <div></div>
-            )} */}
         </>
     )
 }

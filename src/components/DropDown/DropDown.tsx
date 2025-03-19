@@ -1,36 +1,27 @@
-import { useState, JSX, useEffect, useRef, RefObject } from 'react'
+import { useState, JSX, useRef } from 'react'
 import { Control, useController } from 'react-hook-form'
-import TitleH4Component from '../../layouts/TitleH4Component'
 import DropDownText from './DropDownText'
 import { useClickOutside } from '@/hooks/useClickOutside'
 import DropDownChoiceWrapper from './DropDownChoiceWrapper'
 
-type DropDownProps = {
+export type DropDownProps = {
     additionalComponent?: JSX.Element
     name: string
-    title?: string
     items: any[]
-    required?: boolean
     placeholder?: string
     control: Control<any>
-    h4CustomClasses?: string
     renderItem?: (item: any, onClick: () => void) => JSX.Element
     selectedItem?: any
-    headerEnabled?: boolean
 }
 
 const DropDown = ({
-    headerEnabled = true,
     selectedItem = null,
     control,
-    required = false,
     name,
-    title = name,
     additionalComponent,
     items,
     renderItem,
     placeholder = 'Select an option',
-    h4CustomClasses = '',
 }: DropDownProps) => {
     const [toggleCombo, setToggleCombo] = useState(false)
     const [selected, setSelected] = useState<{
@@ -66,11 +57,7 @@ const DropDown = ({
     }
 
     return (
-        <TitleH4Component
-            title={title}
-            required={required}
-            h4CustomClasses={h4CustomClasses}
-        >
+        <>
             <div
                 className="relative w-full text-sm font-light"
                 ref={dropDownRef}
@@ -145,7 +132,7 @@ const DropDown = ({
             <input type="hidden" {...field} />
 
             {/* Display validation message */}
-        </TitleH4Component>
+        </>
     )
 }
 
