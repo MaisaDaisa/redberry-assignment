@@ -5,6 +5,7 @@ import TitleH4Component from '../../layouts/TitleH4Component'
 import './datepicker.css'
 import { useRef, useState } from 'react'
 import { WeeksEnglish } from '@/enums/dateEnums'
+import { months } from '@/utils/months'
 
 type CustomDatePickerProps = {
     name: string
@@ -44,21 +45,6 @@ const CustomDatePicker = ({
     }
 
     const Today = new Date()
-
-    const months = [
-        'იანვარი',
-        'თებერვალი',
-        'მარტი',
-        'აპრილი',
-        'მაისი',
-        'ივნისი',
-        'ივლისი',
-        'აგვისტო',
-        'სექტემბერი',
-        'ოქტომბერი',
-        'ნოემბერი',
-        'დეკემბერი',
-    ]
 
     return (
         <TitleH4Component title="დედლაინი" required={required}>

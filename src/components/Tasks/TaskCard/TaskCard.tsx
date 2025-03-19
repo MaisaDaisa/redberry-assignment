@@ -1,41 +1,59 @@
+import { taskSchema } from '@/api/schemas/apiSchemas'
 import DepartmentRounded from '@/components/DepartmentRounded'
 import TaskPriorityBordered from '@/components/TaskPriorityBordered'
 import { statusStyles } from '@/components/Tasks/TaskStatusColorEnum'
+import { months } from '@/utils/months'
 
 type TaskCardProps = {
     statusId?: number
+    task: taskSchema
 }
 
-const TaskCard = ({ statusId = 2 }: TaskCardProps) => {
+const TaskCard = ({ statusId = 2, task }: TaskCardProps) => {
+    const due_Date = new Date(task.due_date)
     return (
         <div
             className={`flex flex-col items-center gap-7 rounded-[15px] border p-5 ${statusStyles[statusId].borderColor}`}
         >
-            <div className="flex w-full justify-between">
+            <div className="flex w-full items-center justify-between">
                 <div className="flex gap-[10px]">
-                    {/* <TaskPriorityBordered /> */}
-                    <DepartmentRounded
-                        departmentId={3}
-                        departmentText="Redberry"
-                    />
+                    <TaskPriorityBordered {...task.priority} />
+                    {/* <DepartmentRounded
+                        departmentId={task.department.id}
+                        departmentText={task.department.name}
+                    /> */}
                 </div>
                 <p className="text-gray-Shades-Headlines text-sm">
-                    22 იანვ, 2022{' '}
+                    {due_Date.getDate()}{' '}
+                    {months[due_Date.getMonth() - 1].substring(0, 3)},{' '}
+                    {due_Date.getFullYear()}
                 </p>
             </div>
-            <div className="flex flex-col gap-3">
+            <div className="flex w-full flex-col items-start gap-3">
                 <h5 className="text-[15px] font-medium">
-                    Redberry-ს საიტის ლენდინგის დიზაინი{' '}
+                    {task.name
+                        ? task.name
+                        : 'Redberry-ს საიტის ლენდინგის დიზაინი'}
                 </h5>
                 <p className="text-sm">
-                    შექმენი საიტის მთავარი გვერდი, რომელიც მოიცავს მთავარ
-                    სექციებს, ნავიგაციას.
+                    {task.description
+                        ? task.description.substring(0, 100) + '...'
+                        : ' შექმენი საიტის მთავარი გვერდი, რომელიც მოიცავს მთავარ სექციებს, ნავიგაციას'}
                 </p>
             </div>
             <div className="flex w-full items-center justify-between">
                 <img
-                    src="https://picsum.photos/200/200"
-                    alt="yup"
+                    src={
+                        task.employee.avatar
+                            ? task.employee.avatar
+                            : 'https://picsum.photos/200/200'
+                    }
+                    alt={
+                        task.employee.name +
+                        ' ' +
+                        task.employee.surname +
+                        ' avatar'
+                    }
                     className="h-8 w-8 rounded-full"
                 />
                 <div className="flex items-center gap-1">
@@ -51,7 +69,7 @@ const TaskCard = ({ statusId = 2 }: TaskCardProps) => {
                             fill="#212529"
                         />
                     </svg>
-                    <h6 className="text-sm">8</h6>
+                    <h6 className="text-sm">{task.total_comments}</h6>
                 </div>
             </div>
         </div>

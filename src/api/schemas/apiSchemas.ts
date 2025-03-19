@@ -31,6 +31,7 @@ export type taskSchema = {
     priority: prioritySchema
     department: departmentSchema
     employee: employeeSchema
+    total_comments: number
 }
 
 export type commentSchema = {

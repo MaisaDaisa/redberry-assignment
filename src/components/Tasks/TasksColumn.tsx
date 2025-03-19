@@ -1,12 +1,12 @@
-import TaskCard from './TaskCard/TaskCard'
 import { statusStyles } from '@/components/Tasks/TaskStatusColorEnum'
 
 type TasksColumnProps = {
     statusId?: number
     title: string
+    children?: React.ReactNode
 }
 
-const TasksColumn = ({ statusId = 1, title }: TasksColumnProps) => {
+const TasksColumn = ({ statusId = 1, title, children }: TasksColumnProps) => {
     return (
         <div className="flex flex-col gap-[30px]">
             <div
@@ -14,16 +14,7 @@ const TasksColumn = ({ statusId = 1, title }: TasksColumnProps) => {
             >
                 <p className="text-xl font-medium text-white">{title}</p>
             </div>
-            <div className="flex flex-col gap-[30px]">
-                <TaskCard statusId={statusId} />
-                <TaskCard statusId={statusId} />
-                <TaskCard statusId={statusId} />
-                <TaskCard statusId={statusId} />
-                <TaskCard statusId={statusId} />
-                <TaskCard statusId={statusId} />
-                <TaskCard statusId={statusId} />
-                <TaskCard statusId={statusId} />
-            </div>
+            <div className="flex flex-col gap-[30px]">{children}</div>
         </div>
     )
 }

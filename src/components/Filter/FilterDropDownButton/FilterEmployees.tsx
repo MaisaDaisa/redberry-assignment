@@ -1,6 +1,5 @@
 import { employeeSchema } from '@/api/schemas/apiSchemas'
 import CheckBoxAvatar from '@/components/CheckBox/CheckBoxAvatar'
-import CheckBoxWithText from '@/components/CheckBox/CheckBoxWithText'
 import { ControllerRenderProps, UseFormSetValue } from 'react-hook-form'
 import FilterDropDownButtons, {
     FilterDropDownButtonsProps,
@@ -27,8 +26,6 @@ const FilterEmployees = ({
     const [localSelection, setLocalSelection] = useState<
         employeeSchema | undefined
     >(field.value)
-
-    console.log(localSelection)
 
     const handleCheck = (valueToCheck: employeeSchema) => {
         !localSelection && setLocalSelection(valueToCheck)
