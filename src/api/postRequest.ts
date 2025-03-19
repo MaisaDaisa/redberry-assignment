@@ -1,4 +1,9 @@
 import { axiosInstanceJson } from '@/api/axios'
+import {
+    commentPostSchema,
+    employeePostSchema,
+    taskPostSchema,
+} from './schemas/apiPostSchemas'
 
 export const postRequest = async (url: string, data: any) => {
     try {
@@ -30,14 +35,17 @@ export const postRequestForm = async (url: string, data: any) => {
     }
 }
 
-export const createEmployee = async (data: any) => {
+export const createEmployee = async (data: employeePostSchema) => {
     return postRequestForm('/employees', data)
 }
 
-export const createNewComment = async (data: any, taskId: number) => {
+export const createNewComment = async (
+    data: commentPostSchema,
+    taskId: number
+) => {
     return postRequest(`/tasks/${taskId}/comments`, data)
 }
 
-export const createNewTask = async (data: any) => {
+export const createNewTask = async (data: taskPostSchema) => {
     return postRequest(`/tasks`, data)
 }

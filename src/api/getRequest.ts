@@ -32,7 +32,7 @@ export const getAllTasks = async () => {
     return getRequest(`/tasks`, axiosInstanceJson)
 }
 
-export const getAllCommentsForSpecificTask = async (taskId: number) => {
+export const getTaskComments = async (taskId: number) => {
     return getRequest(`/tasks/${taskId}/comments`, axiosInstanceJson)
 }
 
