@@ -1,40 +1,61 @@
-import { employeeSchema } from '@/api/apiSchemas'
+import { employeeSchema } from '@/api/schemas/apiSchemas'
 import CheckBoxAvatar from '@/components/CheckBox/CheckBoxAvatar'
 import CheckBoxWithText from '@/components/CheckBox/CheckBoxWithText'
-import { UseFormSetValue } from 'react-hook-form'
+import { ControllerRenderProps, UseFormSetValue } from 'react-hook-form'
+import FilterDropDownButtons, {
+    FilterDropDownButtonsProps,
+} from './FilterDropDownButtons'
+import { useState } from 'react'
 
-type FilterEmployeesProps = {
-    filters: employeeSchema[]
-    selectedValue: employeeSchema
+type FilterEmployeesProps = Omit<
+    FilterDropDownButtonsProps,
+    'children' | 'onSubmit'
+> & {
     setValue: UseFormSetValue<any>
-    nameProp: string
+    initialData: employeeSchema[]
+    field: ControllerRenderProps<any, any>
 }
 
 const FilterEmployees = ({
-    filters,
-    selectedValue,
+    field,
+    initialData,
     setValue,
-    nameProp,
+    filterText,
+    handleSetActive,
+    isActive,
 }: FilterEmployeesProps) => {
+    const [localSelection, setLocalSelection] = useState<
+        employeeSchema | undefined
+    >(field.value)
+
+    console.log(localSelection)
+
     const handleCheck = (valueToCheck: employeeSchema) => {
-        if (selectedValue.id === valueToCheck.id) {
-            setValue(nameProp, {})
+        !localSelection && setLocalSelection(valueToCheck)
+        if (localSelection?.id === valueToCheck.id) {
+            setLocalSelection(undefined)
         } else {
-            setValue(nameProp, valueToCheck)
+            setLocalSelection(valueToCheck)
         }
     }
+
     return (
-        <>
-            {filters.map((filter) => (
+        <FilterDropDownButtons
+            filterText={filterText}
+            isActive={isActive}
+            handleSetActive={handleSetActive}
+            onSubmit={() => setValue(field.name, localSelection)}
+        >
+            {initialData.map((filter: employeeSchema) => (
                 <CheckBoxAvatar
                     name={filter.name}
                     avatarUrl={filter.avatar}
-                    key={nameProp + filter.id}
-                    isChecked={selectedValue.id === filter.id}
+                    key={field.name + filter.id}
+                    isChecked={localSelection?.id === filter.id}
                     onClickHandler={() => handleCheck(filter)}
                 />
             ))}
-        </>
+        </FilterDropDownButtons>
     )
 }
 

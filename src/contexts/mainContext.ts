@@ -1,4 +1,4 @@
-import { departmentSchema, statusSchema } from '@/api/apiSchemas'
+import { departmentSchema, statusSchema } from '@/api/schemas/apiSchemas'
 import { createContext, useContext } from 'react'
 
 type mainContextType = {

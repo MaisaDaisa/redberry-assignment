@@ -1,4 +1,4 @@
-import { prioritySchema, statusSchema } from '@/api/apiSchemas'
+import { prioritySchema, statusSchema } from '@/api/schemas/apiSchemas'
 import DropDownPriority from '@/components/DropDown/DropDownPriority'
 import DropDownWithTitle from '@/components/DropDown/DropDownWithTitle'
 import { Control } from 'react-hook-form'

@@ -1,4 +1,4 @@
-import { statusSchema } from '@/api/apiSchemas'
+import { statusSchema } from '@/api/schemas/apiSchemas'
 import TasksColumn from '@/components/Tasks/TasksColumn'
 
 type TasksDisplayProps = {

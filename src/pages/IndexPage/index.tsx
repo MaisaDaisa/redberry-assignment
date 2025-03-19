@@ -3,7 +3,7 @@ import {
     employeeSchema,
     prioritySchema,
     statusSchema,
-} from '@/api/apiSchemas'
+} from '@/api/schemas/apiSchemas'
 import { getAllPriorities } from '@/api/getRequest'
 import Filter from '@/components/Filter'
 import FilterInlineDisplay from '@/components/Filter/FilterInline/FilterInlineDisplay'

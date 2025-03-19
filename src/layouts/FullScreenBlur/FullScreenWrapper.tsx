@@ -5,8 +5,9 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { DevTool } from '@hookform/devtools'
 import FileUploader from '@/components/FileUploader/FileUploader'
 import { useDepartmentsContext } from '@/contexts/mainContext'
-import { employeeSchema } from '@/api/apiSchemas'
+import { employeePostSchema } from '@/api/schemas/apiPostSchemas'
 import DropDownWithTitle from '@/components/DropDown/DropDownWithTitle'
+import { createEmployee } from '@/api/postRequest'
 
 export type employeeFormInputs = {
     name: string
@@ -32,7 +33,7 @@ function FullScreenWrapper({ toggleActive }: FullScreenWrapperProps) {
     const { control, handleSubmit } = methods
 
     const onSubmit: SubmitHandler<employeeFormInputs> = (data) => {
-        const dataToSend: employeeSchema = {
+        const dataToSend: employeePostSchema = {
             name: data.name,
             surname: data.surname,
             department_id: data.department.id,
@@ -40,7 +41,7 @@ function FullScreenWrapper({ toggleActive }: FullScreenWrapperProps) {
         }
         console.log(dataToSend)
 
-        // createEmployee(dataToSend)
+        createEmployee(dataToSend)
     }
 
     const h4Styles = 'text-sm font-medium'

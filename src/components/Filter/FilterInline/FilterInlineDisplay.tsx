@@ -3,7 +3,7 @@ import { filterValues } from '@/pages/IndexPage'
 import FilterDisplayText from './FilterDisplayText'
 
 const FilterInlineDisplay = ({}) => {
-    const { watch, setValue } = useFormContext<filterValues>()
+    const { watch, setValue, resetField } = useFormContext<filterValues>()
 
     const formValues = watch()
 
@@ -41,6 +41,17 @@ const FilterInlineDisplay = ({}) => {
                         }
                     />
                 ))}
+            {formValues?.employee.name && (
+                <FilterDisplayText
+                    key={formValues?.employee.id}
+                    text={
+                        formValues?.employee.name +
+                        ' ' +
+                        formValues?.employee.surname
+                    }
+                    onClickHandler={() => resetField('employee')}
+                />
+            )}
         </div>
     )
 }

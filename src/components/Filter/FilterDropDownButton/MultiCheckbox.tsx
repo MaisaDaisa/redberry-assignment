@@ -1,4 +1,4 @@
-import { departmentSchema, prioritySchema } from '@/api/apiSchemas'
+import { departmentSchema, prioritySchema } from '@/api/schemas/apiSchemas'
 import CheckBoxWithText from '@/components/CheckBox/CheckBoxWithText'
 import { MultiAcceptFilterArrays } from './FilterDepPriority'
 

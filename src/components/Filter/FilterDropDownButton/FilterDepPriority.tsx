@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import FilterDropDownButtons from './FilterDropDownButtons'
 import MultiCheckbox from './MultiCheckbox'
 import { ControllerRenderProps, UseFormSetValue } from 'react-hook-form'
-import { departmentSchema, prioritySchema } from '@/api/apiSchemas'
+import { departmentSchema, prioritySchema } from '@/api/schemas/apiSchemas'
 
 export type MultiAcceptFilterArrays = prioritySchema[] | departmentSchema[]
 
