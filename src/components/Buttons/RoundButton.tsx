@@ -1,6 +1,6 @@
 type ButtonProps = {
     text: string
-    onClickHandler: () => any
+    onClickHandler?: () => any
     type?: 'submit' | 'reset' | 'button' | undefined
     customClass?: string
 }

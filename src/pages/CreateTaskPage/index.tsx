@@ -6,7 +6,11 @@ import HeaderWrapper from '@/layouts/HeaderWrapper'
 import DropDownWrapper from './DropDownWrapper'
 import { useDepartmentsContext } from '@/contexts/mainContext'
 import { useEffect, useState } from 'react'
-import { employeeSchema, prioritySchema, statusSchema } from '@/api/apiSchemas'
+import {
+    employeeSchema,
+    prioritySchema,
+    statusSchema,
+} from '@/api/schemas/apiSchemas'
 import {
     getAllEmployees,
     getAllPriorities,

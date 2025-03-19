@@ -1,4 +1,4 @@
-import { useState, JSX, useRef } from 'react'
+import { useState, JSX, useRef, useEffect } from 'react'
 import { Control, useController } from 'react-hook-form'
 import DropDownText from './DropDownText'
 import { useClickOutside } from '@/hooks/useClickOutside'
@@ -11,10 +11,12 @@ export type DropDownProps = {
     placeholder?: string
     control: Control<any>
     renderItem?: (item: any, onClick: () => void) => JSX.Element
-    selectedItem?: any
+    selectedItem?: any | null
+    onChange: () => any
 }
 
 const DropDown = ({
+    onChange = () => {},
     selectedItem = null,
     control,
     name,
@@ -25,7 +27,7 @@ const DropDown = ({
 }: DropDownProps) => {
     const [toggleCombo, setToggleCombo] = useState(false)
     const [selected, setSelected] = useState<{
-        id: string | number
+        id: number
         name: string
     } | null>(selectedItem)
 
@@ -47,13 +49,15 @@ const DropDown = ({
         setToggleCombo(false)
     })
 
-    const handleSelectedItem = (item: {
-        id: string | number
-        name: string
-    }) => {
+    useEffect(() => {
+        setSelected(selectedItem)
+    }, [selectedItem])
+
+    const handleSelectedItem = (item: { id: number; name: string }) => {
         setSelected(item)
         field.onChange(item.id)
         setToggleCombo(false)
+        onChange()
     }
 
     return (

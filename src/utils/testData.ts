@@ -3,7 +3,7 @@ import {
     employeeSchema,
     prioritySchema,
     statusSchema,
-} from '@/api/apiSchemas'
+} from '@/api/schemas/apiSchemas'
 
 export const testStatus: statusSchema[] = [
     {

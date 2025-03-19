@@ -1,21 +1,60 @@
+import { createNewComment } from '@/api/postRequest'
+import { commentPostSchema } from '@/api/schemas/apiPostSchemas'
 import RoundButton from '@/components/Buttons/RoundButton'
 import InputTextDesign from '@/components/Input/InputTextDesign'
-import React from 'react'
+import { DevTool } from '@hookform/devtools'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 
-export function CommentTextArea({}) {
+type CommentTextAreaProps = {
+    parent_id?: number | null
+    taskId: number
+    onComment: () => void
+}
+
+export function CommentTextArea({
+    parent_id = null,
+    taskId,
+    onComment,
+}: CommentTextAreaProps) {
+    const { control, handleSubmit } = useForm<commentPostSchema>({
+        mode: 'all',
+    })
+
+    const invokeCreateComment = async (data: commentPostSchema) => {
+        await createNewComment(
+            { text: data.text, parent_id: parent_id },
+            taskId
+        )
+        onComment()
+    }
+
+    const onSubmit: SubmitHandler<commentPostSchema> = (data) => {
+        console.log({ text: data.text, parent_id: parent_id })
+        invokeCreateComment(data)
+    }
+
     return (
-        <div className="relative">
-            <InputTextDesign
-                type="textarea"
-                placeholder="დაწერე კომენტარი"
-                customDivClass="rounded-[10px] px-5 pt-[18px] pb-[15px] font-book"
+        <form className="relative" onSubmit={handleSubmit(onSubmit)}>
+            <Controller
+                control={control}
+                name="text"
+                render={({ field }) => (
+                    <InputTextDesign
+                        type="textarea"
+                        placeholder="დაწერე კომენტარი"
+                        customDivClass="rounded-[10px] px-5 pt-[18px] pb-[15px] font-book"
+                        field={field}
+                    />
+                )}
             />
+
             <RoundButton
                 text="დააკომენტარე"
-                onClickHandler={() => {}}
+                type="submit"
                 customClass="bottom-[15px] absolute right-5"
             />
-        </div>
+            <DevTool control={control} />
+        </form>
     )
 }
 

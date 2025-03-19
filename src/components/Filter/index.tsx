@@ -4,7 +4,7 @@ import { Controller, useFormContext } from 'react-hook-form'
 import { DevTool } from '@hookform/devtools'
 import { filterValues } from '@/pages/IndexPage'
 import FilterEmployees from './FilterDropDownButton/FilterEmployees'
-import { employeeSchema, prioritySchema } from '@/api/apiSchemas'
+import { employeeSchema, prioritySchema } from '@/api/schemas/apiSchemas'
 import { getAllEmployees } from '@/api/getRequest'
 import FilterDepPriority from './FilterDropDownButton/FilterDepPriority'
 import { useDepartmentsContext } from '@/contexts/mainContext'
@@ -85,21 +85,14 @@ const Filter = ({ priorities }: FilterProps) => {
                 name="employee"
                 control={control}
                 render={({ field }) => (
-                    <FilterDropDownButtons
+                    <FilterEmployees
                         filterText="თანამშრომელი"
                         isActive={activeFilters === 3}
                         handleSetActive={() => handleSetActiveFilter(3)}
-                        // onSubmit={()=>{handleSubmit()}}
-                    >
-                        {employees.length > 0 && (
-                            <FilterEmployees
-                                selectedValue={field.value}
-                                nameProp={field.name}
-                                filters={employees}
-                                setValue={setValue}
-                            />
-                        )}
-                    </FilterDropDownButtons>
+                        field={field}
+                        initialData={employees}
+                        setValue={setValue}
+                    />
                 )}
             />
             <DevTool control={control} />

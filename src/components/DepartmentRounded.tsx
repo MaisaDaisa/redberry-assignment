@@ -16,7 +16,7 @@ const DepartmentRounded = ({
 
     return (
         <div
-            className={`w-[88px] rounded-full px-[9px] py-[5px] text-center text-xs text-white select-none ${
+            className={`rounded-full px-[9px] py-[5px] text-center text-xs text-white select-none ${
                 DepartmentColorEnum[depNum]
             }`}
         >

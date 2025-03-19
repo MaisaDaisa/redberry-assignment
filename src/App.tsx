@@ -10,7 +10,7 @@ import DisplayTask from './pages/DisplayTask'
 import FullScreenBlur from './layouts/FullScreenBlur/FullScreenBlur'
 import { useEffect, useState } from 'react'
 import FullScreenWrapper from './layouts/FullScreenBlur/FullScreenWrapper'
-import { departmentSchema, statusSchema } from './api/apiSchemas'
+import { departmentSchema, statusSchema } from './api/schemas/apiSchemas'
 import { mainContext } from './contexts/mainContext'
 import { getAllDepartments, getAllStatuses } from './api/getRequest'
 

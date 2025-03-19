@@ -7,8 +7,8 @@ type DetailsRowProps = {
 }
 const DetailsRow = ({ children, imgUrl, text }: DetailsRowProps) => {
     return (
-        <div className="flex flex-nowrap justify-start gap-[70px] py-[10px]">
-            <div className="flex items-center gap-[6px]">
+        <div className="grid grid-cols-[170px_auto] items-center gap-[70px] py-[10px]">
+            <div className="flex h-[50px] items-center gap-[6px]">
                 <img src={imgUrl} className="h-6 w-6 shrink-0" alt="" />
                 <p className="text-gray-small">{text}</p>
             </div>
