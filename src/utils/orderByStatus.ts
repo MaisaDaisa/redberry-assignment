@@ -1,14 +1,9 @@
 import { taskSchema } from '@/api/schemas/apiSchemas'
 
-type OrderByStatusProps = {
-    tasks: taskSchema[]
-    numOfStatuses?: number
-}
-
-export const orderByStatus = ({
-    tasks,
-    numOfStatuses = 4,
-}: OrderByStatusProps): taskSchema[][] => {
+export const orderByStatus = (
+    tasks: taskSchema[],
+    numOfStatuses: number = 4
+): taskSchema[][] => {
     if (tasks.length === 0) return []
     const groupedTasks: taskSchema[][] = Array.from(
         { length: numOfStatuses },

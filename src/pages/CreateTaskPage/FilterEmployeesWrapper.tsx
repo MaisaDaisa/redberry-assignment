@@ -51,7 +51,7 @@ const FilterEmployeesWrapper = ({
                             <DropDownChoiceWrapper onClick={onClick}>
                                 <AvatarWithTextInline
                                     avatarUrl={item.avatar}
-                                    name={item.name}
+                                    name={item.name + ' ' + item.surname}
                                     key={'avatar' + item.id}
                                 />
                             </DropDownChoiceWrapper>

@@ -4,34 +4,41 @@ import Input from '@/components/Input'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { DevTool } from '@hookform/devtools'
 import FileUploader from '@/components/FileUploader/FileUploader'
-import { useDepartmentsContext } from '@/contexts/mainContext'
-import { employeePostSchema } from '@/api/schemas/apiPostSchemas'
+import useDepartmentsContext from '@/contexts/AllPages/useDepartmentContext'
 import DropDownWithTitle from '@/components/DropDown/DropDownWithTitle'
 import { createEmployee } from '@/api/postRequest'
-
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
     zodEmployeeFormSchema,
     zodEmployeeFormSchemaType,
 } from '@/api/zodSchemas/zod.employeePostSchema'
+import { useNavigate } from 'react-router'
 
 type FullScreenWrapperProps = {
     toggleActive: () => void
 }
 
 function FullScreenWrapper({ toggleActive }: FullScreenWrapperProps) {
+    const navigation = useNavigate()
     const departments = useDepartmentsContext()
     const methods = useForm<zodEmployeeFormSchemaType>({
         mode: 'onChange',
         delayError: 500,
         resolver: zodResolver(zodEmployeeFormSchema),
         defaultValues: {
-            department_id: 0,
+            department_id: undefined,
+            avatar: undefined,
+            name: '',
+            surname: '',
         },
     })
-    const { control, handleSubmit } = methods
-    const onSubmit: SubmitHandler<zodEmployeeFormSchemaType> = (data) => {
-        createEmployee(data)
+    const { control, handleSubmit, reset } = methods
+    const onSubmit: SubmitHandler<zodEmployeeFormSchemaType> = async (data) => {
+        // const response = await createEmployee(data)
+        // console.log(response)
+
+        toggleActive()
+        reset()
     }
 
     const h4Styles = 'text-sm font-medium'
@@ -74,6 +81,7 @@ function FullScreenWrapper({ toggleActive }: FullScreenWrapperProps) {
                             <div className="grid w-full grid-cols-2 gap-[45px]">
                                 <Input
                                     h4CustomClasses={h4Styles}
+                                    key={'name input'}
                                     possibleErrors={[
                                         {
                                             message: 'მინიმუმ 2 სიმბოლო',
@@ -103,6 +111,7 @@ function FullScreenWrapper({ toggleActive }: FullScreenWrapperProps) {
                                     ]}
                                     h4CustomClasses={h4Styles}
                                     control={control}
+                                    key={'surname input'}
                                     name="surname"
                                     title="გვარი"
                                     required

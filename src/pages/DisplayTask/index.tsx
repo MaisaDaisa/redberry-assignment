@@ -9,7 +9,7 @@ import { useContext, useEffect, useState } from 'react'
 import { getTaskById } from '@/api/getRequest'
 import { useParams } from 'react-router'
 import { taskSchema } from '@/api/schemas/apiSchemas'
-import { mainContext } from '@/contexts/mainContext'
+import { appContext } from '@/contexts/AllPages/appContext'
 
 import TaskDropDownWrapper from './wrappers/TaskDropDownWrapper'
 
@@ -20,7 +20,7 @@ export const index = () => {
     let { taskId } = useParams<{ taskId: string }>()
     const numericTaskId = Number(taskId)
 
-    const departmentValues = useContext(mainContext)
+    const departmentValues = useContext(appContext)
 
     useEffect(() => {
         const fetchData = async () => {
