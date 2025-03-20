@@ -1,8 +1,13 @@
 import { createNewComment } from '@/api/postRequest'
 import { commentPostSchema } from '@/api/schemas/apiPostSchemas'
+import {
+    zodCommentPostFromSchema,
+    zodCommentPostFromSchemaType,
+} from '@/api/zodSchemas/zod.commentPostSchema'
 import RoundButton from '@/components/Buttons/RoundButton'
 import InputTextDesign from '@/components/Input/InputTextDesign'
 import { DevTool } from '@hookform/devtools'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 
 type CommentTextAreaProps = {
@@ -16,23 +21,22 @@ export function CommentTextArea({
     taskId,
     onComment,
 }: CommentTextAreaProps) {
-    const { control, handleSubmit, reset } = useForm<commentPostSchema>({
-        mode: 'all',
-        defaultValues: {
-            text: '',
-        },
-    })
+    const { control, handleSubmit, reset } =
+        useForm<zodCommentPostFromSchemaType>({
+            mode: 'all',
+            resolver: zodResolver(zodCommentPostFromSchema),
+            defaultValues: {
+                parent_id: parent_id,
+            },
+        })
 
     const invokeCreateComment = async (data: commentPostSchema) => {
-        await createNewComment(
-            { text: data.text, parent_id: parent_id },
-            taskId
-        )
+        await createNewComment(data, taskId)
         onComment()
     }
 
     const onSubmit: SubmitHandler<commentPostSchema> = (data) => {
-        console.log({ text: data.text, parent_id: parent_id })
+        // console.log(data)
         invokeCreateComment(data)
         reset()
     }

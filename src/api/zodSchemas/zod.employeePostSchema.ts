@@ -30,5 +30,4 @@ export const zodEmployeeFormSchema = z.object({
     department_id: z.number().int().positive(),
 })
 
-// Infer TypeScript type from Zod schema
 export type zodEmployeeFormSchemaType = z.infer<typeof zodEmployeeFormSchema>

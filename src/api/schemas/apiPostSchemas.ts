@@ -1,10 +1,7 @@
 import { zodTaskPostFormSchemaType } from '@/api/zodSchemas/zod.taskPostSchema'
 import { zodEmployeeFormSchemaType } from '@/api/zodSchemas/zod.employeePostSchema'
+import { zodCommentPostFromSchemaType } from '../zodSchemas/zod.commentPostSchema'
 
 export type taskPostSchema = Omit<zodTaskPostFormSchemaType, 'department_id'>
-export type commentPostSchema = {
-    text: string
-    parent_id: number | null
-}
-
+export type commentPostSchema = zodCommentPostFromSchemaType
 export type employeePostSchema = zodEmployeeFormSchemaType

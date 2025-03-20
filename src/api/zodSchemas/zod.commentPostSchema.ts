@@ -1,6 +1,10 @@
 import { z } from 'zod'
 
-const commentSchea = z.object({
-    email: z.string().email(),
-    password: z.string().min(3).max(20),
+export const zodCommentPostFromSchema = z.object({
+    text: z.string().trim().min(1),
+    parent_id: z.number().int().positive().nullable(),
 })
+
+export type zodCommentPostFromSchemaType = z.infer<
+    typeof zodCommentPostFromSchema
+>
