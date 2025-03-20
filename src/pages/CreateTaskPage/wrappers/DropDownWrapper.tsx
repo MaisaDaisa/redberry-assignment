@@ -22,11 +22,10 @@ const DropDownWrapper = ({ control, data }: DropDownWrapperProps) => {
                     items: data.priorities,
                     name: 'priority_id',
                     control: control,
-                    renderItem: (item: prioritySchema, onClick) => (
+                    renderItem: (item: prioritySchema) => (
                         <DropDownPriority
                             iconUrl={item.icon}
                             text={item.name}
-                            onClick={onClick}
                         />
                     ),
                 }}

@@ -26,8 +26,7 @@ const filterTasks = (tasks: taskSchema[][], filters: filterValues) => {
                 )
             const employeeBool =
                 !filters.employee || filters.employee.id === task.employee.id
-            console.log(task)
-            console.log(departmentBool, priorityBool, employeeBool)
+
             return departmentBool && priorityBool && employeeBool
         })
     )

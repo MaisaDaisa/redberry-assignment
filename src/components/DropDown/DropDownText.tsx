@@ -3,11 +3,18 @@ import DropDownChoiceWrapper from './DropDownChoiceWrapper'
 type DropDownTextProps = {
     text: string
     onClick: () => void
+    noHover?: boolean
 }
 
-const DropDownText = ({ onClick, text }: DropDownTextProps) => {
+const DropDownText = ({
+    onClick,
+    text,
+    noHover = false,
+}: DropDownTextProps) => {
     return (
-        <DropDownChoiceWrapper onClick={onClick}>{text}</DropDownChoiceWrapper>
+        <DropDownChoiceWrapper noHover={noHover} onClick={onClick}>
+            {text}
+        </DropDownChoiceWrapper>
     )
 }
 

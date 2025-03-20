@@ -10,13 +10,15 @@ export type DropDownProps = {
     items: any[]
     placeholder?: string
     control: Control<any>
-    renderItem?: (item: any, onClick: () => void) => JSX.Element
+    renderItem?: (item: any) => JSX.Element
     selectedItem?: any | null
     onChange?: () => any
     customDropDownStyles?: string
+    noHover?: boolean
 }
 
 const DropDown = ({
+    noHover = true,
     onChange = () => {},
     customDropDownStyles = '',
     selectedItem = null,
@@ -81,18 +83,25 @@ const DropDown = ({
                     <div className="w-full overflow-hidden text-nowrap">
                         {selected ? (
                             renderItem ? (
-                                renderItem(selected, () =>
-                                    handleSelectedItem(selected)
-                                )
+                                <DropDownChoiceWrapper
+                                    onClick={() => {}}
+                                    noHover={noHover}
+                                >
+                                    {renderItem(selected)}
+                                </DropDownChoiceWrapper>
                             ) : (
                                 <DropDownText
+                                    noHover={noHover}
                                     key={selected.name + selected.id}
                                     onClick={() => {}}
                                     text={selected.name}
                                 />
                             )
                         ) : (
-                            <DropDownChoiceWrapper onClick={() => {}}>
+                            <DropDownChoiceWrapper
+                                noHover={noHover}
+                                onClick={() => {}}
+                            >
                                 <span className="text-gray-400">
                                     {placeholder}
                                 </span>
@@ -124,7 +133,11 @@ const DropDown = ({
                         {additionalComponent}
                         {items.map((item) =>
                             renderItem ? (
-                                renderItem(item, () => handleSelectedItem(item))
+                                <DropDownChoiceWrapper
+                                    onClick={() => handleSelectedItem(item)}
+                                >
+                                    {renderItem(item)}
+                                </DropDownChoiceWrapper>
                             ) : (
                                 <DropDownText
                                     key={item.name + item.id}

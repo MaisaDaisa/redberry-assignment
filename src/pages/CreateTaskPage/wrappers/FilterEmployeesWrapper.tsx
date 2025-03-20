@@ -1,10 +1,12 @@
 import DropDownWithTitle from '@/components/DropDown/DropDownWithTitle'
 import { useEffect, useState } from 'react'
 import { Control, UseFormResetField, useWatch } from 'react-hook-form'
-import { CreateTaskSchema } from '.'
+import { CreateTaskSchema } from '..'
 import { employeeSchema } from '@/api/schemas/apiSchemas'
 import DropDownChoiceWrapper from '@/components/DropDown/DropDownChoiceWrapper'
 import AvatarWithTextInline from '@/components/AvatarWithTextInline'
+import AddEmployeeDropDownComp from '../components/AddEmployeeDropDownComp'
+import useFullScreenContext from '@/contexts/FullScreen/useFullScreenContext'
 
 type FilterEmployeesWrapperProps = {
     employees: employeeSchema[]
@@ -26,6 +28,12 @@ const FilterEmployeesWrapper = ({
         name: 'department_id',
     })
 
+    const fullScreenContext = useFullScreenContext()
+
+    const additionalComponent = (
+        <AddEmployeeDropDownComp onClick={() => fullScreenContext()} />
+    )
+
     useEffect(() => {
         if (chosenDepartment) {
             resetField('employee_id')
@@ -46,15 +54,14 @@ const FilterEmployeesWrapper = ({
                     dropDownProps={{
                         items: filteredEmployees,
                         control: control,
+                        additionalComponent: additionalComponent,
                         name: 'employee_id',
-                        renderItem: (item, onClick) => (
-                            <DropDownChoiceWrapper onClick={onClick}>
-                                <AvatarWithTextInline
-                                    avatarUrl={item.avatar}
-                                    name={item.name + ' ' + item.surname}
-                                    key={'avatar' + item.id}
-                                />
-                            </DropDownChoiceWrapper>
+                        renderItem: (item) => (
+                            <AvatarWithTextInline
+                                avatarUrl={item.avatar}
+                                name={item.name + ' ' + item.surname}
+                                key={'avatar' + item.id}
+                            />
                         ),
                     }}
                 />

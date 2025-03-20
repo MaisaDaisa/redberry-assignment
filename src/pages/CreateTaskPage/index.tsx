@@ -1,9 +1,9 @@
-import { CustomDatePickerWrapper } from './CustomDatePickerWrapper'
-import { SubmitButtonWrapper } from './SubmitButtonWrapper'
+import CustomDatePickerWrapper from './wrappers/CustomDatePickerWrapper'
+import { SubmitButtonWrapper } from './wrappers/SubmitButtonWrapper'
 import InputField from '@/components/Input'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import HeaderWrapper from '@/layouts/HeaderWrapper'
-import DropDownWrapper from './DropDownWrapper'
+import DropDownWrapper from './wrappers/DropDownWrapper'
 import useDepartmentsContext from '@/contexts/AllPages/useDepartmentContext'
 import { useEffect, useState } from 'react'
 import {
@@ -16,10 +16,9 @@ import {
     getAllPriorities,
     getAllStatuses,
 } from '@/api/getRequest'
-import { DevTool } from '@hookform/devtools'
 import { createNewTask } from '@/api/postRequest'
 import DropDownWithTitle from '@/components/DropDown/DropDownWithTitle'
-import FilterEmployeesWrapper from './FilterEmployeesWrapper'
+import FilterEmployeesWrapper from './wrappers/FilterEmployeesWrapper'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
     zodTaskPostFormSchema,
@@ -78,7 +77,7 @@ const CreateTaskPage = () => {
         <HeaderWrapper text="შექმენი ახალი დავალება">
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="isolate mt-[30px] grid grid-cols-[550px_550px] justify-around gap-y-[55px] rounded-sm px-[55px] pt-[65px] pb-[62px]"
+                className="isolate mt-[30px] grid grid-cols-[auto_auto] gap-x-[150px] gap-y-[55px] rounded-sm px-[55px] pt-[65px] pb-[62px]"
             >
                 <InputField
                     possibleErrors={[
