@@ -4,24 +4,24 @@ import { MultiAcceptFilterArrays } from './FilterDepPriority'
 
 type MultiCheckboxProps = {
     filters: MultiAcceptFilterArrays
-    selectedValue: MultiAcceptFilterArrays
+    selectedValues: MultiAcceptFilterArrays
     setValue: (value: MultiAcceptFilterArrays) => any
 }
 
 const MultiCheckbox = ({
     filters,
-    selectedValue,
+    selectedValues,
     setValue,
 }: MultiCheckboxProps) => {
     const handleCheck = (valueToCheck: departmentSchema | prioritySchema) => {
-        if (selectedValue.some((value) => value.id === valueToCheck.id)) {
+        if (selectedValues.some((value) => value.id === valueToCheck.id)) {
             console.log('Removing:', valueToCheck)
             setValue(
-                selectedValue.filter((item) => item.id !== valueToCheck.id)
+                selectedValues.filter((item) => item.id !== valueToCheck.id)
             )
         } else {
             console.log('Adding:', valueToCheck)
-            setValue([...selectedValue, valueToCheck])
+            setValue([...selectedValues, valueToCheck])
         }
     }
 
@@ -30,7 +30,7 @@ const MultiCheckbox = ({
             {filters.map((filter) => (
                 <CheckBoxWithText
                     key={filter.id}
-                    isChecked={selectedValue.some(
+                    isChecked={selectedValues.some(
                         (value) => value.id === filter.id
                     )}
                     text={filter.name}

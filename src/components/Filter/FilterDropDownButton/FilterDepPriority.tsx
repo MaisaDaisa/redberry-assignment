@@ -10,9 +10,9 @@ type FilterDepPriorityProps = {
     isActive: boolean
     title: string
     handleSetActiveFilter: () => void
-    setValue: UseFormSetValue<any>
-    initialData: MultiAcceptFilterArrays
-    field: ControllerRenderProps<any, any>
+    fullData: MultiAcceptFilterArrays
+    setValue: (value: MultiAcceptFilterArrays) => void
+    selectedValues: MultiAcceptFilterArrays
 }
 
 const FilterDepPriority = ({
@@ -20,24 +20,26 @@ const FilterDepPriority = ({
     title,
     handleSetActiveFilter,
     setValue,
-    initialData,
-    field,
+    fullData,
+    selectedValues,
 }: FilterDepPriorityProps) => {
     const [localSelection, setLocalSelection] =
-        useState<MultiAcceptFilterArrays>(field.value)
+        useState<MultiAcceptFilterArrays>(
+            selectedValues.length > 0 ? selectedValues : []
+        )
 
     return (
         <FilterDropDownButtons
             filterText={title}
             isActive={isActive}
             handleSetActive={handleSetActiveFilter}
-            onSubmit={() => setValue(field.name, localSelection)}
+            onConfirm={() => setValue(localSelection)}
         >
-            {initialData.length > 0 && (
+            {fullData.length > 0 && (
                 <MultiCheckbox
                     setValue={setLocalSelection}
-                    filters={initialData}
-                    selectedValue={localSelection}
+                    filters={fullData}
+                    selectedValues={localSelection}
                 />
             )}
         </FilterDropDownButtons>

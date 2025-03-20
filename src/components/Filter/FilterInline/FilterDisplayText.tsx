@@ -1,6 +1,6 @@
 type FilterDisplayTextProps = {
     text: string
-    onClickHandler: () => void
+    onClickHandler?: () => void
 }
 
 const FilterDisplayText = ({

@@ -76,24 +76,27 @@ const DropDown = ({
                               : 'border-gray-shade-10'
                     } ${!toggleCombo ? 'rounded-b-md' : 'border-b-0'}`}
                 >
-                    {selected ? (
-                        renderItem ? (
-                            renderItem(selected, () =>
-                                handleSelectedItem(selected)
+                    <div className="w-full overflow-hidden text-nowrap">
+                        {selected ? (
+                            renderItem ? (
+                                renderItem(selected, () =>
+                                    handleSelectedItem(selected)
+                                )
+                            ) : (
+                                <DropDownText
+                                    key={selected.name + selected.id}
+                                    onClick={() => {}}
+                                    text={selected.name}
+                                />
                             )
                         ) : (
-                            <DropDownText
-                                key={selected.name + selected.id}
-                                onClick={() => {}}
-                                text={selected.name}
-                            />
-                        )
-                    ) : (
-                        <DropDownChoiceWrapper onClick={() => {}}>
-                            <span className="text-gray-400">{placeholder}</span>
-                        </DropDownChoiceWrapper>
-                    )}
-
+                            <DropDownChoiceWrapper onClick={() => {}}>
+                                <span className="text-gray-400">
+                                    {placeholder}
+                                </span>
+                            </DropDownChoiceWrapper>
+                        )}
+                    </div>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="14"

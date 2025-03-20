@@ -1,7 +1,3 @@
-import High from '@/assets/imgs/High.svg'
-import Medium from '@/assets/imgs/Medium.svg'
-import Low from '@/assets/imgs/Low.svg'
-
 export const TaskPriorityStyles = [
     {
         borderColor: `border-(--color-low-priority)`,
@@ -29,7 +25,6 @@ const TaskPriorityBordered = ({
     icon,
     name,
 }: TaskPriorityBorderedProps) => {
-    // const { borderColor, textColor } = priorityStyles[id]
     const stylesValues = TaskPriorityStyles[id - 1]
     return (
         <div

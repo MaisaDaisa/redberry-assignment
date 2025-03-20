@@ -1,5 +1,5 @@
 import TitleH4Component from '@/layouts/TitleH4Component'
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import trashCan from '@/assets/imgs/trashCan.svg'
 import { Control, useController } from 'react-hook-form'
 import { imageUploadValidation } from '@/api/zodSchemas/zod.employeePostSchema'
@@ -40,6 +40,12 @@ const FileUploader = ({
         },
         []
     )
+
+    useEffect(() => {
+        if (!field.value) {
+            setPreview(null)
+        }
+    }, [field.value])
 
     // Function to handle the drop event on the div element
     const handleDrop = useCallback(

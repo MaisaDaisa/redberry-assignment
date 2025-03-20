@@ -11,7 +11,7 @@ import FullScreenBlur from './layouts/FullScreenBlur/FullScreenBlur'
 import { useEffect, useState } from 'react'
 import FullScreenWrapper from './layouts/FullScreenBlur/FullScreenWrapper'
 import { departmentSchema, statusSchema } from './api/schemas/apiSchemas'
-import { mainContext } from './contexts/mainContext'
+import { appContext } from './contexts/AllPages/appContext'
 import { getAllDepartments, getAllStatuses } from './api/getRequest'
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
 
     const navigate = useNavigate()
     return (
-        <mainContext.Provider
+        <appContext.Provider
             value={{ departments: departments, statuses: statuses }}
         >
             <NavBar>
@@ -58,7 +58,7 @@ function App() {
                     toggleActive={() => setIsBlurActive(false)}
                 />
             </FullScreenBlur>
-        </mainContext.Provider>
+        </appContext.Provider>
     )
 }
 

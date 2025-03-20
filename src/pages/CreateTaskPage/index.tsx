@@ -1,10 +1,10 @@
 import { CustomDatePickerWrapper } from './CustomDatePickerWrapper'
 import { SubmitButtonWrapper } from './SubmitButtonWrapper'
 import InputField from '@/components/Input'
-import { useForm, SubmitHandler, useWatch } from 'react-hook-form'
+import { useForm, SubmitHandler } from 'react-hook-form'
 import HeaderWrapper from '@/layouts/HeaderWrapper'
 import DropDownWrapper from './DropDownWrapper'
-import { useDepartmentsContext } from '@/contexts/mainContext'
+import useDepartmentsContext from '@/contexts/AllPages/useDepartmentContext'
 import { useEffect, useState } from 'react'
 import {
     employeeSchema,
@@ -19,13 +19,13 @@ import {
 import { DevTool } from '@hookform/devtools'
 import { createNewTask } from '@/api/postRequest'
 import DropDownWithTitle from '@/components/DropDown/DropDownWithTitle'
-import { taskPostSchema } from '@/api/schemas/apiPostSchemas'
 import FilterEmployeesWrapper from './FilterEmployeesWrapper'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
     zodTaskPostFormSchema,
     zodTaskPostFormSchemaType,
 } from '@/api/zodSchemas/zod.taskPostSchema'
+import { useNavigate } from 'react-router'
 
 export type CreateTaskSchema = zodTaskPostFormSchemaType & {
     department_id: number
@@ -39,6 +39,8 @@ const CreateTaskPage = () => {
     })
 
     const { control, handleSubmit, resetField } = methods
+
+    const navigation = useNavigate()
 
     //States and Context
     const departments = useDepartmentsContext()
@@ -56,9 +58,10 @@ const CreateTaskPage = () => {
         fetchData()
     }, [])
 
-    const onSubmit: SubmitHandler<CreateTaskSchema> = (data) => {
-        console.log(data)
-        createNewTask(data)
+    const onSubmit: SubmitHandler<CreateTaskSchema> = async (data) => {
+        const response = await createNewTask(data)
+        console.log(response)
+        navigation('/')
     }
 
     if (

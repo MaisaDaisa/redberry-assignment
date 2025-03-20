@@ -6,7 +6,7 @@ export type FilterDropDownButtonsProps = {
     isActive?: boolean
     handleSetActive?: () => void
     children?: React.ReactNode
-    onSubmit?: () => void
+    onConfirm?: () => void
 }
 
 const FilterDropDownButtons = memo(
@@ -15,7 +15,7 @@ const FilterDropDownButtons = memo(
         isActive = false,
         handleSetActive = () => {},
         children,
-        onSubmit = () => {},
+        onConfirm = () => {},
     }: FilterDropDownButtonsProps) => {
         return (
             <div>
@@ -54,7 +54,7 @@ const FilterDropDownButtons = memo(
                         <div className="flex flex-col flex-wrap items-start gap-x-[50px] gap-y-4">
                             {children}
                         </div>
-                        <FilterConfirmButton onConfirm={onSubmit} />
+                        <FilterConfirmButton onConfirm={onConfirm} />
                     </div>
                 }
             </div>

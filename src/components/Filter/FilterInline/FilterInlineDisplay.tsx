@@ -1,55 +1,73 @@
 import { useFormContext } from 'react-hook-form'
 import { filterValues } from '@/pages/IndexPage'
 import FilterDisplayText from './FilterDisplayText'
+import { departmentSchema, prioritySchema } from '@/api/schemas/apiSchemas'
 
-const FilterInlineDisplay = ({}) => {
-    const { watch, setValue, resetField } = useFormContext<filterValues>()
+type FilterInlineDisplayProps = {
+    setFilterFields: (filterFields: filterValues) => void
+    filterFields: filterValues
+}
 
-    const formValues = watch()
-
-    const handleRemoveFromArray = (
-        id: number,
-        filterField: keyof filterValues
-    ) => {
-        setValue(
-            filterField,
-            // @ts-ignore it is an array, an array has filter i don't know that typescript is on about
-            formValues[filterField].filter((item) => item.id !== id)
-        )
-        console.log(filterField)
-    }
-
+const FilterInlineDisplay = ({
+    setFilterFields,
+    filterFields,
+}: FilterInlineDisplayProps) => {
     return (
         <div className="flex min-h-[30px] w-full flex-wrap justify-start gap-4">
-            {formValues?.departments.length > 0 &&
-                formValues.departments.map((department) => (
+            {filterFields?.departments.length > 0 &&
+                filterFields.departments.map((department) => (
                     <FilterDisplayText
                         key={department.id}
                         text={department.name}
                         onClickHandler={() =>
-                            handleRemoveFromArray(department.id, 'departments')
+                            //@ts-ignore
+                            setFilterFields((prev: filterValues) => {
+                                return {
+                                    ...prev,
+                                    departments: prev.departments.filter(
+                                        (dep: departmentSchema) =>
+                                            dep.id !== department.id
+                                    ),
+                                }
+                            })
                         }
                     />
                 ))}
-            {formValues?.priorities.length > 0 &&
-                formValues.priorities.map((priority) => (
+            {filterFields?.priorities.length > 0 &&
+                filterFields.priorities.map((priority) => (
                     <FilterDisplayText
                         key={priority.id}
                         text={priority.name}
                         onClickHandler={() =>
-                            handleRemoveFromArray(priority.id, 'priorities')
+                            //@ts-ignore
+                            setFilterFields((prev: filterValues) => {
+                                return {
+                                    ...prev,
+                                    priorities: prev.priorities.filter(
+                                        (pri: prioritySchema) =>
+                                            pri.id !== priority.id
+                                    ),
+                                }
+                            })
                         }
                     />
                 ))}
-            {formValues?.employee.name && (
+            {filterFields.employee && (
                 <FilterDisplayText
-                    key={formValues?.employee.id}
+                    key={filterFields?.employee.id}
                     text={
-                        formValues?.employee.name +
+                        filterFields?.employee.name +
                         ' ' +
-                        formValues?.employee.surname
+                        filterFields?.employee.surname
                     }
-                    onClickHandler={() => resetField('employee')}
+                    onClickHandler={() => {
+                        setFilterFields((prev: filterValues) => {
+                            return {
+                                ...prev,
+                                employee: undefined,
+                            }
+                        })
+                    }}
                 />
             )}
         </div>

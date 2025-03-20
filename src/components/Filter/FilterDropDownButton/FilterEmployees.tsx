@@ -10,22 +10,22 @@ type FilterEmployeesProps = Omit<
     FilterDropDownButtonsProps,
     'children' | 'onSubmit'
 > & {
-    setValue: UseFormSetValue<any>
+    setValue: (value: employeeSchema | undefined) => void
     initialData: employeeSchema[]
-    field: ControllerRenderProps<any, any>
+    selectedValues: employeeSchema | undefined
 }
 
 const FilterEmployees = ({
-    field,
     initialData,
     setValue,
     filterText,
     handleSetActive,
     isActive,
+    selectedValues,
 }: FilterEmployeesProps) => {
     const [localSelection, setLocalSelection] = useState<
         employeeSchema | undefined
-    >(field.value)
+    >(selectedValues)
 
     const handleCheck = (valueToCheck: employeeSchema) => {
         !localSelection && setLocalSelection(valueToCheck)
@@ -41,13 +41,13 @@ const FilterEmployees = ({
             filterText={filterText}
             isActive={isActive}
             handleSetActive={handleSetActive}
-            onSubmit={() => setValue(field.name, localSelection)}
+            onConfirm={() => setValue(localSelection)}
         >
             {initialData.map((filter: employeeSchema) => (
                 <CheckBoxAvatar
-                    name={filter.name}
+                    name={filter.name + ' ' + filter.surname}
                     avatarUrl={filter.avatar}
-                    key={field.name + filter.id}
+                    key={filter.name + filter.id}
                     isChecked={localSelection?.id === filter.id}
                     onClickHandler={() => handleCheck(filter)}
                 />

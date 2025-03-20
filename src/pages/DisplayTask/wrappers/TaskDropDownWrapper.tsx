@@ -1,7 +1,7 @@
 import { changeTaskStatus } from '@/api/putRequest'
 import { changeTaskStatusSchema } from '@/api/schemas/apiPutSchema'
 import DropDown from '@/components/DropDown/DropDown'
-import { useStatusesContext } from '@/contexts/mainContext'
+import useStatusesContext from '@/contexts/AllPages/useStatusesContext'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 type TaskStatusSetter = changeTaskStatusSchema

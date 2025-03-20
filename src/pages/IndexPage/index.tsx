@@ -3,60 +3,72 @@ import {
     employeeSchema,
     prioritySchema,
     statusSchema,
+    taskSchema,
 } from '@/api/schemas/apiSchemas'
-import { getAllPriorities } from '@/api/getRequest'
+import {
+    getAllEmployees,
+    getAllPriorities,
+    getAllTasks,
+} from '@/api/getRequest'
 import Filter from '@/components/Filter'
 import FilterInlineDisplay from '@/components/Filter/FilterInline/FilterInlineDisplay'
 import TasksDisplay from '@/components/Tasks/TasksDisplay'
-import { useStatusesContext } from '@/contexts/mainContext'
+import { useStatusesContext } from '@/contexts/AllPages/useStatusesContext'
 import HeaderWrapper from '@/layouts/HeaderWrapper'
-import { useEffect, useState } from 'react'
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
+import { useEffect, useRef, useState } from 'react'
+import indexPageContext from '@/contexts/IndexPage/IndexPageContext'
 
 export type filterValues = {
     departments: departmentSchema[]
     priorities: prioritySchema[]
-    employee: employeeSchema
+    employee: employeeSchema | undefined
 }
 
 const IndexPage = () => {
     const [priorities, setPriorities] = useState<prioritySchema[]>([])
     const statuses: statusSchema[] = useStatusesContext()
-
-    const methods = useForm<filterValues>({
-        defaultValues: {
-            departments: [],
-            employee: {},
-            priorities: [],
-        },
+    const [tasks, setTasks] = useState<taskSchema[]>([])
+    const [employees, setEmployees] = useState<employeeSchema[]>([])
+    const [filterFields, setFilterFields] = useState<filterValues>({
+        departments: [],
+        priorities: [],
+        employee: undefined,
     })
-
-    const onSubmit: SubmitHandler<filterValues> = (data) => {
-        console.log(data)
-    }
 
     useEffect(() => {
         const getInfo = async () => {
             setPriorities(await getAllPriorities())
-            // setTasks(await getAllTasks())
-            // setStatuses(await delayedInvoke(() => testStatus))
-            // setPriorities(await delayedInvoke(() => testPriorities))
+            setTasks(await getAllTasks())
+            setEmployees(await getAllEmployees())
         }
         getInfo()
     }, [])
 
+    useEffect(() => {
+        console.log(filterFields)
+    }, [filterFields])
+
     return (
-        <HeaderWrapper text="დავალებების გვერდი">
-            <FormProvider {...methods}>
+        <indexPageContext.Provider value={{ employees, priorities }}>
+            <HeaderWrapper text="დავალებების გვერდი">
                 {priorities.length > 0 && (
-                    <form onSubmit={methods.handleSubmit(onSubmit)}>
-                        <Filter priorities={priorities} />
-                        <FilterInlineDisplay />
-                    </form>
+                    <div>
+                        <Filter
+                            priorities={priorities}
+                            setFilterFields={setFilterFields}
+                            filterFields={filterFields}
+                        />
+                        <FilterInlineDisplay
+                            setFilterFields={setFilterFields}
+                            filterFields={filterFields}
+                        />
+                    </div>
                 )}
-                {statuses.length > 0 && <TasksDisplay statuses={statuses} />}
-            </FormProvider>
-        </HeaderWrapper>
+                {statuses.length > 0 && (
+                    <TasksDisplay tasks={tasks} filters={filterFields} />
+                )}
+            </HeaderWrapper>
+        </indexPageContext.Provider>
     )
 }
 

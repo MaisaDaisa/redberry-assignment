@@ -18,7 +18,6 @@ const InputTextDesign = ({
     error,
     type,
     customInputStyles = '',
-    value,
     readOnly = false,
     borderOn = true,
     customDivClass = '',
@@ -31,14 +30,12 @@ const InputTextDesign = ({
             {type === 'text' ? (
                 <input
                     readOnly={readOnly}
-                    value={value}
                     {...field}
                     placeholder={placeholder}
                     className={`${BothStyles} ${customInputStyles}`}
                 />
             ) : (
                 <textarea
-                    value={value}
                     {...field}
                     placeholder={placeholder}
                     className={`no-scrollbar h-[105px] resize-none ${BothStyles} ${customInputStyles}`}
