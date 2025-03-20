@@ -131,7 +131,7 @@ const CreateTaskPage = () => {
                 <CustomDatePickerWrapper name={'due_date'} control={control} />
                 <SubmitButtonWrapper onSubmit={() => onSubmit} />
             </form>
-            <DevTool control={control} />
+            {/* <DevTool control={control} /> */}
         </HeaderWrapper>
     )
 }

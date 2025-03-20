@@ -2,24 +2,21 @@ import { AddEmployeeButtonWrapper } from './addEmployeeButtonWrapper'
 import HeaderWrapper from '../HeaderWrapper'
 import Input from '@/components/Input'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
-import { DevTool } from '@hookform/devtools'
 import FileUploader from '@/components/FileUploader/FileUploader'
 import useDepartmentsContext from '@/contexts/AllPages/useDepartmentContext'
 import DropDownWithTitle from '@/components/DropDown/DropDownWithTitle'
-import { createEmployee } from '@/api/postRequest'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
     zodEmployeeFormSchema,
     zodEmployeeFormSchemaType,
 } from '@/api/zodSchemas/zod.employeePostSchema'
-import { useNavigate } from 'react-router'
+import { createEmployee } from '@/api/postRequest'
 
 type FullScreenWrapperProps = {
     toggleActive: () => void
 }
 
 function FullScreenWrapper({ toggleActive }: FullScreenWrapperProps) {
-    const navigation = useNavigate()
     const departments = useDepartmentsContext()
     const methods = useForm<zodEmployeeFormSchemaType>({
         mode: 'onChange',
@@ -34,9 +31,8 @@ function FullScreenWrapper({ toggleActive }: FullScreenWrapperProps) {
     })
     const { control, handleSubmit, reset } = methods
     const onSubmit: SubmitHandler<zodEmployeeFormSchemaType> = async (data) => {
-        // const response = await createEmployee(data)
-        // console.log(response)
-
+        const response = await createEmployee(data)
+        console.log(response)
         toggleActive()
         reset()
     }
@@ -130,6 +126,7 @@ function FullScreenWrapper({ toggleActive }: FullScreenWrapperProps) {
                                     title="დეპარტამენტი"
                                     h4CustomClasses={h4Styles}
                                     dropDownProps={{
+                                        customDropDownStyles: 'max-h-[200px]',
                                         control: control,
                                         name: 'department_id',
                                         items: departments,
@@ -141,7 +138,7 @@ function FullScreenWrapper({ toggleActive }: FullScreenWrapperProps) {
                             />
                         </form>
                     </FormProvider>
-                    <DevTool control={control} />
+                    {/* <DevTool control={control} /> */}
                 </HeaderWrapper>
             </div>
         </div>

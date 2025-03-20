@@ -13,7 +13,11 @@ const CheckBoxAvatar = ({
 }: CheckBoxAvatarProps) => {
     return (
         <CheckBoxWrapper isChecked={isChecked} onClickHandler={onClickHandler}>
-            <AvatarWithTextInline avatarUrl={avatarUrl} name={name} />
+            <AvatarWithTextInline
+                avatarUrl={avatarUrl}
+                name={name}
+                customTextClasses=" "
+            />
         </CheckBoxWrapper>
     )
 }

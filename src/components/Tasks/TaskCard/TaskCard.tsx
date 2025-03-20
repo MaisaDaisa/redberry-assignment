@@ -33,14 +33,12 @@ const TaskCard = ({ statusId = 2, task }: TaskCardProps) => {
             </div>
             <div className="flex w-full flex-col items-start gap-3">
                 <h5 className="text-[15px] font-medium">
-                    {task.name
-                        ? task.name
-                        : 'Redberry-ს საიტის ლენდინგის დიზაინი'}
+                    {task.name && task.name}
                 </h5>
                 <p className="text-sm">
-                    {task.description
-                        ? task.description.substring(0, 100) + '...'
-                        : ' შექმენი საიტის მთავარი გვერდი, რომელიც მოიცავს მთავარ სექციებს, ნავიგაციას'}
+                    {task.description && task.description.length > 0
+                        ? task.description.substring(0, 100).trim() + '...'
+                        : task.description}
                 </p>
             </div>
             <div className="flex w-full items-center justify-between">

@@ -18,7 +18,7 @@ export const nameSurnameValidation = z
     .min(2, { message: 'მინიმუმ 2 სიმბოლო' })
     .max(255, { message: 'მაქსიმუმ 255 სიმბოლო' })
     .refine((value) => {
-        return /^[A-Za-z\u10D0-\u10FF\s]+$/.test(value)
+        return /^[A-Za-z\u10D0-\u10FF]+$/.test(value)
     })
 
 // SCHEMAS

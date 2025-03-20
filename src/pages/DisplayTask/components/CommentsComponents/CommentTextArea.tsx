@@ -16,8 +16,11 @@ export function CommentTextArea({
     taskId,
     onComment,
 }: CommentTextAreaProps) {
-    const { control, handleSubmit } = useForm<commentPostSchema>({
+    const { control, handleSubmit, reset } = useForm<commentPostSchema>({
         mode: 'all',
+        defaultValues: {
+            text: '',
+        },
     })
 
     const invokeCreateComment = async (data: commentPostSchema) => {
@@ -31,6 +34,7 @@ export function CommentTextArea({
     const onSubmit: SubmitHandler<commentPostSchema> = (data) => {
         console.log({ text: data.text, parent_id: parent_id })
         invokeCreateComment(data)
+        reset()
     }
 
     return (
@@ -53,7 +57,7 @@ export function CommentTextArea({
                 type="submit"
                 customClass="bottom-[15px] absolute right-5"
             />
-            <DevTool control={control} />
+            {/* <DevTool control={control} /> */}
         </form>
     )
 }

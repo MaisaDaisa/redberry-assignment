@@ -9,7 +9,7 @@ const AvatarWithTextInline = ({
     name,
     avatarUrl,
     customImgClasses = '',
-    customTextClasses = '',
+    customTextClasses = 'text-sm font-light',
 }: AvatarWithTextInlineProps) => {
     return (
         <div className="flex flex-row items-center gap-[6px]">
@@ -18,7 +18,7 @@ const AvatarWithTextInline = ({
                 alt={name}
                 className={`h-7 w-7 rounded-full object-cover object-center ${customImgClasses}`}
             />
-            <p className={`text-sm font-light ${customTextClasses}`}>{name}</p>
+            <p className={`${customTextClasses}`}>{name}</p>
         </div>
     )
 }

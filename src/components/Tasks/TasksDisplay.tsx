@@ -1,6 +1,6 @@
 import { statusSchema, taskSchema } from '@/api/schemas/apiSchemas'
 import TasksColumn from '@/components/Tasks/TasksColumn'
-import { useEffect, useState, useMemo } from 'react'
+import { useMemo } from 'react'
 import TaskCard from './TaskCard/TaskCard'
 import useStatusesContext from '@/contexts/AllPages/useStatusesContext'
 import { filterValues } from '@/pages/IndexPage'

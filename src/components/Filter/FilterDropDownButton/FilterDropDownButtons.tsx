@@ -51,7 +51,7 @@ const FilterDropDownButtons = memo(
                     <div
                         className={`border-purple-accent absolute z-10 flex w-full translate-y-5 transform flex-col gap-6 self-start rounded-[10px] border-[0.5px] bg-white px-[30px] pt-10 pb-5 transition-opacity duration-500 ease-in-out ${isActive ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
                     >
-                        <div className="flex flex-col flex-wrap items-start gap-x-[50px] gap-y-4">
+                        <div className="no-scrollbar flex max-h-[300px] flex-col flex-wrap items-start gap-x-[50px] gap-y-4 overflow-y-scroll">
                             {children}
                         </div>
                         <FilterConfirmButton onConfirm={onConfirm} />

@@ -13,10 +13,12 @@ export type DropDownProps = {
     renderItem?: (item: any, onClick: () => void) => JSX.Element
     selectedItem?: any | null
     onChange?: () => any
+    customDropDownStyles?: string
 }
 
 const DropDown = ({
     onChange = () => {},
+    customDropDownStyles = '',
     selectedItem = null,
     control,
     name,
@@ -117,7 +119,7 @@ const DropDown = ({
                 </div>
                 {toggleCombo && (
                     <ul
-                        className={`absolute z-10 w-full rounded-b-[5px] border border-t-0 bg-white ${toggleCombo ? 'border-purple-accent' : 'border-gray-shade-10'}`}
+                        className={`no-scrollbar absolute z-10 w-full overflow-y-scroll rounded-b-[5px] border border-t-0 bg-white ${toggleCombo ? 'border-purple-accent' : 'border-gray-shade-10'} ${customDropDownStyles}`}
                     >
                         {additionalComponent}
                         {items.map((item) =>
