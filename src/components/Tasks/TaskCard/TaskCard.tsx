@@ -3,6 +3,7 @@ import DepartmentRounded from '@/components/DepartmentRounded'
 import TaskPriorityBordered from '@/components/TaskPriorityBordered'
 import { statusStyles } from '@/components/Tasks/TaskStatusColorEnum'
 import { months } from '@/utils/months'
+import { Link } from 'react-router'
 
 type TaskCardProps = {
     statusId?: number
@@ -12,7 +13,8 @@ type TaskCardProps = {
 const TaskCard = ({ statusId = 2, task }: TaskCardProps) => {
     const due_Date = new Date(task.due_date)
     return (
-        <div
+        <Link
+            to={'./task/' + task.id}
             className={`flex flex-col items-center gap-7 rounded-[15px] border p-5 ${statusStyles[statusId].borderColor}`}
         >
             <div className="flex w-full items-center justify-between">
@@ -72,7 +74,7 @@ const TaskCard = ({ statusId = 2, task }: TaskCardProps) => {
                     <h6 className="text-sm">{task.total_comments}</h6>
                 </div>
             </div>
-        </div>
+        </Link>
     )
 }
 

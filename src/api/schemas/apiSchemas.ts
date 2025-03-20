@@ -19,7 +19,7 @@ export type employeeSchema = {
     name: string
     surname: string
     avatar: string
-    department_id: number
+    department: departmentSchema
 }
 
 export type taskSchema = {

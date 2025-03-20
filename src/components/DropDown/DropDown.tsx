@@ -12,7 +12,7 @@ export type DropDownProps = {
     control: Control<any>
     renderItem?: (item: any, onClick: () => void) => JSX.Element
     selectedItem?: any | null
-    onChange: () => any
+    onChange?: () => any
 }
 
 const DropDown = ({
@@ -69,7 +69,7 @@ const DropDown = ({
                 <div
                     onClick={() => setToggleCombo(!toggleCombo)}
                     className={`text-gray-Shades-Headlines flex w-full min-w-[200px] flex-row items-center justify-between rounded-t-[5px] border bg-white focus:outline-none ${
-                        error && !toggleCombo
+                        error
                             ? 'border-high-priority'
                             : toggleCombo
                               ? 'border-purple-accent'

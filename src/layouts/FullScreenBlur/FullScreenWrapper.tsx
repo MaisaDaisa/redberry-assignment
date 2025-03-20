@@ -9,12 +9,11 @@ import { employeePostSchema } from '@/api/schemas/apiPostSchemas'
 import DropDownWithTitle from '@/components/DropDown/DropDownWithTitle'
 import { createEmployee } from '@/api/postRequest'
 
-export type employeeFormInputs = {
-    name: string
-    surname: string
-    avatar: any
-    department: any
-}
+import { zodResolver } from '@hookform/resolvers/zod'
+import {
+    zodEmployeeFormSchema,
+    zodEmployeeFormSchemaType,
+} from '@/api/zodSchemas/zod.employeePostSchema'
 
 type FullScreenWrapperProps = {
     toggleActive: () => void
@@ -22,26 +21,17 @@ type FullScreenWrapperProps = {
 
 function FullScreenWrapper({ toggleActive }: FullScreenWrapperProps) {
     const departments = useDepartmentsContext()
-    const methods = useForm<employeeFormInputs>({
-        criteriaMode: 'all',
-        mode: 'all',
+    const methods = useForm<zodEmployeeFormSchemaType>({
+        mode: 'onChange',
         delayError: 500,
+        resolver: zodResolver(zodEmployeeFormSchema),
         defaultValues: {
-            avatar: undefined,
+            department_id: 0,
         },
     })
     const { control, handleSubmit } = methods
-
-    const onSubmit: SubmitHandler<employeeFormInputs> = (data) => {
-        const dataToSend: employeePostSchema = {
-            name: data.name,
-            surname: data.surname,
-            department_id: data.department.id,
-            avatar: data.avatar,
-        }
-        console.log(dataToSend)
-
-        createEmployee(dataToSend)
+    const onSubmit: SubmitHandler<zodEmployeeFormSchemaType> = (data) => {
+        createEmployee(data)
     }
 
     const h4Styles = 'text-sm font-medium'
@@ -84,6 +74,16 @@ function FullScreenWrapper({ toggleActive }: FullScreenWrapperProps) {
                             <div className="grid w-full grid-cols-2 gap-[45px]">
                                 <Input
                                     h4CustomClasses={h4Styles}
+                                    possibleErrors={[
+                                        {
+                                            message: 'მინიმუმ 2 სიმბოლო',
+                                            type: 'too_small',
+                                        },
+                                        {
+                                            message: 'მაქსიმუმ 255 სიმბოლო',
+                                            type: 'too_big',
+                                        },
+                                    ]}
                                     control={control}
                                     name="name"
                                     title="სახელი"
@@ -91,6 +91,16 @@ function FullScreenWrapper({ toggleActive }: FullScreenWrapperProps) {
                                     type="text"
                                 />
                                 <Input
+                                    possibleErrors={[
+                                        {
+                                            message: 'მინიმუმ 2 სიმბოლო',
+                                            type: 'too_small',
+                                        },
+                                        {
+                                            message: 'მაქსიმუმ 255 სიმბოლო',
+                                            type: 'too_big',
+                                        },
+                                    ]}
                                     h4CustomClasses={h4Styles}
                                     control={control}
                                     name="surname"
@@ -112,7 +122,7 @@ function FullScreenWrapper({ toggleActive }: FullScreenWrapperProps) {
                                     h4CustomClasses={h4Styles}
                                     dropDownProps={{
                                         control: control,
-                                        name: 'department',
+                                        name: 'department_id',
                                         items: departments,
                                     }}
                                 />

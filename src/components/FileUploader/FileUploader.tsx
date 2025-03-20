@@ -2,7 +2,7 @@ import TitleH4Component from '@/layouts/TitleH4Component'
 import { useState, useRef, useCallback } from 'react'
 import trashCan from '@/assets/imgs/trashCan.svg'
 import { Control, useController } from 'react-hook-form'
-import { fileTooLarge } from '@/utils/fileTooLarge'
+import { imageUploadValidation } from '@/api/zodSchemas/zod.employeePostSchema'
 
 interface FileUploaderProps {
     control: Control<any>
@@ -22,7 +22,7 @@ const FileUploader = ({
     h4CustomClasses = '',
 }: FileUploaderProps) => {
     // State for the preview of the image
-    const { field } = useController({
+    const { field, fieldState } = useController({
         name,
         control,
         rules: {
@@ -30,7 +30,6 @@ const FileUploader = ({
         },
     })
     const [preview, setPreview] = useState<string | ArrayBuffer | null>(null)
-    const [error, setError] = useState<boolean>(false)
     // Ref for the input element
     const inputRef = useRef<HTMLInputElement | null>(null)
 
@@ -55,21 +54,19 @@ const FileUploader = ({
 
     const uploadFileLogic = useCallback(
         (file: File | null) => {
-            if (file && file.type.startsWith('image/')) {
-                if (!fileTooLarge(file)) {
-                    const reader = new FileReader()
-                    reader.onload = () => {
-                        setPreview(reader.result)
-                    }
-                    reader.readAsDataURL(file)
-                    field.onChange(file)
-                } else {
-                    setError(true)
+            const test = imageUploadValidation.safeParse(file)
+            if (test.success) {
+                const reader = new FileReader()
+                reader.onload = () => {
+                    setPreview(reader.result)
                 }
+                reader.readAsDataURL(file as Blob)
+                field.onChange(file)
             } else {
-                setError(true)
+                console.log(test.error)
             }
         },
+
         [field]
     )
 
@@ -78,7 +75,7 @@ const FileUploader = ({
     const uploadFile = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
             const file = event.target.files ? event.target.files[0] : null
-
+            // console.log(file)
             uploadFileLogic(file)
         },
         []
@@ -86,7 +83,7 @@ const FileUploader = ({
 
     const handleDelete = useCallback(() => {
         setPreview(null)
-        field.value = undefined
+        field.onChange(undefined)
     }, [])
 
     return (
@@ -101,7 +98,9 @@ const FileUploader = ({
                 onDrop={handleDrop}
                 onClick={() => !preview && inputRef.current?.click()}
                 className={`group flex h-[120px] items-center justify-center border border-dashed ${
-                    !error ? 'border-gray-shades-15' : 'border-high-priority'
+                    !fieldState.error
+                        ? 'border-gray-shades-15'
+                        : 'border-high-priority'
                 } w-full rounded-lg select-none ${
                     preview ? 'cursor-default' : 'cursor-pointer'
                 }`}
@@ -110,7 +109,7 @@ const FileUploader = ({
             >
                 <input
                     type="file"
-                    // disabled={!!preview}
+                    disabled={!!preview}
                     hidden
                     accept="image/*"
                     onChange={(event) => {

@@ -1,7 +1,7 @@
 import { CustomDatePickerWrapper } from './CustomDatePickerWrapper'
 import { SubmitButtonWrapper } from './SubmitButtonWrapper'
 import InputField from '@/components/Input'
-import { useForm, SubmitHandler } from 'react-hook-form'
+import { useForm, SubmitHandler, useWatch } from 'react-hook-form'
 import HeaderWrapper from '@/layouts/HeaderWrapper'
 import DropDownWrapper from './DropDownWrapper'
 import { useDepartmentsContext } from '@/contexts/mainContext'
@@ -16,32 +16,37 @@ import {
     getAllPriorities,
     getAllStatuses,
 } from '@/api/getRequest'
-import AvatarWithTextInline from '@/components/AvatarWithTextInline'
-import DropDownChoiceWrapper from '@/components/DropDown/DropDownChoiceWrapper'
 import { DevTool } from '@hookform/devtools'
 import { createNewTask } from '@/api/postRequest'
 import DropDownWithTitle from '@/components/DropDown/DropDownWithTitle'
+import { taskPostSchema } from '@/api/schemas/apiPostSchemas'
+import FilterEmployeesWrapper from './FilterEmployeesWrapper'
+import { zodResolver } from '@hookform/resolvers/zod'
+import {
+    zodTaskPostFormSchema,
+    zodTaskPostFormSchemaType,
+} from '@/api/zodSchemas/zod.taskPostSchema'
 
-export type FormFields = {
-    name: string
-    description: string
-    due_date: Date
-    status_id: number
-    priority_id: number
-    employee_id: number
+export type CreateTaskSchema = zodTaskPostFormSchemaType & {
+    department_id: number
 }
 
 const CreateTaskPage = () => {
-    const methods = useForm<FormFields>({
+    const methods = useForm<CreateTaskSchema>({
         mode: 'onChange',
+        resolver: zodResolver(zodTaskPostFormSchema),
         delayError: 500,
     })
 
+    const { control, handleSubmit, resetField } = methods
+
+    //States and Context
     const departments = useDepartmentsContext()
     const [statuses, setStatuses] = useState<statusSchema[]>([])
     const [employees, setEmployees] = useState<employeeSchema[]>([])
     const [priorities, setPriorities] = useState<prioritySchema[]>([])
 
+    // useEffect
     useEffect(() => {
         const fetchData = async () => {
             setStatuses(await getAllStatuses())
@@ -51,12 +56,20 @@ const CreateTaskPage = () => {
         fetchData()
     }, [])
 
-    const { control, handleSubmit } = methods
-
-    const onSubmit: SubmitHandler<FormFields> = (data) => {
+    const onSubmit: SubmitHandler<CreateTaskSchema> = (data) => {
         console.log(data)
         createNewTask(data)
     }
+
+    if (
+        !(
+            statuses.length > 0 &&
+            priorities.length > 0 &&
+            employees.length > 0 &&
+            departments.length > 0
+        )
+    )
+        return <></>
 
     return (
         <HeaderWrapper text="შექმენი ახალი დავალება">
@@ -65,6 +78,10 @@ const CreateTaskPage = () => {
                 className="isolate mt-[30px] grid grid-cols-[550px_550px] justify-around gap-y-[55px] rounded-sm px-[55px] pt-[65px] pb-[62px]"
             >
                 <InputField
+                    possibleErrors={[
+                        { type: 'too_small', message: 'მინიმუმ 3 სიმბოლო' },
+                        { type: 'too_big', message: 'მაქსიმუმ 255 სიმბოლო' },
+                    ]}
                     control={control}
                     name="name"
                     title="სათაური"
@@ -81,30 +98,22 @@ const CreateTaskPage = () => {
                     }}
                 />
                 <InputField
+                    possibleErrors={[
+                        { type: 'too_small', message: 'მინიმუმ 4 სიტყვა' },
+                        { type: 'too_big', message: 'მაქსიმუმ 255 სიმბოლო' },
+                    ]}
                     control={control}
                     name="description"
                     title="აღწერა"
                     type="textarea"
                 />
-                <DropDownWithTitle
-                    title="პასუხისმგებელი თანამშრომელი"
-                    key={'employeeDropdown'}
-                    required
-                    dropDownProps={{
-                        items: employees,
-                        control: control,
-                        name: 'employee_id',
-                        renderItem: (item, onClick) => (
-                            <DropDownChoiceWrapper onClick={onClick}>
-                                <AvatarWithTextInline
-                                    avatarUrl={item.avatar}
-                                    name={item.name}
-                                    key={'avatar' + item.id}
-                                />
-                            </DropDownChoiceWrapper>
-                        ),
-                    }}
+
+                <FilterEmployeesWrapper
+                    resetField={resetField}
+                    employees={employees}
+                    control={control}
                 />
+
                 {/* this might seem unnecessary but somehow this prevents
                 rerendering of two dropDown inputs on change of every other
                 input... IDK why */}
@@ -119,7 +128,7 @@ const CreateTaskPage = () => {
                 <CustomDatePickerWrapper name={'due_date'} control={control} />
                 <SubmitButtonWrapper onSubmit={() => onSubmit} />
             </form>
-            {/* <DevTool control={control} /> */}
+            <DevTool control={control} />
         </HeaderWrapper>
     )
 }

@@ -1,6 +1,6 @@
 import { commentSchema } from '@/api/schemas/apiSchemas'
 
-const countComments = (comments: commentSchema[]) => {
+export const countComments = (comments: commentSchema[]) => {
     let count = 0
     comments.forEach((comment) => {
         // For The initialComment

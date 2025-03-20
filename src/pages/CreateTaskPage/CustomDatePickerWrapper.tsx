@@ -1,9 +1,9 @@
 import { Control } from 'react-hook-form'
-import { FormFields } from './index'
+import { CreateTaskSchema } from './index'
 import CustomDatePicker from '@/components/DatePicker/CustomDatePicker'
 
 type CustomDatePickerWrapperProps = {
-    control: Control<FormFields>
+    control: Control<CreateTaskSchema>
     name: string
 }
 export function CustomDatePickerWrapper({

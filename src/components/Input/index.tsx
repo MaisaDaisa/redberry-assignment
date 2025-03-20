@@ -7,12 +7,9 @@ type InputFieldProps = {
     control: Control<any>
     name: string
     title: string
+    possibleErrors: { type: string; message: string }[]
     required?: boolean
     placeholder?: string
-    minNum?: number
-    minMessage?: string
-    maxNum?: number
-    maxMessage?: string
     type?: 'textarea' | 'text'
     h4CustomClasses?: string
 }
@@ -22,36 +19,18 @@ const InputField = ({
     type = 'text',
     name,
     title,
+    possibleErrors,
     required = false,
-    minNum = 2,
-    minMessage = 'მინიმუმ 2 სიმბოლო',
-    maxNum = 255,
-    maxMessage = 'მაქსიმუმ 255 სიმბოლო',
     placeholder = '',
     h4CustomClasses = '',
 }: InputFieldProps) => {
+    // console.log(possibleErrors)
     const {
         field,
         fieldState: { error, isDirty },
     } = useController({
         name,
         control,
-        rules: {
-            required: required ? 'This field is required' : false, //  Fix required
-            pattern: {
-                value: /^[A-Za-z\u10D0-\u10FF\s]+$/,
-
-                message: 'Only letters are allowed.',
-            },
-            minLength: {
-                value: minNum,
-                message: minMessage,
-            },
-            maxLength: {
-                value: maxNum,
-                message: maxMessage,
-            },
-        },
     })
 
     return (
@@ -67,28 +46,20 @@ const InputField = ({
                 type={type}
             />
             <div className="mt-[6px] flex flex-col items-start gap-[2px]">
-                <InputErrorMessage
-                    validationType={
-                        !isDirty
-                            ? InputErrorMessagesTypes.default
-                            : error?.type === 'minLength' ||
-                                error?.type === 'required'
-                              ? InputErrorMessagesTypes.invalid
-                              : InputErrorMessagesTypes.valid
-                    }
-                    message={minMessage}
-                />
-
-                <InputErrorMessage
-                    validationType={
-                        !isDirty
-                            ? InputErrorMessagesTypes.default
-                            : error?.type === 'maxLength'
-                              ? InputErrorMessagesTypes.invalid
-                              : InputErrorMessagesTypes.valid
-                    }
-                    message={maxMessage}
-                />
+                {possibleErrors &&
+                    possibleErrors.map((errorProp) => (
+                        <InputErrorMessage
+                            validationType={
+                                !isDirty
+                                    ? InputErrorMessagesTypes.default
+                                    : error?.type === errorProp.type ||
+                                        error?.type === 'required'
+                                      ? InputErrorMessagesTypes.invalid
+                                      : InputErrorMessagesTypes.valid
+                            }
+                            message={errorProp.message}
+                        />
+                    ))}
             </div>
         </TitleH4Component>
     )
