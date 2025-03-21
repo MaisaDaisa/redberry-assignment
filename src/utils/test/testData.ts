@@ -1,6 +1,5 @@
 import {
     departmentSchema,
-    employeeSchema,
     prioritySchema,
     statusSchema,
 } from '@/api/schemas/apiSchemas'
@@ -42,43 +41,43 @@ export const testPriorities: prioritySchema[] = [
     },
 ]
 
-export const testEmployees: employeeSchema[] = [
-    {
-        id: 1,
-        name: 'John',
-        surname: 'Doe',
-        avatar: 'https://picsum.photos/300/300',
-        department_id: 1,
-    },
-    {
-        id: 2,
-        name: 'Jane',
-        surname: 'Smith',
-        avatar: 'https://picsum.photos/300/300',
-        department_id: 2,
-    },
-    {
-        id: 3,
-        name: 'Alice',
-        surname: 'Johnson',
-        avatar: 'https://picsum.photos/300/300',
-        department_id: 1,
-    },
-    {
-        id: 4,
-        name: 'Bob',
-        surname: 'Brown',
-        avatar: 'https://picsum.photos/300/300',
-        department_id: 3,
-    },
-    {
-        id: 5,
-        name: 'Charlie',
-        surname: 'Davis',
-        avatar: 'https://picsum.photos/300/300',
-        department_id: 2,
-    },
-]
+// export const testEmployees: employeeSchema[] = [
+//     {
+//         id: 1,
+//         name: 'John',
+//         surname: 'Doe',
+//         avatar: 'https://picsum.photos/300/300',
+//         department_id: 1,
+//     },
+//     {
+//         id: 2,
+//         name: 'Jane',
+//         surname: 'Smith',
+//         avatar: 'https://picsum.photos/300/300',
+//         department: 2,
+//     },
+//     {
+//         id: 3,
+//         name: 'Alice',
+//         surname: 'Johnson',
+//         avatar: 'https://picsum.photos/300/300',
+//         department_id: 1,
+//     },
+//     {
+//         id: 4,
+//         name: 'Bob',
+//         surname: 'Brown',
+//         avatar: 'https://picsum.photos/300/300',
+//         department_id: 3,
+//     },
+//     {
+//         id: 5,
+//         name: 'Charlie',
+//         surname: 'Davis',
+//         avatar: 'https://picsum.photos/300/300',
+//         department_id: 2,
+//     },
+// ]
 
 export const testDepartments: departmentSchema[] = [
     {

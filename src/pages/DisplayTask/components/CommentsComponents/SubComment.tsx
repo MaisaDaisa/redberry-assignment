@@ -1,5 +1,4 @@
 import { commentSchema } from '@/api/schemas/apiSchemas'
-import React from 'react'
 
 type SuvCommentProps = {
     comment: commentSchema

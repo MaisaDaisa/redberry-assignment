@@ -1,12 +1,11 @@
+import { employeeSchema } from '@/api/schemas/apiSchemas'
+import AvatarWithTextInline from '@/components/AvatarWithTextInline'
 import DropDownWithTitle from '@/components/DropDown/DropDownWithTitle'
+import useFullScreenContext from '@/contexts/FullScreen/useFullScreenContext'
 import { useEffect, useState } from 'react'
 import { Control, UseFormResetField, useWatch } from 'react-hook-form'
 import { CreateTaskSchema } from '..'
-import { employeeSchema } from '@/api/schemas/apiSchemas'
-import DropDownChoiceWrapper from '@/components/DropDown/DropDownChoiceWrapper'
-import AvatarWithTextInline from '@/components/AvatarWithTextInline'
 import AddEmployeeDropDownComp from '../components/AddEmployeeDropDownComp'
-import useFullScreenContext from '@/contexts/FullScreen/useFullScreenContext'
 
 type FilterEmployeesWrapperProps = {
     employees: employeeSchema[]

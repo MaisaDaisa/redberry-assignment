@@ -1,5 +1,4 @@
 import { taskSchema } from '@/api/schemas/apiSchemas'
-import DepartmentRounded from '@/components/DepartmentRounded'
 import TaskPriorityBordered from '@/components/TaskPriorityBordered'
 import { statusStyles } from '@/components/Tasks/TaskStatusColorEnum'
 import { months } from '@/utils/months'

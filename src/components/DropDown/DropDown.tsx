@@ -1,4 +1,4 @@
-import { useState, JSX, useRef, useEffect } from 'react'
+import { useState, JSX, useRef } from 'react'
 import { Control, useController } from 'react-hook-form'
 import DropDownText from './DropDownText'
 import { useClickOutside } from '@/hooks/useClickOutside'
@@ -21,7 +21,6 @@ const DropDown = ({
     noHover = true,
     onChange = () => {},
     customDropDownStyles = '',
-    selectedItem = null,
     control,
     name,
     additionalComponent,

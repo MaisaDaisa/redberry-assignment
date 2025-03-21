@@ -1,5 +1,5 @@
 import HourGlass from '@/assets/imgs/Hourglass.svg'
-import { Link, useNavigate } from 'react-router'
+import { Link } from 'react-router'
 
 type Props = {
     children: React.ReactNode

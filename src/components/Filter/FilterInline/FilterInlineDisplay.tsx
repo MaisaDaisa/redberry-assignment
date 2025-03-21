@@ -1,7 +1,6 @@
-import { useFormContext } from 'react-hook-form'
+import { departmentSchema, prioritySchema } from '@/api/schemas/apiSchemas'
 import { filterValues } from '@/pages/IndexPage'
 import FilterDisplayText from './FilterDisplayText'
-import { departmentSchema, prioritySchema } from '@/api/schemas/apiSchemas'
 
 type FilterInlineDisplayProps = {
     setFilterFields: (filterFields: filterValues) => void
@@ -61,6 +60,7 @@ const FilterInlineDisplay = ({
                         filterFields?.employee.surname
                     }
                     onClickHandler={() => {
+                        //@ts-ignore
                         setFilterFields((prev: filterValues) => {
                             return {
                                 ...prev,

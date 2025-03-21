@@ -1,6 +1,5 @@
-import React, { memo, useRef } from 'react'
+import React, { memo } from 'react'
 import FilterConfirmButton from './FilterConfirmButton'
-import { useClickOutside } from '@/hooks/useClickOutside'
 
 export type FilterDropDownButtonsProps = {
     filterText: string

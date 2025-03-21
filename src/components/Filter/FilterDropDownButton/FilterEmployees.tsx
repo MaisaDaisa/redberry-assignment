@@ -1,6 +1,5 @@
 import { employeeSchema } from '@/api/schemas/apiSchemas'
 import CheckBoxAvatar from '@/components/CheckBox/CheckBoxAvatar'
-import { ControllerRenderProps, UseFormSetValue } from 'react-hook-form'
 import FilterDropDownButtons, {
     FilterDropDownButtonsProps,
 } from './FilterDropDownButtons'

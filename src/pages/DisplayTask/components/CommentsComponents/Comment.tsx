@@ -1,8 +1,8 @@
 import { commentSchema } from '@/api/schemas/apiSchemas'
+import { useState } from 'react'
 import CommentAnswerButton from './CommentAnswerButton'
-import SubComment from './SubComment'
-import React, { useState } from 'react'
 import CommentTextArea from './CommentTextArea'
+import SubComment from './SubComment'
 
 type CommentProps = {
     comment: commentSchema
