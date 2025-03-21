@@ -5,7 +5,7 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import HeaderWrapper from '@/layouts/HeaderWrapper'
 import DropDownWrapper from './wrappers/DropDownWrapper'
 import useDepartmentsContext from '@/contexts/AllPages/useDepartmentContext'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
     employeeSchema,
     prioritySchema,
@@ -24,30 +24,74 @@ import {
     zodTaskPostFormSchema,
     zodTaskPostFormSchemaType,
 } from '@/api/zodSchemas/zod.taskPostSchema'
-import { useNavigate } from 'react-router'
+import { useBeforeUnload, useLocation, useNavigate } from 'react-router'
+import { DevTool } from '@hookform/devtools'
 
 export type CreateTaskSchema = zodTaskPostFormSchemaType & {
     department_id: number
 }
 
 const CreateTaskPage = () => {
+    const location = useLocation()
+    const navigation = useNavigate()
+
+    // State for storing saved data
+    const [savedData, setSavedData] = useState<CreateTaskSchema | undefined>()
+
+    // Fetch saved form data
+    useEffect(() => {
+        const fetchSavedData = async () => {
+            try {
+                const savedData = localStorage.createTaskFields
+                const savedLocationKey = localStorage.locationKey
+                const savedLoc = savedLocationKey
+                    ? JSON.parse(savedLocationKey)
+                    : null
+
+                if (savedLoc === location.key && savedData) {
+                    setSavedData(JSON.parse(savedData))
+                } else {
+                    localStorage.removeItem('createTaskFields')
+                }
+            } catch (error) {
+                console.error('Error loading saved data:', error)
+            }
+        }
+
+        fetchSavedData()
+    }, [location.key])
+
+    // useForm setup
     const methods = useForm<CreateTaskSchema>({
+        defaultValues: {
+            name: savedData?.name || '',
+            description: savedData?.description || '',
+            status_id: savedData?.status_id || 1,
+            priority_id: savedData?.priority_id || 2,
+            department_id: savedData?.department_id || undefined,
+            employee_id: savedData?.employee_id || undefined,
+            due_date: new Date(new Date().setDate(new Date().getDate() + 1)),
+        } as CreateTaskSchema,
         mode: 'onChange',
         resolver: zodResolver(zodTaskPostFormSchema),
         delayError: 500,
     })
 
-    const { control, handleSubmit, resetField } = methods
+    const { control, handleSubmit, reset, getValues, resetField } = methods
 
-    const navigation = useNavigate()
+    // Reset form when savedData is available
+    useEffect(() => {
+        if (savedData) {
+            reset(savedData)
+        }
+    }, [savedData, reset])
 
-    //States and Context
+    // Fetch additional data for form fields
     const departments = useDepartmentsContext()
     const [statuses, setStatuses] = useState<statusSchema[]>([])
     const [employees, setEmployees] = useState<employeeSchema[]>([])
     const [priorities, setPriorities] = useState<prioritySchema[]>([])
 
-    // useEffect
     useEffect(() => {
         const fetchData = async () => {
             setStatuses(await getAllStatuses())
@@ -57,21 +101,34 @@ const CreateTaskPage = () => {
         fetchData()
     }, [])
 
+    // Handle form submission
     const onSubmit: SubmitHandler<CreateTaskSchema> = async (data) => {
         const response = await createNewTask(data)
         console.log(response)
         navigation('/')
     }
 
+    // Save form data before unload
+    useBeforeUnload(() => {
+        const data = getValues()
+        localStorage.createTaskFields = JSON.stringify({
+            ...data,
+            due_date: null,
+        })
+        localStorage.locationKey = JSON.stringify(location.key)
+    })
+
+    // Show loading until all required data is ready
     if (
         !(
-            statuses.length > 0 &&
-            priorities.length > 0 &&
-            employees.length > 0 &&
-            departments.length > 0
+            statuses.length &&
+            priorities.length &&
+            employees.length &&
+            departments.length
         )
-    )
-        return <></>
+    ) {
+        return <div></div>
+    }
 
     return (
         <HeaderWrapper text="შექმენი ახალი დავალება">
@@ -130,7 +187,7 @@ const CreateTaskPage = () => {
                 <CustomDatePickerWrapper name={'due_date'} control={control} />
                 <SubmitButtonWrapper onSubmit={() => onSubmit} />
             </form>
-            {/* <DevTool control={control} /> */}
+            <DevTool control={control} />
         </HeaderWrapper>
     )
 }

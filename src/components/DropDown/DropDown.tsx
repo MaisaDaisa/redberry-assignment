@@ -29,12 +29,6 @@ const DropDown = ({
     renderItem,
     placeholder = 'Select an option',
 }: DropDownProps) => {
-    const [toggleCombo, setToggleCombo] = useState(false)
-    const [selected, setSelected] = useState<{
-        id: number
-        name: string
-    } | null>(selectedItem)
-
     const dropDownRef = useRef<HTMLDivElement>(null)
 
     const {
@@ -48,14 +42,16 @@ const DropDown = ({
         },
     })
 
+    const [toggleCombo, setToggleCombo] = useState(false)
+    const [selected, setSelected] = useState<{
+        id: number
+        name: string
+    } | null>(items.find((item) => item.id === field.value))
+
     //
     useClickOutside(dropDownRef, () => {
         setToggleCombo(false)
     })
-
-    useEffect(() => {
-        setSelected(selectedItem)
-    }, [selectedItem])
 
     const handleSelectedItem = (item: { id: number; name: string }) => {
         setSelected(item)

@@ -1,15 +1,11 @@
 import { AddEmployeeButtonWrapper } from './addEmployeeButtonWrapper'
 import HeaderWrapper from '../HeaderWrapper'
 import Input from '@/components/Input'
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
+import { FormProvider, SubmitHandler, useFormContext } from 'react-hook-form'
 import FileUploader from '@/components/FileUploader/FileUploader'
 import useDepartmentsContext from '@/contexts/AllPages/useDepartmentContext'
 import DropDownWithTitle from '@/components/DropDown/DropDownWithTitle'
-import { zodResolver } from '@hookform/resolvers/zod'
-import {
-    zodEmployeeFormSchema,
-    zodEmployeeFormSchemaType,
-} from '@/api/zodSchemas/zod.employeePostSchema'
+import { zodEmployeeFormSchemaType } from '@/api/zodSchemas/zod.employeePostSchema'
 import { createEmployee } from '@/api/postRequest'
 
 type FullScreenWrapperProps = {
@@ -18,17 +14,8 @@ type FullScreenWrapperProps = {
 
 function FullScreenWrapper({ toggleActive }: FullScreenWrapperProps) {
     const departments = useDepartmentsContext()
-    const methods = useForm<zodEmployeeFormSchemaType>({
-        mode: 'onChange',
-        delayError: 500,
-        resolver: zodResolver(zodEmployeeFormSchema),
-        defaultValues: {
-            department_id: undefined,
-            avatar: undefined,
-            name: '',
-            surname: '',
-        },
-    })
+    const methods = useFormContext<zodEmployeeFormSchemaType>()
+
     const { control, handleSubmit, reset } = methods
     const onSubmit: SubmitHandler<zodEmployeeFormSchemaType> = async (data) => {
         const response = await createEmployee(data)
